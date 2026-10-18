@@ -1,4 +1,4 @@
-﻿package com.verden.entity;
+package com.verden.entity;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -28,7 +28,7 @@ import java.util.EnumSet;
 
 /**
  * Condolyus: pequena criatura de fogo, companheira de Noite e Milly.
- * Alimente com maÃ§Ã£ para domesticar; ela segue vocÃª e cospe metal derretido nos inimigos.
+ * Alimente com maçã para domesticar; ela segue você e cospe metal derretido nos inimigos.
  */
 public class CondolyusEntity extends TameableEntity {
     public CondolyusEntity(EntityType<? extends CondolyusEntity> type, World world) {
@@ -87,9 +87,10 @@ public class CondolyusEntity extends TameableEntity {
         }
     }
 
-    @Override`r`n    public boolean isBreedingItem(ItemStack stack) {`r`n        return stack.isOf(Items.APPLE);`r`n    }`r`n`r`n
-
-    @Override`r`n    public boolean isBreedingItem(ItemStack stack) {`r`n        return stack.isOf(Items.APPLE);`r`n    }`r`n`r`n
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return stack.isOf(Items.APPLE);
+    }
 
     @Nullable
     @Override
@@ -97,7 +98,7 @@ public class CondolyusEntity extends TameableEntity {
         return null;
     }
 
-    /** Segue o dono sem depender da API de seguir da versÃ£o. */
+    /** Segue o dono sem depender da API de seguir da versão. */
     private static class FollowOwnerSimpleGoal extends Goal {
         private final CondolyusEntity pet;
 
@@ -133,5 +134,3 @@ public class CondolyusEntity extends TameableEntity {
         }
     }
 }
-
-

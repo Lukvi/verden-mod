@@ -35,7 +35,7 @@ public final class ModEntities {
             EntityType.Builder.create(KunoriEntity::new, SpawnGroup.MONSTER).dimensions(0.6f, 1.95f).maxTrackingRange(8));
 
     public static final EntityType<TentaculoEntity> TENTACULO = reg("tentaculo",
-            EntityType.Builder.create(TentaculoEntity::new, SpawnGroup.MONSTER).dimensions(1.0f, 0.9f).maxTrackingRange(8));
+            EntityType.Builder.create(TentaculoEntity::new, SpawnGroup.MONSTER).dimensions(0.8f, 1.8f).maxTrackingRange(8));
 
     public static final EntityType<AmalgamaKooldEntity> AMALGAMA = reg("amalgama_koold",
             EntityType.Builder.create(AmalgamaKooldEntity::new, SpawnGroup.MONSTER).dimensions(1.8f, 5.85f).maxTrackingRange(16));
@@ -56,7 +56,7 @@ public final class ModEntities {
             EntityType.Builder.create(HaigolEntity::new, SpawnGroup.MONSTER).dimensions(0.72f, 2.34f).maxTrackingRange(12));
 
     public static final EntityType<CondolyusEntity> CONDOLYUS = reg("condolyus",
-            EntityType.Builder.create(CondolyusEntity::new, SpawnGroup.CREATURE).dimensions(0.5f, 0.5f).maxTrackingRange(8));
+            EntityType.Builder.create(CondolyusEntity::new, SpawnGroup.CREATURE).dimensions(0.6f, 0.8f).maxTrackingRange(8));
 
     private static <T extends Entity> EntityType<T> reg(String name, EntityType.Builder<T> builder) {
         return Registry.register(Registries.ENTITY_TYPE, VerdenMod.id(name), builder.build(name));

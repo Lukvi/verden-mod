@@ -490,3 +490,8 @@ w(os.path.join(DATA, "recipe", "pocao_recuperacao.json"), {
     "result": {"id": "verden:pocao_recuperacao", "count": 1}})
 
 print("Assets gerados.")
+
+# Modelos 3D próprios e suas texturas (sobrescrevem as texturas simples acima)
+import runpy
+runpy.run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "model_gen.py"), run_name="__main__")
+runpy.run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "humanoid_gen.py"), run_name="__main__")

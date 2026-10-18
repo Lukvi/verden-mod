@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "verden",
+  "version": "${version}",
+  "name": "Verden",
+  "description": "Mod baseado na história de Verden: magias, licantropos, Kunori, o Núcleo de Koold e muito mais.",
+  "authors": ["Você & Claude"],
+  "license": "All-Rights-Reserved",
+  "icon": "assets/verden/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.verden.VerdenMod"],
+    "client": ["com.verden.client.VerdenClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

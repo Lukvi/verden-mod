@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "verden:municao_45"
+    },
+    {
+      "item": "verden:municao_45"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    }
+  ],
+  "result": {
+    "id": "verden:municao_incendiaria",
+    "count": 2
+  }
+}

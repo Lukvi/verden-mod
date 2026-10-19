@@ -28,6 +28,12 @@ public class RevolverItem extends Item {
     private static ItemStack findAmmo(PlayerEntity p) {
         for (int i = 0; i < p.getInventory().size(); i++) {
             ItemStack s = p.getInventory().getStack(i);
+            if (s.isOf(ModItems.MUNICAO_INCENDIARIA) || s.isOf(ModItems.MUNICAO_PERFURANTE)) {
+                return s;
+            }
+        }
+        for (int i = 0; i < p.getInventory().size(); i++) {
+            ItemStack s = p.getInventory().getStack(i);
             if (s.isOf(ModItems.MUNICAO_45)) {
                 return s;
             }
@@ -47,13 +53,22 @@ public class RevolverItem extends Item {
             return TypedActionResult.fail(gun);
         }
         if (!world.isClient) {
+            boolean fire = ammo.isOf(ModItems.MUNICAO_INCENDIARIA);
+            boolean pierce = ammo.isOf(ModItems.MUNICAO_PERFURANTE);
             if (!player.isCreative()) {
                 ammo.decrement(1);
             }
             world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_FIREWORK_ROCKET_BLAST, SoundCategory.PLAYERS, 1.5f, 0.6f);
-            LivingEntity t = SpellUtil.raycastLiving(world, player, 48, ParticleTypes.SMOKE);
+            LivingEntity t = SpellUtil.raycastLiving(world, player, 48, fire ? ParticleTypes.FLAME : ParticleTypes.SMOKE);
             if (t != null) {
-                t.damage(world.getDamageSources().playerAttack(player), 11f);
+                if (pierce) {
+                    t.damage(world.getDamageSources().indirectMagic(player, player), 13f); // ignora armadura
+                } else {
+                    t.damage(world.getDamageSources().playerAttack(player), fire ? 9f : 11f);
+                }
+                if (fire) {
+                    t.setOnFireFor(5);
+                }
             }
             player.getItemCooldownManager().set(this, 15);
             gun.damage(1, player, hand == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);

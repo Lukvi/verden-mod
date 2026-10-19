@@ -495,3 +495,4 @@ print("Assets gerados.")
 import runpy
 runpy.run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "model_gen.py"), run_name="__main__")
 runpy.run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "humanoid_gen.py"), run_name="__main__")
+runpy.run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "generate_v5.py"), run_name="__main__")

@@ -1,6 +1,7 @@
 package com.verden.magic;
 
 import com.verden.registry.ModItems;
+import com.verden.registry.ModSounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -21,6 +22,7 @@ public final class Spells {
     }
 
     public static void cast(Power power, ServerWorld w, PlayerEntity pl) {
+        w.playSound(null, pl.getBlockPos(), ModSounds.SPELL, SoundCategory.PLAYERS, 0.8f, 0.8f + power.ordinal() * 0.07f);
         switch (power) {
             case CHAMAS -> chamas(w, pl);
             case VENTO -> vento(w, pl);

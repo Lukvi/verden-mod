@@ -2,6 +2,7 @@ package com.verden.entity;
 
 import com.verden.magic.SpellUtil;
 import com.verden.registry.ModEntities;
+import com.verden.registry.ModSounds;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -16,6 +17,7 @@ import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
@@ -43,7 +45,8 @@ public class AmalgamaKooldEntity extends VerdenMonster {
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 18)
                 .add(EntityAttributes.GENERIC_ARMOR, 8)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64)
+                .add(EntityAttributes.GENERIC_STEP_HEIGHT, 2.0)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0);
     }
 
@@ -68,13 +71,18 @@ public class AmalgamaKooldEntity extends VerdenMonster {
             return;
         }
 
+        // Tema do chefe (toca a cada ~34 s enquanto há alvo; o raio de som é grande)
+        if (this.getTarget() != null && this.age % 680 == 1) {
+            sw.playSound(null, this.getBlockPos(), ModSounds.BOSS_MUSIC, SoundCategory.RECORDS, 5f, 1f);
+        }
+
         // Fase 2: tentáculos
         if (ratio < 0.5f && this.age % 200 == 0) {
             for (int i = 0; i < 2; i++) {
                 TentaculoEntity t = ModEntities.TENTACULO.create(sw);
                 if (t != null) {
-                    t.refreshPositionAndAngles(this.getX() + this.random.nextInt(7) - 3, this.getY(),
-                            this.getZ() + this.random.nextInt(7) - 3, this.random.nextFloat() * 360f, 0f);
+                    t.refreshPositionAndAngles(this.getX() + this.random.nextInt(13) - 6, this.getY(),
+                            this.getZ() + this.random.nextInt(13) - 6, this.random.nextFloat() * 360f, 0f);
                     sw.spawnEntity(t);
                 }
             }
@@ -83,18 +91,28 @@ public class AmalgamaKooldEntity extends VerdenMonster {
         // Pisão em área (mais frequente na fase 3)
         int period = ratio < 0.25f ? 80 : 160;
         if (this.getTarget() != null && this.age % period == 0) {
-            sw.playSound(null, this.getBlockPos(), SoundEvents.ENTITY_RAVAGER_ROAR, SoundCategory.HOSTILE, 2f, 0.5f);
+            sw.playSound(null, this.getBlockPos(), ModSounds.ROAR, SoundCategory.HOSTILE, 4f, 1f);
             sw.spawnParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY() + 0.2, this.getZ(), 8, 3, 0.2, 3, 0.0);
-            for (LivingEntity e : SpellUtil.around(sw, this, 7)) {
-                if (e instanceof VerdenMonster) {
+            for (LivingEntity e : SpellUtil.around(sw, this, 12)) {
+                if (e instanceof VerdenMonster || e instanceof LegionUnit) {
                     continue;
                 }
-                e.damage(this.getDamageSources().mobAttack(this), 6f);
+                e.damage(this.getDamageSources().mobAttack(this), 9f);
                 Vec3d push = e.getPos().subtract(this.getPos()).normalize().multiply(1.2).add(0, 0.6, 0);
                 e.setVelocity(push);
                 e.velocityModified = true;
             }
         }
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.ROAR;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.LYCAN_DEATH;
     }
 
     @Override

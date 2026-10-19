@@ -1,7 +1,16 @@
 package com.verden.registry;
 
 import com.verden.VerdenMod;
+import com.verden.entity.NpcRole;
+import com.verden.item.BackpackItem;
 import com.verden.item.CornetaItem;
+import com.verden.item.FlameKatanaItem;
+import com.verden.item.FrostSpearItem;
+import com.verden.item.LanternItem;
+import com.verden.item.NpcSpawnItem;
+import com.verden.item.VerdenCompassItem;
+import com.verden.item.WarmthElixirItem;
+import net.minecraft.item.ArmorItem;
 import com.verden.item.CromusItem;
 import com.verden.item.GrimoireItem;
 import com.verden.item.RevolverItem;
@@ -103,6 +112,63 @@ public final class ModItems {
     public static final Item OVO_RINOY = reg("rinoy_spawn_egg",
             new SpawnEggItem(ModEntities.RINOY, 0x2a2420, 0xd8e0e8, new Item.Settings()));
 
+    // ---- Moedas e materiais ----
+    public static final Item MONTER = reg("monter", new Item(new Item.Settings().rarity(Rarity.UNCOMMON)));
+    public static final Item COPTA = reg("copta_flereniana", new Item(new Item.Settings()));
+    public static final Item GARRA_LICANTROPO = reg("garra_licantropo", new Item(new Item.Settings()));
+
+    // ---- Utilidades ----
+    public static final Item BUSSOLA = reg("bussola_verden", new VerdenCompassItem(new Item.Settings().maxCount(1)));
+    public static final Item LANTERNA_FAUNO = reg("lanterna_fauno", new LanternItem(new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON)));
+    public static final Item MOCHILA_COURO = reg("mochila_couro", new BackpackItem(new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON)));
+    public static final Item RACAO_VIAGEM = reg("racao_viagem",
+            new Item(new Item.Settings().maxCount(32).food(new FoodComponent.Builder()
+                    .nutrition(8).saturationModifier(0.9f).build())));
+    public static final Item POCAO_VISAO_NOTURNA = reg("pocao_visao_noturna",
+            new Item(new Item.Settings().maxCount(16).food(new FoodComponent.Builder()
+                    .nutrition(1).saturationModifier(0.1f).alwaysEdible()
+                    .statusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 3600, 0), 1.0f).build())));
+    public static final Item ELIXIR_CALOR = reg("elixir_calor",
+            new WarmthElixirItem(new Item.Settings().maxCount(16).food(new FoodComponent.Builder()
+                    .nutrition(1).saturationModifier(0.1f).alwaysEdible().build())));
+
+    // ---- Armas por afinidade ----
+    public static final Item LANCA_GELO = reg("lanca_gelo",
+            new FrostSpearItem(ToolMaterials.DIAMOND, new Item.Settings().rarity(Rarity.RARE)
+                    .attributeModifiers(SwordItem.createAttributeModifiers(ToolMaterials.DIAMOND, 4, -2.4f))));
+    public static final Item KATANA_CHAMAS = reg("katana_chamas",
+            new FlameKatanaItem(ToolMaterials.DIAMOND, new Item.Settings().rarity(Rarity.RARE).fireproof()
+                    .attributeModifiers(SwordItem.createAttributeModifiers(ToolMaterials.DIAMOND, 4, -2.0f))));
+    public static final Item MUNICAO_INCENDIARIA = reg("municao_incendiaria", new Item(new Item.Settings()));
+    public static final Item MUNICAO_PERFURANTE = reg("municao_perfurante", new Item(new Item.Settings()));
+
+    // ---- Armaduras ----
+    public static final Item LEGIAO_CAPACETE = armor("legiao_capacete", ModArmor.LEGIAO, ArmorItem.Type.HELMET, 24);
+    public static final Item LEGIAO_PEITORAL = armor("legiao_peitoral", ModArmor.LEGIAO, ArmorItem.Type.CHESTPLATE, 24);
+    public static final Item LEGIAO_CALCAS = armor("legiao_calcas", ModArmor.LEGIAO, ArmorItem.Type.LEGGINGS, 24);
+    public static final Item LEGIAO_BOTAS = armor("legiao_botas", ModArmor.LEGIAO, ArmorItem.Type.BOOTS, 24);
+    public static final Item RINOY_CAPUZ = armor("rinoy_capuz", ModArmor.PELE_RINOY, ArmorItem.Type.HELMET, 18);
+    public static final Item RINOY_CASACO = armor("rinoy_casaco", ModArmor.PELE_RINOY, ArmorItem.Type.CHESTPLATE, 18);
+    public static final Item RINOY_CALCAS = armor("rinoy_calcas", ModArmor.PELE_RINOY, ArmorItem.Type.LEGGINGS, 18);
+    public static final Item RINOY_BOTAS = armor("rinoy_botas", ModArmor.PELE_RINOY, ArmorItem.Type.BOOTS, 18);
+
+    // ---- Ovos de NPC (um por personagem) ----
+    public static final Item[] NPC_EGGS = createNpcEggs();
+
+    private static Item[] createNpcEggs() {
+        NpcRole[] roles = NpcRole.values();
+        Item[] eggs = new Item[roles.length];
+        for (int i = 0; i < roles.length; i++) {
+            eggs[i] = reg("npc_" + roles[i].id, new NpcSpawnItem(roles[i], new Item.Settings()));
+        }
+        return eggs;
+    }
+
+    private static Item armor(String name, net.minecraft.registry.entry.RegistryEntry<net.minecraft.item.ArmorMaterial> mat,
+                              ArmorItem.Type type, int durability) {
+        return reg(name, new ArmorItem(mat, type, new Item.Settings().maxDamage(type.getMaxDamage(durability))));
+    }
+
     private static Item reg(String name, Item item) {
         return Registry.register(Registries.ITEM, VerdenMod.id(name), item);
     }
@@ -129,6 +195,30 @@ public final class ModItems {
                             entries.add(ESPADA_HAIGOL);
                             entries.add(INSIGNIA_LEGIAO);
                             entries.add(POCAO_RECUPERACAO);
+                            entries.add(MONTER);
+                            entries.add(COPTA);
+                            entries.add(GARRA_LICANTROPO);
+                            entries.add(BUSSOLA);
+                            entries.add(LANTERNA_FAUNO);
+                            entries.add(MOCHILA_COURO);
+                            entries.add(RACAO_VIAGEM);
+                            entries.add(POCAO_VISAO_NOTURNA);
+                            entries.add(ELIXIR_CALOR);
+                            entries.add(LANCA_GELO);
+                            entries.add(KATANA_CHAMAS);
+                            entries.add(MUNICAO_INCENDIARIA);
+                            entries.add(MUNICAO_PERFURANTE);
+                            entries.add(LEGIAO_CAPACETE);
+                            entries.add(LEGIAO_PEITORAL);
+                            entries.add(LEGIAO_CALCAS);
+                            entries.add(LEGIAO_BOTAS);
+                            entries.add(RINOY_CAPUZ);
+                            entries.add(RINOY_CASACO);
+                            entries.add(RINOY_CALCAS);
+                            entries.add(RINOY_BOTAS);
+                            for (Item egg : NPC_EGGS) {
+                                entries.add(egg);
+                            }
                             entries.add(OVO_LICANTROPO_ADAPTADO);
                             entries.add(OVO_SOLDADO);
                             entries.add(OVO_ZYTRA);

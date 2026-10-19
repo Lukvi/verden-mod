@@ -1,6 +1,10 @@
 package com.verden;
 
+import com.verden.event.ModEvents;
+import com.verden.registry.ModArmor;
 import com.verden.registry.ModEntities;
+import com.verden.registry.ModSounds;
+import com.verden.world.ModWorldgen;
 import com.verden.registry.ModItems;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
@@ -17,8 +21,12 @@ public class VerdenMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        ModSounds.register();
+        ModArmor.register();
         ModEntities.register();
         ModItems.register();
+        ModEvents.register();
+        ModWorldgen.register();
         LOGGER.info("Verden carregado. Que os ventos não soprem contra você.");
     }
 }

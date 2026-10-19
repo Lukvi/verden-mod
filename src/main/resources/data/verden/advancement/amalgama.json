@@ -1,0 +1,34 @@
+{
+  "display": {
+    "icon": {
+      "id": "verden:amuleto_triquetra"
+    },
+    "title": {
+      "translate": "advancement.verden.amalgama.title"
+    },
+    "description": {
+      "translate": "advancement.verden.amalgama.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "k": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "verden:amalgama_koold"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "parent": "verden:licantropo"
+}

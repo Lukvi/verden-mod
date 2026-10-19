@@ -22,3 +22,16 @@ Modelos vanilla com textura própria (Condolyus usa modelo de porco pequeno; Ten
 Biomas, estruturas, NPCs, moedas e Limbo ficam para as próximas fases.
 
 Texturas/lang/receitas são geradas por `python3 tools/generate_assets.py` (requer Pillow).
+
+
+## v0.5.0 — Moedas, NPCs, armaduras, HUD e sons
+- **Legião corrigida**: soldados, Zytra e Haigol caçam licantropos/Kunori/Amálgama e ficam neutros com o jogador (só reagem se atacados). Licantropos também atacam a Legião.
+- **Amálgama de Koold** ~9,5 blocos de altura, pisão de 12 blocos, tema musical próprio.
+- **Moedas**: Mønter e Copta Flereniana (1 mønter = 9 coptas, crafting nos dois sentidos).
+- **Itens**: Bússola de Verden, Lanterna do Fauno, Mochila de Couro, Ração de Viagem, Poção de Visão Noturna, Elixir de Calor, Lança de Gelo, Katana de Chamas, Munição Incendiária/Perfurante, Garra de Licantropo, armaduras da Legião e de Pele de Rinoy (bônus de set; a pele protege do congelamento).
+- **15 NPCs** (ovos no menu criativo): Luke, Lucy, Noite, Milly, Liam, Hiraku, Rose, Vanessa, Rei Konge, Menetryx, Rashad, Yann, Thalen, Taverneiro, Raoni. Clique direito conversa; 11 deles têm loja.
+- **Acampamento da Legião** gerado no mundo (tendas, fogueira, baú, guardas, às vezes Menetryx).
+- **HUD**: painel de poderes com recarga, munição do revólver e bolsa de moedas.
+- **Sons**: rugidos, trompa da Legião, magia, moedas, fala de NPC e tema do chefe (gerados por `tools/sound_gen.py`).
+- **Conquistas** (aba Verden). Diálogos estão só em português.
+Para regenerar tudo: `python3 tools/generate_assets.py` e `python3 tools/sound_gen.py`.

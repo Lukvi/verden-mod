@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "verden:legiao_peitoral"
+    },
+    "title": {
+      "translate": "advancement.verden.legiao.title"
+    },
+    "description": {
+      "translate": "advancement.verden.legiao.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "peito": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "verden:legiao_peitoral"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "verden:root"
+}

@@ -42,6 +42,24 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "verden:monter",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2,
+                "max": 4
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
           "name": "verden:pocao_recuperacao",
           "functions": [
             {

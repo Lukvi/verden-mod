@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "verden:monter"
+    }
+  ],
+  "result": {
+    "id": "verden:copta_flereniana",
+    "count": 9
+  }
+}

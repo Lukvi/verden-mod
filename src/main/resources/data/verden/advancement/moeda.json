@@ -1,0 +1,46 @@
+{
+  "display": {
+    "icon": {
+      "id": "verden:monter"
+    },
+    "title": {
+      "translate": "advancement.verden.moeda.title"
+    },
+    "description": {
+      "translate": "advancement.verden.moeda.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "m": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "verden:monter"
+          }
+        ]
+      }
+    },
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "verden:copta_flereniana"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "verden:root",
+  "requirements": [
+    [
+      "m",
+      "c"
+    ]
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "I I"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "X": {
+      "item": "verden:insignia_legiao"
+    }
+  },
+  "result": {
+    "id": "verden:legiao_capacete",
+    "count": 1
+  }
+}

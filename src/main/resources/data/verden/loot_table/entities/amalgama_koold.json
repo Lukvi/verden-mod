@@ -42,6 +42,24 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "verden:monter",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 8,
+                "max": 14
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
           "name": "verden:amuleto_triquetra",
           "functions": [
             {
@@ -58,6 +76,24 @@
         {
           "condition": "minecraft:random_chance",
           "chance": 0.5
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "verden:garra_licantropo",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 3,
+                "max": 6
+              }
+            }
+          ]
         }
       ]
     }

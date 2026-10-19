@@ -10,6 +10,7 @@ import com.verden.entity.LicantropoEntity;
 import com.verden.entity.RinoyEntity;
 import com.verden.entity.SoldadoLegiaoEntity;
 import com.verden.entity.TentaculoEntity;
+import com.verden.entity.VerdenNpcEntity;
 import com.verden.entity.ZytraEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -38,7 +39,7 @@ public final class ModEntities {
             EntityType.Builder.create(TentaculoEntity::new, SpawnGroup.MONSTER).dimensions(0.8f, 1.8f).maxTrackingRange(8));
 
     public static final EntityType<AmalgamaKooldEntity> AMALGAMA = reg("amalgama_koold",
-            EntityType.Builder.create(AmalgamaKooldEntity::new, SpawnGroup.MONSTER).dimensions(1.8f, 5.85f).maxTrackingRange(16));
+            EntityType.Builder.create(AmalgamaKooldEntity::new, SpawnGroup.MONSTER).dimensions(3.6f, 9.5f).maxTrackingRange(24));
 
     public static final EntityType<RinoyEntity> RINOY = reg("rinoy",
             EntityType.Builder.create(RinoyEntity::new, SpawnGroup.CREATURE).dimensions(1.9f, 2.6f).maxTrackingRange(10));
@@ -58,6 +59,9 @@ public final class ModEntities {
     public static final EntityType<CondolyusEntity> CONDOLYUS = reg("condolyus",
             EntityType.Builder.create(CondolyusEntity::new, SpawnGroup.CREATURE).dimensions(0.6f, 0.8f).maxTrackingRange(8));
 
+    public static final EntityType<VerdenNpcEntity> NPC = reg("npc",
+            EntityType.Builder.create(VerdenNpcEntity::new, SpawnGroup.MISC).dimensions(0.6f, 1.8f).maxTrackingRange(10));
+
     private static <T extends Entity> EntityType<T> reg(String name, EntityType.Builder<T> builder) {
         return Registry.register(Registries.ENTITY_TYPE, VerdenMod.id(name), builder.build(name));
     }
@@ -74,6 +78,7 @@ public final class ModEntities {
         FabricDefaultAttributeRegistry.register(ZYTRA, ZytraEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(HAIGOL, HaigolEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CONDOLYUS, CondolyusEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(NPC, VerdenNpcEntity.createAttributes());
 
         SpawnRestriction.register(LICANTROPO_ADAPTADO, SpawnLocationTypes.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HostileEntity::canSpawnInDark);

@@ -24,6 +24,30 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "verden:copta_flereniana",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 4
+              }
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.7
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
           "name": "verden:coroa_espinhos_kunori",
           "functions": [
             {

@@ -1,0 +1,53 @@
+{
+  "licantropo.growl": {
+    "sounds": [
+      {
+        "name": "verden:growl",
+        "volume": 0.9
+      }
+    ]
+  },
+  "licantropo.hurt": {
+    "sounds": [
+      "verden:lycan_hurt"
+    ]
+  },
+  "licantropo.death": {
+    "sounds": [
+      "verden:lycan_death"
+    ]
+  },
+  "amalgama.roar": {
+    "sounds": [
+      "verden:roar"
+    ]
+  },
+  "music.amalgama": {
+    "sounds": [
+      {
+        "name": "verden:boss_music",
+        "stream": true
+      }
+    ]
+  },
+  "legiao.horn": {
+    "sounds": [
+      "verden:horn"
+    ]
+  },
+  "magia.cast": {
+    "sounds": [
+      "verden:cast"
+    ]
+  },
+  "moeda.tilintar": {
+    "sounds": [
+      "verden:coin"
+    ]
+  },
+  "npc.falar": {
+    "sounds": [
+      "verden:npc_talk"
+    ]
+  }
+}

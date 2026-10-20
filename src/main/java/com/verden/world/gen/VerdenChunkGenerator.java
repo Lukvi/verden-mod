@@ -2,6 +2,7 @@ package com.verden.world.gen;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verden.world.build.SiteBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryWrapper;
@@ -21,7 +22,7 @@ import net.minecraft.world.biome.source.BiomeAccess;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkSection;
-import net.minecraft.util.math.random.ChunkRandom;
+import net.minecraft.world.gen.ChunkRandom;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.Blender;
@@ -112,7 +113,7 @@ public class VerdenChunkGenerator extends ChunkGenerator {
 
     // ------------------------------------------------------------------ geração do terreno
     @Override
-    public CompletableFuture<Chunk> fillFromNoise(Blender blender, NoiseConfig noiseConfig, StructureAccessor structureAccessor, Chunk chunk) {
+    public CompletableFuture<Chunk> fillFromNoise(java.util.concurrent.Executor executor, Blender blender, NoiseConfig noiseConfig, StructureAccessor structureAccessor, Chunk chunk) {
         ChunkPos pos = chunk.getPos();
         int startX = pos.getStartX(), startZ = pos.getStartZ();
         Heightmap oceanFloor = chunk.getHeightmap(Heightmap.Type.OCEAN_FLOOR_WG);
@@ -264,7 +265,7 @@ public class VerdenChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public void appendDebugHoverText(List<String> text, NoiseConfig noiseConfig, BlockPos pos) {
+    public void getDebugHudText(List<String> text, NoiseConfig noiseConfig, BlockPos pos) {
         Terrain.Column c = terrain.column(pos.getX(), pos.getZ());
         text.add("Verden: " + c.biome + " solid=" + c.solid + " agua=" + c.water);
     }
@@ -273,5 +274,6 @@ public class VerdenChunkGenerator extends ChunkGenerator {
     @Override
     public void generateFeatures(StructureWorldAccess world, Chunk chunk, StructureAccessor structureAccessor) {
         super.generateFeatures(world, chunk, structureAccessor);
+        SiteBuilder.placeInChunk(world, chunk, this);
     }
 }

@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 21
@@ -20,20 +20,21 @@ jobs:
         with:
           gradle-version: 8.10.2
 
-      - name: Build
+      - name: Compile
         run: |
           set -o pipefail
-          gradle build --stacktrace 2>&1 | tee build-log.txt
+          gradle compileJava --stacktrace 2>&1 | tee compile.log
 
-      - name: Show build log
+      - name: Publish compilation error
         if: failure()
         run: |
-          echo "===== ÚLTIMAS 200 LINHAS DO LOG ====="
-          tail -n 200 build-log.txt
-          echo "===== FIM DO LOG ====="
+          echo "::error file=compile.log::A compilação Java falhou. Veja o log abaixo."
+          echo "===== ERRO DE COMPILAÇÃO ====="
+          grep -n -B 8 -A 15 -E "error:|cannot find symbol|symbol:|location:" compile.log || cat compile.log
+          echo "===== FIM ====="
 
       - uses: actions/upload-artifact@v4
-        if: success()
+        if: always()
         with:
-          name: verden-mod
-          path: build/libs/*.jar
+          name: compile-log
+          path: compile.log

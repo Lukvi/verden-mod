@@ -113,7 +113,7 @@ public class VerdenChunkGenerator extends ChunkGenerator {
 
     // ------------------------------------------------------------------ geração do terreno
     @Override
-    public CompletableFuture<Chunk> fillFromNoise(java.util.concurrent.Executor executor, Blender blender, NoiseConfig noiseConfig, StructureAccessor structureAccessor, Chunk chunk) {
+    public CompletableFuture<Chunk> populateNoise(Blender blender, NoiseConfig noiseConfig, StructureAccessor structureAccessor, Chunk chunk) {
         ChunkPos pos = chunk.getPos();
         int startX = pos.getStartX(), startZ = pos.getStartZ();
         Heightmap oceanFloor = chunk.getHeightmap(Heightmap.Type.OCEAN_FLOOR_WG);

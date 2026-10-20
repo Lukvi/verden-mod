@@ -20,21 +20,21 @@ jobs:
         with:
           gradle-version: 8.10.2
 
-      - name: Compile
+      - name: Build
         run: |
           set -o pipefail
-          gradle compileJava --stacktrace 2>&1 | tee compile.log
+          gradle build --stacktrace 2>&1 | tee build.log
 
-      - name: Publish compilation error
-        if: failure()
-        run: |
-          echo "::error file=compile.log::A compilação Java falhou. Veja o log abaixo."
-          echo "===== ERRO DE COMPILAÇÃO ====="
-          grep -n -B 8 -A 15 -E "error:|cannot find symbol|symbol:|location:" compile.log || cat compile.log
-          echo "===== FIM ====="
-
-      - uses: actions/upload-artifact@v4
+      - name: Publish build log
         if: always()
+        uses: actions/upload-artifact@v4
         with:
-          name: compile-log
-          path: compile.log
+          name: build-log
+          path: build.log
+
+      - name: Publish JAR
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verden-mod
+          path: build/libs/*.jar

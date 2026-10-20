@@ -2,7 +2,7 @@ package com.verden.world.gen;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verden.world.build.SiteBuilder;
+import com.verden.world.obras.SiteBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryWrapper;

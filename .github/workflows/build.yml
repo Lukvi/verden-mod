@@ -14,7 +14,12 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.10.2
-      - run: gradle build --stacktrace
+      - run: gradle build --stacktrace 2>&1 | tee build-log.txt
+      - name: Show compilation errors
+        if: failure()
+        run: |
+          echo "===== ERROS DE COMPILAÇÃO ====="
+          grep -n -B 5 -A 10 -E "error:|cannot find symbol|What went wrong" build-log.txt || true
       - uses: actions/upload-artifact@v4
         if: success()
         with:

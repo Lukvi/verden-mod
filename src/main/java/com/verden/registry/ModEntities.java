@@ -62,6 +62,9 @@ public final class ModEntities {
     public static final EntityType<VerdenNpcEntity> NPC = reg("npc",
             EntityType.Builder.create(VerdenNpcEntity::new, SpawnGroup.MISC).dimensions(0.6f, 1.8f).maxTrackingRange(10));
 
+    public static final EntityType<com.verden.entity.VerdenWalkerEntity> WALKER = reg("viajante",
+            EntityType.Builder.create(com.verden.entity.VerdenWalkerEntity::new, SpawnGroup.MISC).dimensions(0.6f, 1.8f).maxTrackingRange(10));
+
     private static <T extends Entity> EntityType<T> reg(String name, EntityType.Builder<T> builder) {
         return Registry.register(Registries.ENTITY_TYPE, VerdenMod.id(name), builder.build(name));
     }
@@ -79,6 +82,7 @@ public final class ModEntities {
         FabricDefaultAttributeRegistry.register(HAIGOL, HaigolEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CONDOLYUS, CondolyusEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(NPC, VerdenNpcEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(WALKER, com.verden.entity.VerdenWalkerEntity.createAttributes());
 
         SpawnRestriction.register(LICANTROPO_ADAPTADO, SpawnLocationTypes.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HostileEntity::canSpawnInDark);

@@ -60,6 +60,10 @@ public final class Parts {
      * front = lado da porta; floors = 1 ou 2 andares.
      */
     public static void house(Blueprint b, Pal p, Random r, int x, int z, int w, int d, int g, int floors, Direction front) {
+        houseImpl(b, p, r, x, z, w, d, g, floors, front, true);
+    }
+
+    private static void houseImpl(Blueprint b, Pal p, Random r, int x, int z, int w, int d, int g, int floors, Direction front, boolean furnish) {
         int h = 4;
         int top = g + floors * h;
         int x2 = x + w - 1, z2 = z + d - 1;
@@ -132,6 +136,9 @@ public final class Parts {
         // interior: lanterna, cama, baú
         b.set(x + w / 2, g + h - 1, z + d / 2, Bk.lantern(true));
         b.set(x + w / 2, g + h, z + d / 2, Bk.d(p.floor));
+        if (!furnish) {
+            return;
+        }
         int bx = x + 2, bz = z2 - 1;
         if (bx + 1 <= x2 - 1 && front != Direction.SOUTH) {
             b.set(bx, g + 1, bz, Bk.bedPart(Blocks.RED_BED, Direction.EAST, false));
@@ -142,6 +149,117 @@ public final class Parts {
         } else {
             b.set(x2 - 1, g + 1, z + 1, Bk.d(Blocks.CRAFTING_TABLE));
         }
+    }
+
+    // ------------------------------------------------------------------ lojas
+    public enum Shop { TAVERNA, FERREIRO, ALQUIMISTA, ARMEIRO, MERCEARIA }
+
+    /** Converte (u ao longo da parede do fundo, v profundidade para dentro) em x/z conforme a fachada. */
+    private static int[] rot(Direction front, int x, int z, int w, int d, int u, int v) {
+        int x2 = x + w - 1, z2 = z + d - 1;
+        return switch (front) {
+            case NORTH -> new int[]{x + u, z2 - v};
+            case SOUTH -> new int[]{x + u, z + v};
+            case WEST -> new int[]{x2 - v, z + u};
+            default -> new int[]{x + v, z + u};
+        };
+    }
+
+    private static void put(Blueprint b, Direction front, int x, int z, int w, int d, int g, int u, int v, int h, net.minecraft.block.BlockState s) {
+        int[] q = rot(front, x, z, w, d, u, v);
+        b.set(q[0], g + h, q[1], s);
+    }
+
+    /** Loja ou taverna: casa com fachada de comércio e mobília própria. Retorna o ponto {x, z} do balconista. */
+    public static int[] shop(Blueprint b, Pal p, Random r, int x, int z, int w, int d, int g, Direction front, Shop type) {
+        houseImpl(b, p, r, x, z, w, d, g, 1, front, false);
+        boolean ns = front == Direction.NORTH || front == Direction.SOUTH;
+        int wid = ns ? w : d, dep = ns ? d : w;
+        // letreiro: faixa colorida em cima da porta
+        int dx, dz;
+        switch (front) {
+            case NORTH -> { dx = x + w / 2; dz = z; }
+            case SOUTH -> { dx = x + w / 2; dz = z + d - 1; }
+            case WEST -> { dx = x; dz = z + d / 2; }
+            default -> { dx = x + w - 1; dz = z + d / 2; }
+        }
+        Block sign = switch (type) {
+            case TAVERNA -> Blocks.ORANGE_WALL_BANNER;
+            case FERREIRO -> Blocks.GRAY_WALL_BANNER;
+            case ALQUIMISTA -> Blocks.GREEN_WALL_BANNER;
+            case ARMEIRO -> Blocks.RED_WALL_BANNER;
+            default -> Blocks.YELLOW_WALL_BANNER;
+        };
+        b.set(dx + front.getOffsetX(), g + 3, dz + front.getOffsetZ(), Bk.wallBanner(sign, front));
+        int cu = wid / 2;
+        switch (type) {
+            case TAVERNA -> {
+                for (int u = 2; u <= wid - 3; u++) {
+                    put(b, front, x, z, w, d, g, u, 2, 1, Bk.d(Blocks.SPRUCE_PLANKS));
+                    put(b, front, x, z, w, d, g, u, 2, 2, Bk.slab(Blocks.SPRUCE_SLAB, false));
+                    put(b, front, x, z, w, d, g, u, 1, 1, Bk.d(u % 2 == 0 ? Blocks.BARREL : Blocks.SPRUCE_PLANKS));
+                }
+                put(b, front, x, z, w, d, g, 1, 1, 1, Bk.d(Blocks.CAULDRON));
+                put(b, front, x, z, w, d, g, wid - 2, 1, 1, Bk.d(Blocks.BARREL));
+                for (int t = 0; t < 3; t++) {
+                    int u = 2 + t * Math.max(3, (wid - 4) / 2);
+                    int v = dep - 3;
+                    if (u < wid - 1 && v > 3) {
+                        put(b, front, x, z, w, d, g, u, v, 1, Bk.d(Blocks.SPRUCE_FENCE));
+                        put(b, front, x, z, w, d, g, u, v, 2, Bk.d(Blocks.SPRUCE_PRESSURE_PLATE));
+                        put(b, front, x, z, w, d, g, u - 1, v, 1, Bk.stairs(Blocks.SPRUCE_STAIRS, Direction.EAST, false));
+                        put(b, front, x, z, w, d, g, u + 1, v, 1, Bk.stairs(Blocks.SPRUCE_STAIRS, Direction.WEST, false));
+                    }
+                }
+                b.chest(rot(front, x, z, w, d, 1, 2)[0], g + 1, rot(front, x, z, w, d, 1, 2)[1], front.getOpposite(), "porto");
+            }
+            case FERREIRO -> {
+                put(b, front, x, z, w, d, g, 2, 1, 1, Bk.d(Blocks.BLAST_FURNACE));
+                put(b, front, x, z, w, d, g, 3, 1, 1, Bk.d(Blocks.FURNACE));
+                put(b, front, x, z, w, d, g, wid - 3, 1, 1, Bk.d(Blocks.SMITHING_TABLE));
+                put(b, front, x, z, w, d, g, wid - 4, 1, 1, Bk.d(Blocks.GRINDSTONE));
+                put(b, front, x, z, w, d, g, cu, 3, 1, Bk.d(Blocks.ANVIL));
+                put(b, front, x, z, w, d, g, 1, 3, 1, Bk.d(Blocks.CAULDRON));
+                int[] q = rot(front, x, z, w, d, wid - 2, 2);
+                b.chest(q[0], g + 1, q[1], front.getOpposite(), "casa");
+            }
+            case ALQUIMISTA -> {
+                for (int u = 2; u <= wid - 3; u += 2) {
+                    put(b, front, x, z, w, d, g, u, 1, 1, Bk.d(Blocks.BOOKSHELF));
+                    put(b, front, x, z, w, d, g, u, 1, 2, Bk.d(Blocks.BOOKSHELF));
+                }
+                put(b, front, x, z, w, d, g, cu, 3, 1, Bk.d(Blocks.OAK_PLANKS));
+                put(b, front, x, z, w, d, g, cu, 3, 2, Bk.d(Blocks.BREWING_STAND));
+                put(b, front, x, z, w, d, g, cu + 1, 3, 1, Bk.d(Blocks.CAULDRON));
+                put(b, front, x, z, w, d, g, 1, 3, 1, Bk.d(Blocks.FLOWER_POT));
+                int[] q = rot(front, x, z, w, d, wid - 2, 3);
+                b.chest(q[0], g + 1, q[1], front.getOpposite(), "casa");
+            }
+            case ARMEIRO -> {
+                put(b, front, x, z, w, d, g, 2, 1, 1, Bk.d(Blocks.GRINDSTONE));
+                put(b, front, x, z, w, d, g, 3, 1, 1, Bk.d(Blocks.SMITHING_TABLE));
+                for (int u = 4; u <= wid - 3; u++) {
+                    put(b, front, x, z, w, d, g, u, 1, 1, Bk.d(Blocks.OAK_PLANKS));
+                    put(b, front, x, z, w, d, g, u, 1, 2, Bk.d(Blocks.TARGET));
+                }
+                put(b, front, x, z, w, d, g, cu, 3, 1, Bk.d(Blocks.DARK_OAK_PLANKS));
+                put(b, front, x, z, w, d, g, cu, 3, 2, Bk.d(Blocks.LANTERN));
+                int[] q = rot(front, x, z, w, d, 1, 3);
+                b.chest(q[0], g + 1, q[1], front.getOpposite(), "castelo");
+            }
+            default -> {
+                for (int u = 2; u <= wid - 3; u++) {
+                    put(b, front, x, z, w, d, g, u, 1, 1, Bk.d(u % 2 == 0 ? Blocks.BARREL : Blocks.HAY_BLOCK));
+                }
+                put(b, front, x, z, w, d, g, 1, 3, 1, Bk.d(Blocks.COMPOSTER));
+                put(b, front, x, z, w, d, g, cu, 3, 1, Bk.d(Blocks.OAK_PLANKS));
+                put(b, front, x, z, w, d, g, cu, 3, 2, Bk.d(Blocks.MELON));
+                int[] q = rot(front, x, z, w, d, wid - 2, 2);
+                b.chest(q[0], g + 1, q[1], front.getOpposite(), "casa");
+            }
+        }
+        // o balconista fica atrás do balcão
+        return rot(front, x, z, w, d, cu, type == Shop.TAVERNA ? 1 : 2);
     }
 
     // ------------------------------------------------------------------ torres e cúpulas

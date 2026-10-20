@@ -24,7 +24,11 @@ public enum NpcRole {
     YANN("yann", 4),
     THALEN("thalen", 4),
     TAVERNEIRO("taverneiro", 4),
-    RAONI("raoni", 4);
+    RAONI("raoni", 4),
+    FERREIRO("ferreiro", 4),
+    ALQUIMISTA("alquimista", 4),
+    ARMEIRO("armeiro", 4),
+    MERCEIRO("merceiro", 4);
 
     public final String id;
     public final int lines;
@@ -114,6 +118,36 @@ public enum NpcRole {
                 deal(l, c, 2, Items.COOKED_BEEF, 2);
                 deal(l, c, 3, ModItems.RACAO_VIAGEM, 2);
                 deal(l, c, 4, Items.GOLDEN_CARROT, 2);
+            }
+            case FERREIRO -> {
+                deal(l, c, 8, Items.IRON_SWORD, 1);
+                deal(l, c, 6, Items.IRON_PICKAXE, 1);
+                deal(l, c, 12, Items.IRON_CHESTPLATE, 1);
+                deal(l, c, 5, Items.SHIELD, 1);
+                deal(l, Items.IRON_INGOT, 8, c, 4);
+                deal(l, m, 6, Items.DIAMOND_SWORD, 1);
+            }
+            case ALQUIMISTA -> {
+                deal(l, c, 3, ModItems.POCAO_RECUPERACAO, 1);
+                deal(l, c, 4, ModItems.POCAO_VISAO_NOTURNA, 1);
+                deal(l, c, 5, ModItems.ELIXIR_CALOR, 1);
+                deal(l, c, 6, Items.EXPERIENCE_BOTTLE, 3);
+                deal(l, m, 2, Items.ENDER_PEARL, 1);
+            }
+            case ARMEIRO -> {
+                deal(l, c, 6, Items.BOW, 1);
+                deal(l, c, 2, Items.ARROW, 16);
+                deal(l, c, 10, Items.CROSSBOW, 1);
+                deal(l, m, 3, ModItems.ESPADA_LEGIAO, 1);
+                deal(l, c, 7, Items.CHAINMAIL_CHESTPLATE, 1);
+            }
+            case MERCEIRO -> {
+                deal(l, c, 1, Items.BREAD, 4);
+                deal(l, c, 2, Items.COOKED_PORKCHOP, 3);
+                deal(l, c, 2, Items.TORCH, 16);
+                deal(l, c, 3, Items.LANTERN, 1);
+                deal(l, c, 4, Items.SADDLE, 1);
+                deal(l, m, 1, ModItems.MOCHILA_COURO, 1);
             }
             default -> {
             }

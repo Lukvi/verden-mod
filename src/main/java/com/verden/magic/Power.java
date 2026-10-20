@@ -11,7 +11,20 @@ public enum Power {
     NEVOA("nevoa", 60),
     CRONO("crono", 80),
     NEGRA("negra", 200),
-    METAMORFOSE("metamorfose", 600);
+    METAMORFOSE("metamorfose", 600),
+    // Grimório de Ednar Peer
+    HIDRO("hidro", 40),
+    GEO("geo", 60),
+    CURA("cura", 120),
+    LUZ("luz", 80),
+    TELEPORTE("teleporte", 50),
+    DEFESA("defesa", 200),
+    INVISIBILIDADE("invisibilidade", 300),
+    AREIA("areia", 70),
+    AURA("aura", 90),
+    PRAGAS("pragas", 100),
+    THUUM("thuum", 150),
+    HIPNOSE("hipnose", 100);
 
     public final String key;
     public final int cooldown;

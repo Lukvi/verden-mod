@@ -1,5 +1,6 @@
 package com.verden.world.obras;
 
+import com.verden.entity.NpcRole;
 import com.verden.world.gen.Sites.Site;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.Direction;
@@ -22,6 +23,50 @@ public final class Lay {
         for (int dz = -r; dz <= r; dz++) {
             int hw = (int) Math.floor(Math.sqrt((double) r * r - (double) dz * dz));
             b.clear(cx - hw, g + 1, cz + dz, cx + hw, g + h, cz + dz);
+        }
+    }
+
+    private static Parts.Shop shopAt(int n, int radius, boolean capital) {
+        if (capital) {
+            return switch (n % 6) {
+                case 1 -> Parts.Shop.TAVERNA;
+                case 2 -> Parts.Shop.FERREIRO;
+                case 3 -> Parts.Shop.ALQUIMISTA;
+                case 4 -> Parts.Shop.ARMEIRO;
+                case 5 -> Parts.Shop.MERCEARIA;
+                default -> null;
+            };
+        }
+        return switch (n) {
+            case 1 -> Parts.Shop.MERCEARIA;
+            case 3 -> Parts.Shop.TAVERNA;
+            case 5 -> radius >= 40 ? Parts.Shop.FERREIRO : null;
+            case 7 -> radius >= 40 ? Parts.Shop.ALQUIMISTA : null;
+            case 9 -> radius >= 44 ? Parts.Shop.ARMEIRO : null;
+            default -> null;
+        };
+    }
+
+    private static NpcRole roleOf(Parts.Shop t) {
+        return switch (t) {
+            case TAVERNA -> NpcRole.TAVERNEIRO;
+            case FERREIRO -> NpcRole.FERREIRO;
+            case ALQUIMISTA -> NpcRole.ALQUIMISTA;
+            case ARMEIRO -> NpcRole.ARMEIRO;
+            default -> NpcRole.MERCEIRO;
+        };
+    }
+
+    /** Constrói uma casa comum ou, conforme o contador, uma loja com o comerciante dentro. */
+    private static void build(Blueprint b, Pal p, Random r, Homes homes, int n, int radius, boolean capital,
+                              int x, int z, int w, int d, int g, int floors, Direction front) {
+        Parts.Shop t = shopAt(n, radius, capital);
+        if (t == null) {
+            Parts.house(b, p, r, x, z, w, d, g, floors, front);
+            homes.list.add(new int[]{x, z, g, w, d});
+        } else {
+            int[] c = Parts.shop(b, p, r, x, z, w, d, g, front, t);
+            b.spawn(c[0], g + 1, c[1], Blueprint.Mob.NPC, roleOf(t).ordinal());
         }
     }
 
@@ -53,13 +98,19 @@ public final class Lay {
             }
         }
         List<int[]> rects = new ArrayList<>();
+        int[] count = {0};
         // casas ao longo das ruas
         for (int axis = 0; axis < 2; axis++) {
             for (int side = -1; side <= 1; side += 2) {
                 for (int dir = -1; dir <= 1; dir += 2) {
                     int off = 10;
                     while (true) {
+                        Parts.Shop shop = shopAt(count[0], R, false);
                         int w = 6 + r.nextInt(3), d = 6 + r.nextInt(3);
+                        if (shop == Parts.Shop.TAVERNA) {
+                            w = 10;
+                            d = 8;
+                        }
                         int far = off + (axis == 0 ? w : w) + 2;
                         if (far > R - 6) {
                             break;
@@ -81,8 +132,8 @@ public final class Lay {
                         double fz = Math.max(Math.abs(z - cz), Math.abs(z + dd - 1 - cz));
                         if (Math.hypot(fx, fz) <= R - 4 && free(rects, x, z, x + ww - 1, z + dd - 1)) {
                             rects.add(new int[]{x, z, x + ww - 1, z + dd - 1});
-                            Parts.house(b, p, r, x, z, ww, dd, g, r.nextInt(4) == 0 ? 2 : 1, front);
-                            homes.list.add(new int[]{x, z, g, ww, dd});
+                            build(b, p, r, homes, count[0], R, false, x, z, ww, dd, g, r.nextInt(4) == 0 ? 2 : 1, front);
+                            count[0]++;
                         }
                         off += (axis == 0 ? w : w) + 2 + r.nextInt(2);
                     }
@@ -116,6 +167,7 @@ public final class Lay {
         b.ring(cx, g, g, cz, inner - 4, Bk.d(p.path2));
         b.ring(cx, g, g, cz, inner - 3, Bk.d(p.path2));
         // quarteirões
+        int[] shopN = {0};
         for (int sx = -1; sx <= 1; sx += 2) {
             for (int sz = -1; sz <= 1; sz += 2) {
                 for (int i = 0; i < 7; i++) {
@@ -130,6 +182,10 @@ public final class Lay {
                         int x1 = sx > 0 ? cx + ox : cx - ox - 15;
                         int z1 = sz > 0 ? cz + oz : cz - oz - 15;
                         int w = 8 + r.nextInt(3), d = 7 + r.nextInt(3);
+                        if (shopAt(shopN[0], wallR, true) == Parts.Shop.TAVERNA) {
+                            w = 11;
+                            d = 9;
+                        }
                         int hx = x1 + 3, hz = z1 + 3;
                         Direction front;
                         if (ox < oz) {
@@ -138,8 +194,7 @@ public final class Lay {
                             front = sz > 0 ? Direction.NORTH : Direction.SOUTH;
                         }
                         Pal pp = (i + j) % 5 == 0 ? noble : p;
-                        Parts.house(b, pp, r, hx, hz, w, d, g, (i + j) % 3 == 0 ? 2 : 1, front);
-                        homes.list.add(new int[]{hx, hz, g, w, d});
+                        build(b, pp, r, homes, shopN[0]++, wallR, true, hx, hz, w, d, g, (i + j) % 3 == 0 ? 2 : 1, front);
                         if (i == 0 || j == 0) {
                             Parts.lamp(b, x1 + 1, g, z1 + 1, p);
                         }

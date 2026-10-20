@@ -2,6 +2,7 @@ package com.verden.world.gen;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verden.world.obras.RoadBuilder;
 import com.verden.world.obras.SiteBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -274,6 +275,7 @@ public class VerdenChunkGenerator extends ChunkGenerator {
     @Override
     public void generateFeatures(StructureWorldAccess world, Chunk chunk, StructureAccessor structureAccessor) {
         super.generateFeatures(world, chunk, structureAccessor);
+        RoadBuilder.placeInChunk(world, chunk, this);
         SiteBuilder.placeInChunk(world, chunk, this);
     }
 }

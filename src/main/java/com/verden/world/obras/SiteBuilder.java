@@ -51,7 +51,6 @@ public final class SiteBuilder {
                 Pal p = Pal.norte(), nb = Pal.nobreNorte();
                 Lay.Homes h = Lay.capital(b, s, p, nb, r, s.radius() - 8, 9, 38);
                 Landmarks.partenon(b, cx, cz, g, nb);
-                inHome(b, h, 2, NpcRole.TAVERNEIRO);
                 for (int k = -2; k <= 2; k++) {
                     b.spawn(cx + k * 12, g + 1, cz + 44, Blueprint.Mob.SOLDADO, 0);
                 }

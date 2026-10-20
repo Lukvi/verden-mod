@@ -43,3 +43,10 @@ Ao criar um mundo, escolha **Tipo de mundo → Verden**. O terreno é gerado a p
 Lugares construídos: Veroogh (Partenon, Rei Konge), Nagdaar (fortaleza negra), Jørd (salão das guildas), Flerin (palácio de cúpulas), Maariz (porto pirata), Mosteiro de Montainezz, Torre de Merlim, Templo de Casthiel, cidades de torres (Vesten Hayvmand, Ost Sirener), vilas de neve/planície/floresta/porto/deserto, ruínas, acampamentos em Karamarraw e covis de licantropos. Os NPCs ficam em suas cidades.
 
 Código: `world/gen` (terreno, mapa, gerador) e `world/build` (construções). O mapa vem de `tools/map_gen.py`.
+
+## v0.7.0 — Mundo vivo
+
+- **Estradas** ligam as cidades da mesma massa de terra (rotas por A* em `tools/roads_gen.py`), com pontes sobre rios e **marcos com placas** (destino e distância) a cada 500 blocos. Ilhas só se alcançam por mar.
+- **Viajantes de Verden** (`verden:viajante`): camponeses, guardas, magos, caçadores, mercenários, mercadores, sacerdotes e piratas. Passeiam pelas cidades, formam **caravanas** nas estradas e combatem licantropos e outros monstros do livro (magos lançam chamas, gelo e vento; caçadores atiram; sacerdotes curam).
+- **Lojas e tavernas** nas cidades: Taverneiro, Ferreiro, Alquimista, Armeiro e Merceiro (novos NPCs com comércio).
+- **12 novas magias do Grimório** no Grimório do jogador: Hidrocinese, Geocinese, Dom da Cura, Magia da Luz, Teletransporte, Barreira Arcana, Invisibilidade, Controlador da Areia, Aura Explosiva, Senhor das Pragas, Thu'um e Hipnose.

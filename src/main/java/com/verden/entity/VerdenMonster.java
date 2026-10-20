@@ -27,6 +27,9 @@ public abstract class VerdenMonster extends HostileEntity {
         this.goalSelector.add(7, new LookAroundGoal(this));
         this.targetSelector.add(1, new RevengeGoal(this));
         addTargets();
+        if (!(this instanceof LegionUnit)) {
+            this.targetSelector.add(4, new ActiveTargetGoal<>(this, VerdenWalkerEntity.class, true));
+        }
     }
 
     /** Alvos padrão: jogadores. A Legião e os licantropos sobrescrevem. */

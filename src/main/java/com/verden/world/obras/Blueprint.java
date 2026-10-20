@@ -32,7 +32,7 @@ import java.util.List;
  * Cada chunk aplica só a parte que cai dentro dele, então a mesma planta serve a todos os chunks do lugar.
  */
 public final class Blueprint {
-    public enum Mob { NPC, SOLDADO, LICANTROPO, ADAPTADO, KUNORI, ZYTRA, HAIGOL }
+    public enum Mob { NPC, SOLDADO, LICANTROPO, ADAPTADO, KUNORI, ZYTRA, HAIGOL, WALKER }
 
     private abstract static class Op {
         final int x0, x1, z0, z1;
@@ -136,6 +136,13 @@ public final class Blueprint {
                 case KUNORI -> ModEntities.KUNORI.create(sw);
                 case ZYTRA -> ModEntities.ZYTRA.create(sw);
                 case HAIGOL -> ModEntities.HAIGOL.create(sw);
+                case WALKER -> {
+                    com.verden.entity.VerdenWalkerEntity wk = ModEntities.WALKER.create(sw);
+                    if (wk != null) {
+                        wk.setKind(com.verden.entity.VerdenWalkerEntity.Kind.byIndex(variant));
+                    }
+                    yield wk;
+                }
             };
             if (e == null) {
                 return;

@@ -44,6 +44,7 @@ public class VerdenClient implements ClientModInitializer {
     public void onInitializeClient() {
         VerdenHud.register();
         EntityRendererRegistry.register(ModEntities.NPC, VerdenNpcRenderer::new);
+        EntityRendererRegistry.register(ModEntities.WALKER, VerdenWalkerRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(VerdenModelLayers.LICANTROPO, LicantropoParts::create);
         EntityModelLayerRegistry.registerModelLayer(VerdenModelLayers.AMALGAMA, AmalgamaParts::create);
         EntityModelLayerRegistry.registerModelLayer(VerdenModelLayers.RINOY, RinoyParts::create);

@@ -79,7 +79,7 @@ public class LegionCampFeature extends Feature<DefaultFeatureConfig> {
         // Baú de suprimentos dentro da tenda
         BlockPos chest = t.add(1, 0, 2);
         world.setBlockState(chest, Blocks.CHEST.getDefaultState(), Block.NOTIFY_LISTENERS);
-        if (world.getBlockEntity(chest) instanceof LootableContainerBlockEntity lootChest) { lootChest.setLootTable(LOOT); }
+        LootableContainerBlockEntity.setLootTable(world, random, chest, LOOT);
         world.setBlockState(t.add(1, 0, 0), Blocks.RED_CARPET.getDefaultState(), Block.NOTIFY_LISTENERS);
         world.setBlockState(t.add(1, 0, 1), Blocks.RED_CARPET.getDefaultState(), Block.NOTIFY_LISTENERS);
 

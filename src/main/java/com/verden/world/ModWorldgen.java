@@ -19,6 +19,8 @@ public final class ModWorldgen {
             VerdenMod.id("acampamento_legiao"), new LegionCampFeature(DefaultFeatureConfig.CODEC));
 
     public static void register() {
+        Registry.register(Registries.CHUNK_GENERATOR, VerdenMod.id("verden"), com.verden.world.gen.VerdenChunkGenerator.CODEC);
+        Registry.register(Registries.BIOME_SOURCE, VerdenMod.id("verden"), com.verden.world.gen.VerdenBiomeSource.CODEC);
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
                 GenerationStep.Feature.SURFACE_STRUCTURES,
                 RegistryKey.of(RegistryKeys.PLACED_FEATURE, VerdenMod.id("acampamento_legiao")));

@@ -6,6 +6,7 @@ import net.minecraft.entity.ai.goal.LookAtCustomerGoal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.TradeWithPlayerGoal;
 import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -69,6 +70,7 @@ public class VerdenNpcEntity extends MerchantEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
+        this.goalSelector.add(1, new TradeWithPlayerGoal(this));
         this.goalSelector.add(1, new LookAtCustomerGoal(this));
         this.goalSelector.add(4, new WanderAroundFarGoal(this, 0.5));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 8f));

@@ -35,3 +35,11 @@ Texturas/lang/receitas são geradas por `python3 tools/generate_assets.py` (requ
 - **Sons**: rugidos, trompa da Legião, magia, moedas, fala de NPC e tema do chefe (gerados por `tools/sound_gen.py`).
 - **Conquistas** (aba Verden). Diálogos estão só em português.
 Para regenerar tudo: `python3 tools/generate_assets.py` e `python3 tools/sound_gen.py`.
+
+## v0.6.0 — O mundo "Verden"
+
+Ao criar um mundo, escolha **Tipo de mundo → Verden**. O terreno é gerado a partir do mapa do livro (1 pixel = 8 blocos, ~8000 x 6000 blocos), com os reinos, biomas, rios, lagos, montanhas e desertos nos lugares certos. O spawn fica em Floresta Grøn.
+
+Lugares construídos: Veroogh (Partenon, Rei Konge), Nagdaar (fortaleza negra), Jørd (salão das guildas), Flerin (palácio de cúpulas), Maariz (porto pirata), Mosteiro de Montainezz, Torre de Merlim, Templo de Casthiel, cidades de torres (Vesten Hayvmand, Ost Sirener), vilas de neve/planície/floresta/porto/deserto, ruínas, acampamentos em Karamarraw e covis de licantropos. Os NPCs ficam em suas cidades.
+
+Código: `world/gen` (terreno, mapa, gerador) e `world/build` (construções). O mapa vem de `tools/map_gen.py`.

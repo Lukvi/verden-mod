@@ -1,0 +1,333 @@
+{
+ "scale": 8,
+ "origin": [
+  235,
+  478
+ ],
+ "sites": [
+  {
+   "id": "veroogh",
+   "name": "Veroogh",
+   "kind": "capital_norte",
+   "x": 1440,
+   "z": -2240,
+   "radius": 104,
+   "level": 70
+  },
+  {
+   "id": "nagdaar",
+   "name": "Nagdaar",
+   "kind": "capital_oeste",
+   "x": 264,
+   "z": -1424,
+   "radius": 100,
+   "level": 67
+  },
+  {
+   "id": "jord",
+   "name": "Jørd",
+   "kind": "capital_sul",
+   "x": 1640,
+   "z": 0,
+   "radius": 100,
+   "level": 67
+  },
+  {
+   "id": "flerin",
+   "name": "Flerin",
+   "kind": "capital_leste",
+   "x": 3840,
+   "z": -584,
+   "radius": 110,
+   "level": 69
+  },
+  {
+   "id": "maariz",
+   "name": "Maariz",
+   "kind": "porto_pirata",
+   "x": 5736,
+   "z": -1280,
+   "radius": 80,
+   "level": 67
+  },
+  {
+   "id": "geerd",
+   "name": "Geerd",
+   "kind": "vila_neve",
+   "x": 1040,
+   "z": -2336,
+   "radius": 56,
+   "level": 70
+  },
+  {
+   "id": "oerr",
+   "name": "Oerr",
+   "kind": "vila_neve",
+   "x": 4176,
+   "z": -2528,
+   "radius": 44,
+   "level": 70
+  },
+  {
+   "id": "cambehy",
+   "name": "Cambehy",
+   "kind": "vila_neve",
+   "x": 3280,
+   "z": -3456,
+   "radius": 40,
+   "level": 70
+  },
+  {
+   "id": "montainezz",
+   "name": "Montainezz",
+   "kind": "mosteiro",
+   "x": 520,
+   "z": -2688,
+   "radius": 64,
+   "level": 99
+  },
+  {
+   "id": "torre_merlim",
+   "name": "Torre de Merlim",
+   "kind": "torre",
+   "x": 1880,
+   "z": -3008,
+   "radius": 26,
+   "level": 125
+  },
+  {
+   "id": "huguottir",
+   "name": "Huguottir",
+   "kind": "vila_planicie",
+   "x": 216,
+   "z": -1904,
+   "radius": 48,
+   "level": 68
+  },
+  {
+   "id": "suttbarth",
+   "name": "Suttbarth",
+   "kind": "vila_floresta",
+   "x": 2744,
+   "z": -1936,
+   "radius": 44,
+   "level": 71
+  },
+  {
+   "id": "juttor",
+   "name": "Juttor",
+   "kind": "vila_floresta",
+   "x": 3592,
+   "z": -1728,
+   "radius": 40,
+   "level": 71
+  },
+  {
+   "id": "dejury",
+   "name": "Dejury",
+   "kind": "vila_planicie",
+   "x": 520,
+   "z": -728,
+   "radius": 48,
+   "level": 67
+  },
+  {
+   "id": "orse",
+   "name": "Orse",
+   "kind": "vila_porto",
+   "x": 264,
+   "z": 384,
+   "radius": 44,
+   "level": 67
+  },
+  {
+   "id": "rodi",
+   "name": "Rodi",
+   "kind": "vila_planicie",
+   "x": 2760,
+   "z": -304,
+   "radius": 44,
+   "level": 70
+  },
+  {
+   "id": "hjam",
+   "name": "Hjam",
+   "kind": "vila_deserto",
+   "x": 2856,
+   "z": 320,
+   "radius": 44,
+   "level": 72
+  },
+  {
+   "id": "verfaes",
+   "name": "Verfaes",
+   "kind": "vila_planicie",
+   "x": 2968,
+   "z": -976,
+   "radius": 44,
+   "level": 67
+  },
+  {
+   "id": "vilaes_praianas",
+   "name": "Vilaes Praianas",
+   "kind": "vila_deserto",
+   "x": 3896,
+   "z": -1024,
+   "radius": 44,
+   "level": 73
+  },
+  {
+   "id": "lolity",
+   "name": "Lolity",
+   "kind": "vila_neve",
+   "x": -1336,
+   "z": -3200,
+   "radius": 38,
+   "level": 72
+  },
+  {
+   "id": "xasof",
+   "name": "Xasof",
+   "kind": "vila_planicie",
+   "x": -1336,
+   "z": -1664,
+   "radius": 36,
+   "level": 69
+  },
+  {
+   "id": "barvyl",
+   "name": "Barvyl",
+   "kind": "vila_porto",
+   "x": -1480,
+   "z": -744,
+   "radius": 34,
+   "level": 67
+  },
+  {
+   "id": "casthiel",
+   "name": "Templo Casthiel",
+   "kind": "templo_sol",
+   "x": -1144,
+   "z": -528,
+   "radius": 30,
+   "level": 68
+  },
+  {
+   "id": "vesten",
+   "name": "Vesten Hayvmand",
+   "kind": "cidade_torres",
+   "x": -904,
+   "z": -2448,
+   "radius": 34,
+   "level": 72
+  },
+  {
+   "id": "ost_sirener",
+   "name": "Ost Sirener",
+   "kind": "cidade_torres",
+   "x": 5144,
+   "z": -3216,
+   "radius": 30,
+   "level": 68
+  },
+  {
+   "id": "cornoy",
+   "name": "Cornoy",
+   "kind": "vila_porto",
+   "x": 4880,
+   "z": -2184,
+   "radius": 34,
+   "level": 67
+  },
+  {
+   "id": "landy_srew",
+   "name": "Landy Srew",
+   "kind": "vila_porto",
+   "x": 5944,
+   "z": -2584,
+   "radius": 34,
+   "level": 69
+  },
+  {
+   "id": "runes",
+   "name": "Runes",
+   "kind": "ruinas",
+   "x": 5920,
+   "z": -224,
+   "radius": 30,
+   "level": 68
+  },
+  {
+   "id": "bellus",
+   "name": "Bellus",
+   "kind": "vila_porto",
+   "x": 5784,
+   "z": 600,
+   "radius": 30,
+   "level": 67
+  },
+  {
+   "id": "motry_life",
+   "name": "Motry Life",
+   "kind": "vila_porto",
+   "x": -1280,
+   "z": 1480,
+   "radius": 30,
+   "level": 69
+  },
+  {
+   "id": "fim_do_mundo",
+   "name": "Fim do Mundo",
+   "kind": "ruinas",
+   "x": 5720,
+   "z": 1872,
+   "radius": 26,
+   "level": 68
+  },
+  {
+   "id": "caverna_gelada",
+   "name": "Caverna Gelada",
+   "kind": "caverna",
+   "x": 2720,
+   "z": -2688,
+   "radius": 16,
+   "level": 70
+  },
+  {
+   "id": "caverna_frajorn",
+   "name": "Caverna Frajorn",
+   "kind": "caverna",
+   "x": -1000,
+   "z": -3104,
+   "radius": 16,
+   "level": 70
+  },
+  {
+   "id": "caverna_orju",
+   "name": "Caverna Orju",
+   "kind": "caverna",
+   "x": 1200,
+   "z": -1024,
+   "radius": 16,
+   "level": 70
+  },
+  {
+   "id": "karamarraw_ruinas",
+   "name": "Ruínas de Karamarraw",
+   "kind": "ruinas",
+   "x": 2320,
+   "z": 2000,
+   "radius": 36,
+   "level": 76
+  },
+  {
+   "id": "karamarraw_acampamento",
+   "name": "Acampamento de Karamarraw",
+   "kind": "ruinas",
+   "x": 3640,
+   "z": 2056,
+   "radius": 28,
+   "level": 76
+  }
+ ]
+}

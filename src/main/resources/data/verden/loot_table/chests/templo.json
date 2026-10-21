@@ -76,6 +76,20 @@
               }
             }
           ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "verden:selo_limbo",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
         }
       ]
     }

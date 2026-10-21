@@ -34,10 +34,29 @@ public class VerdenBiomeSource extends BiomeSource {
         return entries.stream();
     }
 
+    /** Cache por thread: chave (x,z) -> região. O bioma não depende de y, mas o jogo pergunta por cada seção vertical. */
+    private static final class Memo {
+        final long[] keys = new long[512];
+        final byte[] vals = new byte[512];
+        final boolean[] used = new boolean[512];
+    }
+
+    private static final ThreadLocal<Memo> MEMO = ThreadLocal.withInitial(Memo::new);
+
     @Override
     public RegistryEntry<Biome> getBiome(int x, int y, int z, MultiNoiseUtil.MultiNoiseSampler noise) {
-        Region r = terrain.biomeAt(x * 4 + 2, z * 4 + 2);
-        int i = Math.min(r.ordinal(), entries.size() - 1);
-        return entries.get(i);
+        long key = ((long) x << 32) ^ (z & 0xffffffffL);
+        int slot = (int) ((key ^ (key >>> 21) ^ (key >>> 41)) & 511);
+        Memo m = MEMO.get();
+        int ord;
+        if (m.used[slot] && m.keys[slot] == key) {
+            ord = m.vals[slot];
+        } else {
+            ord = terrain.biomeAt(x * 4 + 2, z * 4 + 2).ordinal();
+            m.keys[slot] = key;
+            m.vals[slot] = (byte) ord;
+            m.used[slot] = true;
+        }
+        return entries.get(Math.min(ord, entries.size() - 1));
     }
 }

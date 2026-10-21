@@ -1,0 +1,34 @@
+{
+  "display": {
+    "icon": {
+      "id": "verden:coracao_vestigio"
+    },
+    "title": {
+      "translate": "advancement.verden.razor.title"
+    },
+    "description": {
+      "translate": "advancement.verden.razor.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "k": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "verden:razor_kitsuji"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "parent": "verden:licantropo"
+}

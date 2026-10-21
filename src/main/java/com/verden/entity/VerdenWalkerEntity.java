@@ -331,6 +331,9 @@ public class VerdenWalkerEntity extends PathAwareEntity {
             }
             double[] a = r.at(Math.max(0, Math.min(r.length, roadT + roadDir * 14)));
             int bx = (int) Math.round(a[0]), bz = (int) Math.round(a[1]);
+            if (!getWorld().isChunkLoaded(bx >> 4, bz >> 4)) {
+                return;      // não força a geração de chunks distantes no thread do servidor
+            }
             int by = getWorld().getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, bx, bz);
             getNavigation().startMovingTo(bx + 0.5, by, bz + 0.5, 0.6);
         }

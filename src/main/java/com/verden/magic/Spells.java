@@ -18,7 +18,7 @@ public final class Spells {
     private Spells() {}
 
     public static boolean hasTriquetra(PlayerEntity p) {
-        return p.getInventory().contains(s -> s.isOf(ModItems.TRIQUETRA));
+        return p.getInventory().contains(s -> s.isOf(ModItems.TRIQUETRA) || s.isOf(ModItems.GRIMORIO_MORKE));
     }
 
     public static void cast(Power power, ServerWorld w, PlayerEntity pl) {
@@ -139,7 +139,8 @@ public final class Spells {
         pl.damage(w.getDamageSources().magic(), 4f);
         LivingEntity t = SpellUtil.raycastLiving(w, pl, 24, ParticleTypes.SOUL_FIRE_FLAME);
         if (t != null) {
-            t.damage(w.getDamageSources().indirectMagic(pl, pl), 14f);
+            t.damage(w.getDamageSources().indirectMagic(pl, pl),
+                    pl.getEquippedStack(net.minecraft.entity.EquipmentSlot.HEAD).isOf(ModItems.CARTOLA_KITSUJI) ? 19f : 14f);
             t.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 120, 2));
             w.spawnParticles(ParticleTypes.SQUID_INK, t.getX(), t.getBodyY(0.5), t.getZ(), 30, 0.4, 0.4, 0.4, 0.05);
         }
@@ -203,7 +204,9 @@ public final class Spells {
         w.spawnParticles(ParticleTypes.END_ROD, pl.getX(), pl.getY() + 1, pl.getZ(), 80, 3, 1, 3, 0.05);
         pl.heal(4f);
         for (LivingEntity e : SpellUtil.around(w, pl, 9)) {
-            if (e instanceof net.minecraft.entity.mob.HostileEntity) {
+            if (e instanceof com.verden.entity.RazorKitsujiEntity razor) {
+                razor.lightHit(25f);
+            } else if (e instanceof net.minecraft.entity.mob.HostileEntity) {
                 e.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 100, 0));
                 e.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 200, 0));
             }

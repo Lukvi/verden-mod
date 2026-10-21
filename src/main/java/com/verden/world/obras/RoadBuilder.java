@@ -121,48 +121,64 @@ public final class RoadBuilder {
         return n.length() > 15 ? n.substring(0, 15) : n;
     }
 
-    private static void markers(StructureWorldAccess world, Chunk chunk, Terrain t, int x0, int z0) {
-        for (RoadNet.Road r : RoadNet.all()) {
-            for (double pos = 18; pos < r.length - 10; pos += MILE) {
-                double[] p = r.at(pos);
-                // posto do lado direito da estrada, a 3 blocos do eixo
-                int px = (int) Math.round(p[0] - p[3] * 3), pz = (int) Math.round(p[1] + p[2] * 3);
-                if (px < x0 || px >= x0 + 16 || pz < z0 || pz >= z0 + 16) {
-                    continue;
+    private record Marker(int px, int pz, int rot, String to, int toB, String from, int toA) {}
+
+    private static java.util.List<Marker> markerList;
+
+    private static synchronized java.util.List<Marker> markerList() {
+        if (markerList == null) {
+            java.util.List<Marker> out = new java.util.ArrayList<>();
+            for (RoadNet.Road r : RoadNet.all()) {
+                for (double pos = 18; pos < r.length - 10; pos += MILE) {
+                    double[] p = r.at(pos);
+                    // posto do lado direito da estrada, a 3 blocos do eixo
+                    int px = (int) Math.round(p[0] - p[3] * 3), pz = (int) Math.round(p[1] + p[2] * 3);
+                    // a placa fica de frente para quem anda na estrada: perpendicular ao eixo
+                    int rot = Math.abs(p[2]) > Math.abs(p[3]) ? (p[2] > 0 ? 8 : 0) : (p[3] > 0 ? 12 : 4);
+                    int toB = (int) Math.round((r.length - pos) / 10.0) * 10, toA = (int) Math.round(pos / 10.0) * 10;
+                    out.add(new Marker(px, pz, rot, nameOf(r.b), toB, nameOf(r.a), toA));
                 }
-                Terrain.Column c = t.column(px, pz);
-                if (c.water > c.solid) {
-                    continue;
-                }
-                int y = c.solid;
-                BlockPos.Mutable m = new BlockPos.Mutable(px, y, pz);
-                if (world.getBlockState(m).isAir()) {
-                    continue;
-                }
-                for (int dy = 1; dy <= 5; dy++) {
-                    m.set(px, y + dy, pz);
-                    world.setBlockState(m, Blocks.AIR.getDefaultState(), Block.NOTIFY_LISTENERS);
-                }
-                m.set(px, y + 1, pz);
-                world.setBlockState(m, Blocks.OAK_FENCE.getDefaultState(), Block.NOTIFY_LISTENERS);
-                m.set(px, y + 2, pz);
-                world.setBlockState(m, Blocks.OAK_FENCE.getDefaultState(), Block.NOTIFY_LISTENERS);
-                m.set(px, y + 3, pz);
-                // a placa fica de frente para quem anda na estrada: perpendicular ao eixo
-                int rot = Math.abs(p[2]) > Math.abs(p[3]) ? (p[2] > 0 ? 8 : 0) : (p[3] > 0 ? 12 : 4);
-                world.setBlockState(m, Blocks.OAK_SIGN.getDefaultState().with(SignBlock.ROTATION, rot), Block.NOTIFY_LISTENERS);
-                int toB = (int) Math.round((r.length - pos) / 10.0) * 10, toA = (int) Math.round(pos / 10.0) * 10;
-                if (world.getBlockEntity(m) instanceof SignBlockEntity sign) {
-                    SignText text = sign.getFrontText()
-                            .withMessage(0, Text.literal("-> " + nameOf(r.b)))
-                            .withMessage(1, Text.literal(toB + " m"))
-                            .withMessage(2, Text.literal("<- " + nameOf(r.a)))
-                            .withMessage(3, Text.literal(toA + " m"));
-                    sign.setText(text, true);
-                }
-                m.set(px, y + 4, pz);
-                world.setBlockState(m, Blocks.LANTERN.getDefaultState(), Block.NOTIFY_LISTENERS);
             }
+            markerList = out;
+        }
+        return markerList;
+    }
+
+    private static void markers(StructureWorldAccess world, Chunk chunk, Terrain t, int x0, int z0) {
+        for (Marker mk : markerList()) {
+            int px = mk.px(), pz = mk.pz();
+            if (px < x0 || px >= x0 + 16 || pz < z0 || pz >= z0 + 16) {
+                continue;
+            }
+            Terrain.Column c = t.column(px, pz);
+            if (c.water > c.solid) {
+                continue;
+            }
+            int y = c.solid;
+            BlockPos.Mutable m = new BlockPos.Mutable(px, y, pz);
+            if (world.getBlockState(m).isAir()) {
+                continue;
+            }
+            for (int dy = 1; dy <= 5; dy++) {
+                m.set(px, y + dy, pz);
+                world.setBlockState(m, Blocks.AIR.getDefaultState(), Block.NOTIFY_LISTENERS);
+            }
+            m.set(px, y + 1, pz);
+            world.setBlockState(m, Blocks.OAK_FENCE.getDefaultState(), Block.NOTIFY_LISTENERS);
+            m.set(px, y + 2, pz);
+            world.setBlockState(m, Blocks.OAK_FENCE.getDefaultState(), Block.NOTIFY_LISTENERS);
+            m.set(px, y + 3, pz);
+            world.setBlockState(m, Blocks.OAK_SIGN.getDefaultState().with(SignBlock.ROTATION, mk.rot()), Block.NOTIFY_LISTENERS);
+            if (world.getBlockEntity(m) instanceof SignBlockEntity sign) {
+                SignText text = sign.getFrontText()
+                        .withMessage(0, Text.literal("-> " + mk.to()))
+                        .withMessage(1, Text.literal(mk.toB() + " m"))
+                        .withMessage(2, Text.literal("<- " + mk.from()))
+                        .withMessage(3, Text.literal(mk.toA() + " m"));
+                sign.setText(text, true);
+            }
+            m.set(px, y + 4, pz);
+            world.setBlockState(m, Blocks.LANTERN.getDefaultState(), Block.NOTIFY_LISTENERS);
         }
     }
 }

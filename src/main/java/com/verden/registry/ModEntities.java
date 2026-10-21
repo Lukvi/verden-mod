@@ -65,6 +65,9 @@ public final class ModEntities {
     public static final EntityType<com.verden.entity.VerdenWalkerEntity> WALKER = reg("viajante",
             EntityType.Builder.create(com.verden.entity.VerdenWalkerEntity::new, SpawnGroup.MISC).dimensions(0.6f, 1.8f).maxTrackingRange(10));
 
+    public static final EntityType<com.verden.entity.RazorKitsujiEntity> RAZOR = reg("razor_kitsuji",
+            EntityType.Builder.create(com.verden.entity.RazorKitsujiEntity::new, SpawnGroup.MONSTER).dimensions(0.6f, 1.95f).maxTrackingRange(16));
+
     private static <T extends Entity> EntityType<T> reg(String name, EntityType.Builder<T> builder) {
         return Registry.register(Registries.ENTITY_TYPE, VerdenMod.id(name), builder.build(name));
     }
@@ -82,6 +85,7 @@ public final class ModEntities {
         FabricDefaultAttributeRegistry.register(HAIGOL, HaigolEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CONDOLYUS, CondolyusEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(NPC, VerdenNpcEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(RAZOR, com.verden.entity.RazorKitsujiEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(WALKER, com.verden.entity.VerdenWalkerEntity.createAttributes());
 
         SpawnRestriction.register(LICANTROPO_ADAPTADO, SpawnLocationTypes.ON_GROUND,

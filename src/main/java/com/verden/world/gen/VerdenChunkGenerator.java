@@ -56,6 +56,7 @@ public class VerdenChunkGenerator extends ChunkGenerator {
 
     public VerdenChunkGenerator(BiomeSource biomeSource) {
         super(biomeSource);
+        SiteBuilder.warmUp(terrain);
     }
 
     public Terrain terrain() {
@@ -175,8 +176,7 @@ public class VerdenChunkGenerator extends ChunkGenerator {
             return false;
         }
         double n1 = caves.noise(x * 0.016, y * 0.026, z * 0.016);
-        double n2 = caves2.noise(x * 0.016 + 77, y * 0.026, z * 0.016 - 31);
-        if (Math.abs(n1) < 0.05 && Math.abs(n2) < 0.05) {
+        if (Math.abs(n1) < 0.05 && Math.abs(caves2.noise(x * 0.016 + 77, y * 0.026, z * 0.016 - 31)) < 0.05) {
             return true;
         }
         return y < 36 && caves.noise(x * 0.009 + 50, y * 0.015, z * 0.009 - 50) > 0.6;

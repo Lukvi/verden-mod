@@ -25,6 +25,9 @@ public final class ModArmor {
     public static final RegistryEntry<ArmorMaterial> PELE_RINOY = material("pele_rinoy", 2, 5, 4, 2, 12,
             SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.05f, () -> Ingredient.ofItems(Items.LEATHER));
 
+    public static final RegistryEntry<ArmorMaterial> KITSUJI = material("kitsuji", 3, 8, 6, 4, 18,
+            SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 2.0f, 0.1f, () -> Ingredient.ofItems(Items.NETHERITE_SCRAP));
+
     private static RegistryEntry<ArmorMaterial> material(String name, int boots, int chest, int legs, int helmet, int ench,
                                                          RegistryEntry<SoundEvent> sound, float toughness, float kb,
                                                          Supplier<Ingredient> repair) {

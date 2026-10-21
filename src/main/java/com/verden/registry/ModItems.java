@@ -58,6 +58,16 @@ public final class ModItems {
     public static final Item TRIQUETRA = reg("amuleto_triquetra",
             new Item(new Item.Settings().maxCount(1).rarity(Rarity.EPIC)));
 
+    // ---- Razor Kitsuji ----
+    public static final Item CORACAO_VESTIGIO = reg("coracao_vestigio", new Item(new Item.Settings().maxCount(1).rarity(Rarity.EPIC)
+            .component(net.minecraft.component.DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)));
+    public static final Item GRIMORIO_MORKE = reg("grimorio_morke", new Item(new Item.Settings().maxCount(1).rarity(Rarity.EPIC)));
+    public static final Item SELO_LIMBO = reg("selo_limbo", new com.verden.item.SeloLimboItem(new Item.Settings().maxCount(1).rarity(Rarity.EPIC)));
+    public static final Item CARTOLA_KITSUJI = reg("cartola_kitsuji", new ArmorItem(ModArmor.KITSUJI, ArmorItem.Type.HELMET,
+            new Item.Settings().rarity(Rarity.EPIC).maxDamage(ArmorItem.Type.HELMET.getMaxDamage(48))));
+    public static final Item OVO_RAZOR = reg("razor_kitsuji_spawn_egg",
+            new SpawnEggItem(ModEntities.RAZOR, 0x101018, 0xd01830, new Item.Settings()));
+
     public static final Item COROA_KUNORI = reg("coroa_espinhos_kunori",
             new Item(new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON)));
 
@@ -228,6 +238,11 @@ public final class ModItems {
                             entries.add(OVO_KUNORI);
                             entries.add(OVO_TENTACULO);
                             entries.add(OVO_AMALGAMA);
+                            entries.add(OVO_RAZOR);
+                            entries.add(SELO_LIMBO);
+                            entries.add(CORACAO_VESTIGIO);
+                            entries.add(GRIMORIO_MORKE);
+                            entries.add(CARTOLA_KITSUJI);
                             entries.add(OVO_RINOY);
                         })
                         .build());

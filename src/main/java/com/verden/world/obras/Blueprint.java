@@ -68,13 +68,20 @@ public final class Blueprint {
             int xa = Math.max(x0, cx), xb = Math.min(x1, cx + 15);
             int za = Math.max(z0, cz), zb = Math.min(z1, cz + 15);
             int ya = Math.max(y0, w.getBottomY()), yb = Math.min(y1, w.getTopY() - 1);
+            if (xa > xb || za > zb || ya > yb) {
+                return;
+            }
             boolean p = needsPost(state);
             BlockPos.Mutable m = new BlockPos.Mutable();
+            // a caixa cai toda dentro de um chunk: lê direto dele e só escreve o que realmente muda
+            net.minecraft.world.chunk.Chunk ch = w.getChunk(xa >> 4, za >> 4);
             for (int x = xa; x <= xb; x++) {
                 for (int z = za; z <= zb; z++) {
                     for (int y = ya; y <= yb; y++) {
                         m.set(x, y, z);
-                        w.setBlockState(m, state, Block.NOTIFY_LISTENERS);
+                        if (ch.getBlockState(m) != state) {
+                            w.setBlockState(m, state, Block.NOTIFY_LISTENERS);
+                        }
                         if (p) {
                             post.add(m.toImmutable());
                         }

@@ -50,3 +50,18 @@ Código: `world/gen` (terreno, mapa, gerador) e `world/build` (construções). O
 - **Viajantes de Verden** (`verden:viajante`): camponeses, guardas, magos, caçadores, mercenários, mercadores, sacerdotes e piratas. Passeiam pelas cidades, formam **caravanas** nas estradas e combatem licantropos e outros monstros do livro (magos lançam chamas, gelo e vento; caçadores atiram; sacerdotes curam).
 - **Lojas e tavernas** nas cidades: Taverneiro, Ferreiro, Alquimista, Armeiro e Merceiro (novos NPCs com comércio).
 - **12 novas magias do Grimório** no Grimório do jogador: Hidrocinese, Geocinese, Dom da Cura, Magia da Luz, Teletransporte, Barreira Arcana, Invisibilidade, Controlador da Areia, Aura Explosiva, Senhor das Pragas, Thu'um e Hipnose.
+
+## Boss: Razor Kitsuji
+
+Invoque com o **Selo do Limbo** (raro, nos baús do Templo de Casthiel) ou pelo ovo no criativo. Duas fases (HP 600):
+- **Fase 1:** *Durma* (aparece atrás e atordoa), *Ji* (esfera gravitacional que atrai) seguido de *Kan* (onda repulsiva), raios negros.
+- **Fase 2** (< 50%): garra de sombras, escudo de almas do Limbo (reflete dano), invoca licantropos e o **Colapso do Vazio** (esconda-se atrás de blocos!). Atacar de frente acerta o coração exposto.
+- Projéteis o atravessam. **Fraqueza: Magia da Luz** (poder do Grimório). Drenagem de vida ao agarrar.
+- Drops: Coração do Vestígio Corrompido, Cartola de Kitsuji (imunidade mental + magia negra mais forte), Grimório de Mørke.
+
+## v0.8.1 — desempenho do mundo Verden
+- Medido fora do jogo: o terreno (mapa fixo + ruído de detalhe) custa ~0,3 ms por chunk e as cavernas ~1–2 ms; não era o gargalo.
+- Plantas das cidades montadas uma vez, em segundo plano, sem travar threads de geração.
+- Preenchimentos das construções só escrevem blocos que realmente mudam (antes reescreviam todo o ar).
+- Cache de bioma por coluna, marcos das estradas pré-calculados, cavernas com 2º ruído sob demanda.
+- Caminhantes/caravanas não forçam mais a geração de chunks distantes no thread do servidor.

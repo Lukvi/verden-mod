@@ -11,12 +11,52 @@ import net.minecraft.world.chunk.Chunk;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /** Constrói os lugares do mapa de Verden: cada chunk aplica a parte da planta que o atinge. */
 public final class SiteBuilder {
     private SiteBuilder() {}
 
-    private static final Map<String, Blueprint> CACHE = new ConcurrentHashMap<>();
+    private static final Map<String, FutureTask<Blueprint>> CACHE = new ConcurrentHashMap<>();
+    private static final AtomicBoolean WARMING = new AtomicBoolean();
+
+    /** Planta do lugar: montada uma única vez (sem segurar lock do mapa) e reaproveitada por todos os chunks. */
+    private static Blueprint get(Site s, Terrain t) {
+        FutureTask<Blueprint> f = CACHE.get(s.id());
+        if (f == null) {
+            FutureTask<Blueprint> n = new FutureTask<>(() -> build(s, t));
+            f = CACHE.putIfAbsent(s.id(), n);
+            if (f == null) {
+                f = n;
+                n.run();
+            }
+        }
+        try {
+            return f.get();
+        } catch (Exception e) {
+            CACHE.remove(s.id(), f);
+            throw new IllegalStateException("falha ao montar " + s.id(), e);
+        }
+    }
+
+    /** Monta todas as plantas em segundo plano ao abrir o mundo, para os chunks não esperarem por isso. */
+    public static void warmUp(Terrain t) {
+        if (!WARMING.compareAndSet(false, true)) {
+            return;
+        }
+        Thread th = new Thread(() -> {
+            for (Site s : Sites.all()) {
+                try {
+                    get(s, t);
+                } catch (RuntimeException ignored) {
+                    // será tentado de novo quando o chunk precisar
+                }
+            }
+        }, "verden-plantas");
+        th.setDaemon(true);
+        th.start();
+    }
 
     public static void placeInChunk(StructureWorldAccess world, Chunk chunk, VerdenChunkGenerator gen) {
         int cx = chunk.getPos().getStartX(), cz = chunk.getPos().getStartZ();
@@ -25,7 +65,7 @@ public final class SiteBuilder {
             if (cx + 15 < s.x() - e || cx > s.x() + e || cz + 15 < s.z() - e || cz > s.z() + e) {
                 continue;
             }
-            Blueprint bp = CACHE.computeIfAbsent(s.id(), k -> build(s, gen.terrain()));
+            Blueprint bp = get(s, gen.terrain());
             bp.apply(world, cx, cz);
         }
     }

@@ -151,6 +151,9 @@ public final class Population {
                 double tt = Math.max(0, Math.min(r.length, t - dir * i * 2.5));
                 double[] q = r.at(tt);
                 int qx = (int) Math.round(q[0]), qz = (int) Math.round(q[1]);
+                if (!w.getChunkManager().isChunkLoaded(qx >> 4, qz >> 4)) {
+                    continue;
+                }
                 int qy = w.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, qx, qz);
                 VerdenWalkerEntity e = spawn(w, party[i], qx + 0.5, qy, qz + 0.5);
                 if (e != null) {

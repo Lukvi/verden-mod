@@ -29,6 +29,7 @@ public class VerdenMod implements ModInitializer {
         ModWorldgen.register();
         com.verden.world.Population.register();
         com.verden.event.RazorEvents.register();
+        com.verden.world.RegionAnnouncer.register();
         LOGGER.info("Verden carregado. Que os ventos não soprem contra você.");
     }
 }

@@ -46,7 +46,13 @@ public final class SiteBuilder {
             return;
         }
         Thread th = new Thread(() -> {
-            for (Site s : Sites.all()) {
+            java.util.List<Site> todos = new java.util.ArrayList<>(Sites.all());
+            try {
+                todos.addAll(Waysides.all(t));
+            } catch (RuntimeException ignored) {
+                // os pontos de estrada serão calculados quando o primeiro chunk precisar
+            }
+            for (Site s : todos) {
                 try {
                     get(s, t);
                 } catch (RuntimeException ignored) {
@@ -61,13 +67,19 @@ public final class SiteBuilder {
     public static void placeInChunk(StructureWorldAccess world, Chunk chunk, VerdenChunkGenerator gen) {
         int cx = chunk.getPos().getStartX(), cz = chunk.getPos().getStartZ();
         for (Site s : Sites.all()) {
-            int e = Sites.extent(s) + 8;
-            if (cx + 15 < s.x() - e || cx > s.x() + e || cz + 15 < s.z() - e || cz > s.z() + e) {
-                continue;
-            }
-            Blueprint bp = get(s, gen.terrain());
-            bp.apply(world, cx, cz);
+            applyIfNear(s, world, cx, cz, gen);
         }
+        for (Site s : Waysides.all(gen.terrain())) {
+            applyIfNear(s, world, cx, cz, gen);
+        }
+    }
+
+    private static void applyIfNear(Site s, StructureWorldAccess world, int cx, int cz, VerdenChunkGenerator gen) {
+        int e = Sites.extent(s) + 8;
+        if (cx + 15 < s.x() - e || cx > s.x() + e || cz + 15 < s.z() - e || cz > s.z() + e) {
+            return;
+        }
+        get(s, gen.terrain()).apply(world, cx, cz);
     }
 
     private static void npc(Blueprint b, Site s, int dx, int dz, NpcRole role) {
@@ -127,14 +139,14 @@ public final class SiteBuilder {
             }
             case "vila_planicie" -> {
                 Lay.town(b, s, Pal.planicie(), r);
-                if (s.id().equals("dejury")) {
+                if (s.id().equals("hejury")) {
                     npc(b, s, -3, 2, NpcRole.MILLY);
                 }
             }
             case "vila_floresta" -> Lay.town(b, s, Pal.floresta(), r);
             case "vila_porto" -> {
                 Lay.town(b, s, Pal.porto(), r);
-                if (s.id().equals("orse")) {
+                if (s.id().equals("okse")) {
                     npc(b, s, -3, 2, NpcRole.LUKE);
                     npc(b, s, -4, 3, NpcRole.VANESSA);
                 }
@@ -157,6 +169,14 @@ public final class SiteBuilder {
                 }
             }
             case "caverna" -> Landmarks.lair(b, s, !s.id().equals("caverna_orju"));
+            case "vila_militar" -> Novos.vilaMilitar(b, s, r);
+            case "arena" -> Novos.arena(b, s, r);
+            case "presidio" -> Novos.presidio(b, s, r);
+            case "pilares" -> Novos.pilares(b, s, t, r);
+            case "estalagem" -> Novos.estalagem(b, cx, cz, g, r);
+            case "torre_vigia" -> Novos.torreVigia(b, cx, cz, g, r);
+            case "santuario" -> Novos.santuario(b, cx, cz, g, r);
+            case "posto_abandonado" -> Novos.postoAbandonado(b, cx, cz, g, r);
             default -> { }
         }
         return b;

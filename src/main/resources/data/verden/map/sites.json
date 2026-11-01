@@ -27,9 +27,18 @@
    "id": "jord",
    "name": "Jørd",
    "kind": "capital_sul",
-   "x": 1640,
-   "z": 0,
+   "x": 1880,
+   "z": 496,
    "radius": 100,
+   "level": 67
+  },
+  {
+   "id": "grandeza",
+   "name": "Grandeza",
+   "kind": "vila_militar",
+   "x": 2312,
+   "z": 216,
+   "radius": 52,
    "level": 67
   },
   {
@@ -49,6 +58,15 @@
    "z": -1280,
    "radius": 80,
    "level": 67
+  },
+  {
+   "id": "pilares_maariz",
+   "name": "Pilares de Maariz",
+   "kind": "pilares",
+   "x": 5320,
+   "z": -640,
+   "radius": 26,
+   "level": 66
   },
   {
    "id": "geerd",
@@ -96,8 +114,8 @@
    "level": 125
   },
   {
-   "id": "huguottir",
-   "name": "Huguottir",
+   "id": "hyjnottir",
+   "name": "Hyjnottir",
    "kind": "vila_planicie",
    "x": 216,
    "z": -1904,
@@ -105,8 +123,8 @@
    "level": 68
   },
   {
-   "id": "suttbarth",
-   "name": "Suttbarth",
+   "id": "suttbahr",
+   "name": "Suttbahr",
    "kind": "vila_floresta",
    "x": 2744,
    "z": -1936,
@@ -114,8 +132,8 @@
    "level": 71
   },
   {
-   "id": "juttor",
-   "name": "Juttor",
+   "id": "juttok",
+   "name": "Juttok",
    "kind": "vila_floresta",
    "x": 3592,
    "z": -1728,
@@ -123,8 +141,8 @@
    "level": 71
   },
   {
-   "id": "dejury",
-   "name": "Dejury",
+   "id": "hejury",
+   "name": "Hejury",
    "kind": "vila_planicie",
    "x": 520,
    "z": -728,
@@ -132,8 +150,8 @@
    "level": 67
   },
   {
-   "id": "orse",
-   "name": "Orse",
+   "id": "okse",
+   "name": "Okse",
    "kind": "vila_porto",
    "x": 264,
    "z": 384,
@@ -159,8 +177,8 @@
    "level": 72
   },
   {
-   "id": "verfaes",
-   "name": "Verfaes",
+   "id": "verfaeg",
+   "name": "Verfaeg",
    "kind": "vila_planicie",
    "x": 2968,
    "z": -976,
@@ -168,8 +186,8 @@
    "level": 67
   },
   {
-   "id": "vilaes_praianas",
-   "name": "Vilaes Praianas",
+   "id": "villaes",
+   "name": "Villaes",
    "kind": "vila_deserto",
    "x": 3896,
    "z": -1024,
@@ -213,15 +231,6 @@
    "level": 68
   },
   {
-   "id": "vesten",
-   "name": "Vesten Hayvmand",
-   "kind": "cidade_torres",
-   "x": -904,
-   "z": -2448,
-   "radius": 34,
-   "level": 72
-  },
-  {
    "id": "ost_sirener",
    "name": "Ost Sirener",
    "kind": "cidade_torres",
@@ -231,12 +240,12 @@
    "level": 68
   },
   {
-   "id": "cornoy",
-   "name": "Cornoy",
-   "kind": "vila_porto",
+   "id": "chronyth",
+   "name": "Arena Chronyth",
+   "kind": "arena",
    "x": 4880,
    "z": -2184,
-   "radius": 34,
+   "radius": 40,
    "level": 67
   },
   {
@@ -267,22 +276,13 @@
    "level": 67
   },
   {
-   "id": "motry_life",
-   "name": "Motry Life",
-   "kind": "vila_porto",
+   "id": "motry",
+   "name": "Motry",
+   "kind": "presidio",
    "x": -1280,
    "z": 1480,
-   "radius": 30,
+   "radius": 40,
    "level": 69
-  },
-  {
-   "id": "fim_do_mundo",
-   "name": "Fim do Mundo",
-   "kind": "ruinas",
-   "x": 5720,
-   "z": 1872,
-   "radius": 26,
-   "level": 68
   },
   {
    "id": "caverna_gelada",

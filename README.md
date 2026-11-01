@@ -65,3 +65,13 @@ Invoque com o **Selo do Limbo** (raro, nos baús do Templo de Casthiel) ou pelo 
 - Preenchimentos das construções só escrevem blocos que realmente mudam (antes reescreviam todo o ar).
 - Cache de bioma por coluna, marcos das estradas pré-calculados, cavernas com 2º ruído sob demanda.
 - Caminhantes/caravanas não forçam mais a geração de chunks distantes no thread do servidor.
+
+## v0.9.0 — Guia de Cartografia do Continente Verden
+- Mapa, nomes e posições atualizados conforme o Guia (Hejury, Okse, Hyjnottir, Suttbahr, Juttok, Verfaeg, Villaes, Motry, Chronyth).
+- Removidos: Vesten Hayvmand e Fim do Mundo (não existem mais no cânone).
+- Jørd realocada para a antiga área do Pântano Nadder; Campos Verderinos e Pântano Nadder trocaram de posição entre si.
+- Novos lugares: Grandeza (vila militar perto de Jørd), Arena Chronyth (Mar Hojre), Presídio de Motry (Ilha Motry), Pilares de Maariz (corais e rochas ao sul de Maariz).
+- Pontos de interesse nas estradas: estalagens, torres de vigia, santuários e postos abandonados (com licantropos), calculados a partir da malha de estradas.
+- Livros de lore espalhados pelos baús (biblioteca.json): Os Quatro Reinos, Das Águas de Verden, Dos Mares e das Ilhas, Grandeza, Sobre Motry, A Arena Chronyth, Notas de Estrada.
+- Aviso de região ao entrar numa área nomeada (reino, floresta, pântano, cidade, mar), com título/subtítulo.
+- Estradas regeneradas para as novas posições (30 trechos; algumas ilhas seguem sem rota terrestre).

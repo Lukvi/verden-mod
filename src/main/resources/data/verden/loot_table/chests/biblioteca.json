@@ -1,0 +1,209 @@
+{
+ "type": "minecraft:chest",
+ "pools": [
+  {
+   "rolls": {
+    "min": 1,
+    "max": 2
+   },
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:written_book",
+     "weight": 6,
+     "functions": [
+      {
+       "function": "minecraft:set_components",
+       "components": {
+        "minecraft:written_book_content": {
+         "title": "Os Quatro Reinos",
+         "author": "Cartógrafo anônimo",
+         "pages": [
+          "Verden divide-se em quatro grandes reinos, regidos pelos pontos cardeais.\n\nAo Norte, o gélido Reino de Veroogh. A Oeste, o fortificado Reino de Nagdaar.",
+          "Ao Sul, o reino industrial e militar de Jørd. A Leste, o árido Reino de Flerin, senhor das vastidões do Deserto Yettus.\n\nCada reino tem sua capital com o mesmo nome."
+         ]
+        }
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:written_book",
+     "weight": 6,
+     "functions": [
+      {
+       "function": "minecraft:set_components",
+       "components": {
+        "minecraft:written_book_content": {
+         "title": "Das Águas de Verden",
+         "author": "Viajante de Okse",
+         "pages": [
+          "Seis rios cortam o continente: Kejne, Real, Mak, Dash, Údrio e Synor.\n\nTodos se encontram, de um jeito ou de outro, na Interseção dos Rios, perto da Floresta Morke.",
+          "O Dash corre para o Lago Ged, onde fica o porto de Okse. O Kejne desce rumo ao Leste, até o mar.\n\nQuem navega por eles sabe: água de Verden não perdoa quem a subestima."
+         ]
+        }
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:written_book",
+     "weight": 6,
+     "functions": [
+      {
+       "function": "minecraft:set_components",
+       "components": {
+        "minecraft:written_book_content": {
+         "title": "Dos Mares e das Ilhas",
+         "author": "Marinheiro sem nome",
+         "pages": [
+          "O Mar Hojre banha o Leste: Maariz, a ilha dos piratas, Lolity, Juttok e a Arena Chronyth.\n\nAbaixo de Maariz há um aglomerado de pilares de pedra e corais. Os pescadores evitam o lugar.",
+          "O Mar Venstre estende-se a Oeste e ao Sul: Motry, a ilha presídio, o Templo Casthiel, Xasof e Barvyl.\n\nE ao extremo Sul, Karamarraw, a colossal ilha misteriosa."
+         ]
+        }
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:written_book",
+     "weight": 6,
+     "functions": [
+      {
+       "function": "minecraft:set_components",
+       "components": {
+        "minecraft:written_book_content": {
+         "title": "Grandeza",
+         "author": "Soldado de Jørd",
+         "pages": [
+          "Perto da capital de Jørd ergue-se Grandeza, a vila militar do reino. Ali o ferro se forja, o soldado treina e a bandeira roxa nunca desce.",
+          "Quem passa pelos portões é revistado. Quem fica, aprende a obedecer.\n\nDizem que em Grandeza nem a lama tem folga."
+         ]
+        }
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:written_book",
+     "weight": 6,
+     "functions": [
+      {
+       "function": "minecraft:set_components",
+       "components": {
+        "minecraft:written_book_content": {
+         "title": "Sobre Motry",
+         "author": "Guarda aposentado",
+         "pages": [
+          "Motry é a Ilha Presídio. Quem entra raramente conta como foi.\n\nSuas muralhas são de pedra comum, mas o mar em volta faz o serviço das grades.",
+          "Os guardas dormem em turnos. Os presos, nunca."
+         ]
+        }
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:written_book",
+     "weight": 6,
+     "functions": [
+      {
+       "function": "minecraft:set_components",
+       "components": {
+        "minecraft:written_book_content": {
+         "title": "A Arena Chronyth",
+         "author": "Cronista do Leste",
+         "pages": [
+          "Chronyth ergue-se numa ilha do Mar Hojre. Um anel de pedra clara, areia no centro e quatro portões que só se abrem para quem tem coragem.",
+          "Os combates ali não têm lei além da vitória.\n\nO povo vem de longe para ver. Poucos voltam para contar o que viram."
+         ]
+        }
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:written_book",
+     "weight": 6,
+     "functions": [
+      {
+       "function": "minecraft:set_components",
+       "components": {
+        "minecraft:written_book_content": {
+         "title": "Notas de Estrada",
+         "author": "Mercador de passagem",
+         "pages": [
+          "Estalagens, torres de vigia e santuários marcam os caminhos de Verden. Pare, descanse e leia as placas: cada marco indica a distância até a próxima cidade.",
+          "Cuidado com os postos abandonados. Nem toda ruína de beira de estrada está vazia."
+         ]
+        }
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:bread",
+     "weight": 8,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "min": 1,
+        "max": 4
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:torch",
+     "weight": 6,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "min": 2,
+        "max": 8
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:paper",
+     "weight": 6,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "min": 1,
+        "max": 4
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:emerald",
+     "weight": 3,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "min": 1,
+        "max": 3
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

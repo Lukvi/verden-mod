@@ -126,7 +126,7 @@ def endpoints(s):
         r = 14
     return [(cx + r, cz), (cx - r, cz), (cx, cz + r), (cx, cz - r)]
 
-nodes = [s for s in sites if s["kind"] != "caverna"]
+nodes = [s for s in sites if s["kind"] not in ("caverna", "pilares")]
 def dist(a, b):
     return math.hypot(a["x"] - b["x"], a["z"] - b["z"])
 

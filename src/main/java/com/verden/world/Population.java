@@ -38,6 +38,9 @@ public final class Population {
             case "vila_neve", "vila_planicie", "vila_floresta", "vila_porto", "vila_deserto" -> 6;
             case "cidade_torres" -> 5;
             case "mosteiro" -> 5;
+            case "vila_militar" -> 12;
+            case "arena" -> 5;
+            case "presidio" -> 4;
             case "templo_sol" -> 3;
             default -> 0;
         };
@@ -51,6 +54,10 @@ public final class Population {
                     Kind.MAGO, Kind.CACADOR, Kind.MERCENARIO, Kind.MERCADOR, Kind.MERCADOR, Kind.SACERDOTE};
         } else if (k.equals("porto_pirata")) {
             pool = new Kind[]{Kind.PIRATA, Kind.PIRATA, Kind.PIRATA, Kind.PIRATA, Kind.CAMPONESA, Kind.MERCADOR, Kind.MERCENARIO, Kind.MERCENARIO};
+        } else if (k.equals("vila_militar") || k.equals("presidio")) {
+            pool = new Kind[]{Kind.GUARDA, Kind.GUARDA, Kind.GUARDA, Kind.GUARDA, Kind.MERCENARIO, Kind.CACADOR};
+        } else if (k.equals("arena")) {
+            pool = new Kind[]{Kind.MERCENARIO, Kind.MERCENARIO, Kind.GUARDA, Kind.VIAJANTE, Kind.MERCADOR};
         } else if (k.equals("mosteiro") || k.equals("templo_sol")) {
             pool = new Kind[]{Kind.SACERDOTE, Kind.SACERDOTE, Kind.SACERDOTE, Kind.VIAJANTE};
         } else if (k.equals("cidade_torres")) {

@@ -70,3 +70,5 @@ Invoque com o **Selo do Limbo** (raro, nos baús do Templo de Casthiel) ou pelo 
 ## Núcleo do RPG (em desenvolvimento)
 `src/main/java/com/verden/rpg/core` é Java puro (estado da campanha, missões, diálogos, salvamento com backup e checksum).
 Conteúdo em `src/main/resources/data/verden/rpg/`. Testes: `tools/run_core_tests.sh`. Documentos em `docs/`.
+
+Estado do desenvolvimento do RPG: `DEVELOPMENT_STATUS.md`. Como testar: `TESTING_GUIDE.md`.

@@ -1,0 +1,163 @@
+[
+ {
+  "id": "F1",
+  "titulo": "A Proposta de Jord",
+  "livro": 1,
+  "de": 1,
+  "ate": 4
+ },
+ {
+  "id": "F2",
+  "titulo": "Os Desaparecimentos de Lóros",
+  "livro": 1,
+  "de": 5,
+  "ate": 7
+ },
+ {
+  "id": "F3",
+  "titulo": "Rio Kejne e a Infiltração",
+  "livro": 1,
+  "de": 8,
+  "ate": 9
+ },
+ {
+  "id": "F4",
+  "titulo": "O Altar da Seita Kunori",
+  "livro": 1,
+  "de": 10,
+  "ate": 11
+ },
+ {
+  "id": "F5",
+  "titulo": "A Assembleia e o Ataque em Flerin",
+  "livro": 1,
+  "de": 12,
+  "ate": 16
+ },
+ {
+  "id": "F6",
+  "titulo": "Rotas Separadas",
+  "livro": 1,
+  "de": 17,
+  "ate": 24
+ },
+ {
+  "id": "F7",
+  "titulo": "A Expedição de Trinity",
+  "livro": 1,
+  "de": 25,
+  "ate": 27
+ },
+ {
+  "id": "F8",
+  "titulo": "Okse, Dagnus e as Rotas de Marie",
+  "livro": 1,
+  "de": 28,
+  "ate": 34
+ },
+ {
+  "id": "F9",
+  "titulo": "A Mina de Yettus e o Enigma de Razor",
+  "livro": 1,
+  "de": 35,
+  "ate": 43
+ },
+ {
+  "id": "F10",
+  "titulo": "Os Sete Dias / Jornada para Hyjnottir",
+  "livro": 1,
+  "de": 44,
+  "ate": 53
+ },
+ {
+  "id": "F11",
+  "titulo": "Koold, a Mansão e a Perda de Gabe",
+  "livro": 1,
+  "de": 54,
+  "ate": 63
+ },
+ {
+  "id": "F12",
+  "titulo": "O Julgamento e o Epílogo de Prelúdio",
+  "livro": 1,
+  "de": 64,
+  "ate": 67
+ },
+ {
+  "id": "F13",
+  "titulo": "O Ultimato de Kizaki",
+  "livro": 2,
+  "de": 1,
+  "ate": 3
+ },
+ {
+  "id": "F14",
+  "titulo": "A Infiltração em Nagdaar",
+  "livro": 2,
+  "de": 4,
+  "ate": 12
+ },
+ {
+  "id": "F15",
+  "titulo": "A Subida ao Templo Yak",
+  "livro": 2,
+  "de": 5,
+  "ate": 13
+ },
+ {
+  "id": "F16",
+  "titulo": "A Prisão de Marie e o Caminho de Mark",
+  "livro": 2,
+  "de": 14,
+  "ate": 20
+ },
+ {
+  "id": "F17",
+  "titulo": "Retorno, Refugiados e a Mina de Yettus",
+  "livro": 2,
+  "de": 21,
+  "ate": 39
+ },
+ {
+  "id": "F18",
+  "titulo": "A Crise em Flerin",
+  "livro": 2,
+  "de": 40,
+  "ate": 49
+ },
+ {
+  "id": "F19",
+  "titulo": "Presídio Motry e a Nova Organização",
+  "livro": 2,
+  "de": 50,
+  "ate": 59
+ },
+ {
+  "id": "F20",
+  "titulo": "O Plano para Karamarraw",
+  "livro": 2,
+  "de": 60,
+  "ate": 69
+ },
+ {
+  "id": "F21",
+  "titulo": "A Ofensiva Final e Diana",
+  "livro": 2,
+  "de": 70,
+  "ate": 80
+ },
+ {
+  "id": "F22",
+  "titulo": "O Vestígio e a Floresta Mørke",
+  "livro": 2,
+  "de": 81,
+  "ate": 82
+ },
+ {
+  "id": "F23",
+  "titulo": "O Palácio, o Coração e o Fim",
+  "livro": 2,
+  "de": 83,
+  "ate": 92
+ }
+]

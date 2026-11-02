@@ -232,6 +232,65 @@ public final class CoreTests {
             check(s.eval(List.of("memory:fuga_do_deserto")), "condição memory");
         });
 
+        System.out.println("== personagens, skins e troca de protagonista");
+        test("personagens carregam e validam", () -> {
+            Session s = loadedSession();
+            check(s.characters.keySet().containsAll(List.of("trinity", "marie", "dan", "lena")), "4 personagens");
+            check(ContentLoader.validate(s).isEmpty(), "validação: " + ContentLoader.validate(s));
+        });
+        test("troca de personagem muda modelo, skin, animações, habilidades e ficha juntos", () -> {
+            Session s = loadedSession();
+            Appearance t = s.appearance();
+            eq(t.characterId(), "trinity", "começa em Trinity");
+            eq(s.switchTo("marie", false), Session.SwitchResult.LOCKED, "Marie bloqueada até a história liberar");
+            s.apply(List.of("flag:marie_disponivel", "xp:500"));
+            int lvT = s.state.sheet("trinity").level;
+            eq(s.switchTo("marie", false), Session.SwitchResult.OK, "troca liberada");
+            Appearance m = s.appearance();
+            check(!m.model().equals(t.model()) && !m.skin().equals(t.skin()) && !m.animations().equals(t.animations()), "visual 100% trocado");
+            check(!m.abilities().equals(t.abilities()), "habilidades base trocadas");
+            eq(s.state.current().level, 1, "ficha ativa é a de Marie (nível 1)");
+            eq(s.state.sheet("trinity").level, lvT, "ficha de Trinity intacta");
+            s.apply(List.of("xp:100"));
+            eq(s.state.sheet("trinity").level, lvT, "XP de Marie não vaza para Trinity");
+            eq(s.switchTo("marie", false), Session.SwitchResult.ALREADY, "já é Marie");
+        });
+        test("trava narrativa, troca forçada e personagens inválidos", () -> {
+            Session s = loadedSession();
+            s.apply(List.of("flag:marie_disponivel", "flag:switch_locked"));
+            eq(s.switchTo("marie", false), Session.SwitchResult.BLOCKED_BY_STORY, "jogador não pode durante a trava");
+            s.apply(List.of("switch:marie"));
+            eq(s.state.protagonist, "marie", "história pode forçar");
+            eq(s.switchTo("dan", true), Session.SwitchResult.NOT_PLAYABLE, "Dan não é jogável (nem forçado)");
+            eq(s.switchTo("fantasma", true), Session.SwitchResult.UNKNOWN, "personagem inexistente");
+            check(s.playableNow().size() == 2, "jogáveis agora: Trinity e Marie");
+        });
+        test("roupas: desbloqueio, equipar, independência entre personagens e fallback", () -> {
+            Session s = loadedSession();
+            s.characters.put("trinity", ContentLoader.parseCharacter(Json.parseObject(
+                "{\"id\":\"trinity\",\"name\":\"T\",\"playable\":true,\"model\":\"m\",\"animations\":\"a\",\"defaultOutfit\":\"base\",\"abilities\":[\"x\"],"
+                + "\"outfits\":[{\"id\":\"base\",\"name\":\"B\",\"skin\":\"s_base\"},"
+                + "{\"id\":\"festa\",\"name\":\"F\",\"skin\":\"s_festa\",\"canon\":false,\"requires\":[\"flag:festa_ok\"]}]}")));
+            check(!s.equipOutfit("trinity", "festa"), "bloqueada");
+            eq(s.appearance().skin(), "s_base", "skin padrão");
+            s.apply(List.of("flag:festa_ok"));
+            check(s.equipOutfit("trinity", "festa"), "liberada por condição");
+            eq(s.appearance().skin(), "s_festa", "skin trocada");
+            s.apply(List.of("flag:marie_disponivel", "switch:marie"));
+            eq(s.appearance().skin(), "verden:textures/entity/marie/padrao.png", "Marie usa a própria roupa");
+            s.apply(List.of("switch:trinity"));
+            eq(s.appearance().skin(), "s_festa", "Trinity mantém a roupa ao voltar");
+            s.apply(List.of("unflag:festa_ok"));
+            eq(s.appearance().skin(), "s_base", "condição perdida → volta à padrão");
+            check(!s.equipOutfit("trinity", "inexistente") && !s.equipOutfit("fantasma", "x"), "ids inválidos rejeitados");
+        });
+        test("validador acusa personagem mal definido", () -> {
+            Session s = new Session(new StoryState());
+            s.characters.put("x", ContentLoader.parseCharacter(Json.parseObject(
+                "{\"id\":\"x\",\"name\":\"X\",\"playable\":true,\"model\":\"m\",\"animations\":\"a\",\"defaultOutfit\":\"nao_existe\",\"outfits\":[]}")));
+            check(ContentLoader.validate(s).size() == 2, "padrão inexistente + sem habilidades: " + ContentLoader.validate(s));
+        });
+
         System.out.println("== salvamento");
         Path tmp = Files.createTempDirectory("verden_save");
         Path f = tmp.resolve("state.json");
@@ -246,6 +305,17 @@ public final class CoreTests {
             check(r != null && !r.recovered(), "carregou do principal");
             eq(Json.write(r.state().toMap()), Json.write(s.state.toMap()), "estado idêntico");
             check(!Files.exists(tmp.resolve("state.json.tmp")), "sem .tmp sobrando");
+        });
+        test("save/load preserva protagonista, roupas e posições", () -> {
+            Session s = loadedSession();
+            s.apply(List.of("flag:marie_disponivel", "outfit+:marie/gala", "switch:marie"));
+            s.state.positions.put("trinity", "overworld|10.5|64|-3.25|90|0");
+            Path g = tmp.resolve("chars.json");
+            SaveManager.save(g, s.state);
+            StoryState r = SaveManager.load(g).state();
+            eq(r.protagonist, "marie", "protagonista");
+            check(r.outfitsUnlocked.contains("marie/gala"), "roupa desbloqueada");
+            eq(r.positions.get("trinity"), "overworld|10.5|64|-3.25|90|0", "posição");
         });
         test("principal corrompido recupera do backup", () -> {
             Session s = new Session(new StoryState());

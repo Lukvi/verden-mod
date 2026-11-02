@@ -1,0 +1,26 @@
+{
+ "id": "marie",
+ "name": "Marie Chilgster",
+ "playable": true,
+ "unlock": [
+  "flag:marie_disponivel"
+ ],
+ "model": "verden:marie",
+ "animations": "verden:marie",
+ "portrait": "verden:textures/gui/portrait/marie.png",
+ "defaultOutfit": "padrao",
+ "outfits": [
+  {
+   "id": "padrao",
+   "name": "Aparência padrão (PENDENTE)",
+   "skin": "verden:textures/entity/marie/padrao.png",
+   "canon": true,
+   "description": "PENDENTE: descrever conforme o livro. PLACEHOLDER: a textura ainda não existe; o caminho é o contrato para a arte."
+  }
+ ],
+ "abilities": [
+  "marie.pendente_ler_livro"
+ ],
+ "attributes": {},
+ "bookNote": "NÃO LIDA ainda. Primeira aparição: Prelúdio cap. 12 (e cena de Razor ao fim do livro 1). Habilidades, atributos e aparência só serão definidos após a leitura — nada inventado. A flag marie_disponivel deve ser ligada pela história."
+}

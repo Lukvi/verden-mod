@@ -1,0 +1,22 @@
+{
+ "id": "lena",
+ "name": "Lena",
+ "playable": false,
+ "unlock": [],
+ "model": "verden:lena",
+ "animations": "verden:lena",
+ "portrait": "verden:textures/gui/portrait/lena.png",
+ "defaultOutfit": "padrao",
+ "outfits": [
+  {
+   "id": "padrao",
+   "name": "Princesa de Flerin (PENDENTE)",
+   "skin": "verden:textures/entity/lena/padrao.png",
+   "canon": true,
+   "description": "PENDENTE: descrever conforme o livro. PLACEHOLDER: a textura ainda não existe; o caminho é o contrato para a arte."
+  }
+ ],
+ "abilities": [],
+ "attributes": {},
+ "bookNote": "Ainda não descrita nos capítulos lidos (desaparecida nos caps. 1–3)."
+}

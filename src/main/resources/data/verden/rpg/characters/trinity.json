@@ -1,0 +1,28 @@
+{
+ "id": "trinity",
+ "name": "Trinity Reeves",
+ "playable": true,
+ "unlock": [],
+ "model": "verden:trinity",
+ "animations": "verden:trinity",
+ "portrait": "verden:textures/gui/portrait/trinity.png",
+ "defaultOutfit": "jord_branca",
+ "outfits": [
+  {
+   "id": "jord_branca",
+   "name": "Armadura branca de Jord",
+   "skin": "verden:textures/entity/trinity/jord_branca.png",
+   "canon": true,
+   "description": "Cap. 1: armadura branca, broche de pássaro dourado de Jord, cabelos castanhos longos com pequenas tranças. PLACEHOLDER: a textura ainda não existe; o caminho é o contrato para a arte."
+  }
+ ],
+ "abilities": [
+  "trinity.audicao_treinada"
+ ],
+ "attributes": {
+  "vigor": 10,
+  "agilidade": 12,
+  "mente": 6
+ },
+ "bookNote": "Lido: caps. 1–3 de Prelúdio (tenente de Jord, 19 anos; audição treinada; em magia tem só noção). Atributos iniciais são PROVISÓRIOS de balanceamento. Habilidades de combate (espada etc.) ainda NÃO verificadas no livro."
+}

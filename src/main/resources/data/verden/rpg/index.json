@@ -1,4 +1,10 @@
 {
+ "characters": [
+  "data/verden/rpg/characters/trinity.json",
+  "data/verden/rpg/characters/marie.json",
+  "data/verden/rpg/characters/dan.json",
+  "data/verden/rpg/characters/lena.json"
+ ],
  "quests": [
   "data/verden/rpg/quests/p1_q01_yettus.json",
   "data/verden/rpg/quests/p1_q02_lena.json"

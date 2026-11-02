@@ -3,984 +3,1148 @@
   "code": "L1_00_prologo",
   "livro": 1,
   "titulo": "Prelúdio",
-  "palavras": 311
+  "palavras": 311,
+  "duplicado": false
  },
  {
   "code": "L1_01",
   "livro": 1,
   "titulo": "CAPÍTULO UM",
-  "palavras": 2471
+  "palavras": 2471,
+  "duplicado": false
  },
  {
   "code": "L1_02",
   "livro": 1,
   "titulo": "CAPÍTULO DOIS",
-  "palavras": 1796
+  "palavras": 1796,
+  "duplicado": false
  },
  {
   "code": "L1_03",
   "livro": 1,
   "titulo": "CAPÍTULO TRÊS",
-  "palavras": 2087
+  "palavras": 2087,
+  "duplicado": false
  },
  {
   "code": "L1_04",
   "livro": 1,
   "titulo": "CAPÍTULO QUATRO",
-  "palavras": 1821
+  "palavras": 1821,
+  "duplicado": false
  },
  {
   "code": "L1_05",
   "livro": 1,
   "titulo": "CAPÍTULO CINCO",
-  "palavras": 2635
+  "palavras": 2635,
+  "duplicado": false
  },
  {
   "code": "L1_06",
   "livro": 1,
   "titulo": "CAPÍTULO SEIS",
-  "palavras": 3039
+  "palavras": 3039,
+  "duplicado": false
  },
  {
   "code": "L1_07",
   "livro": 1,
   "titulo": "CAPÍTULO SETE",
-  "palavras": 2653
+  "palavras": 2653,
+  "duplicado": false
  },
  {
   "code": "L1_08",
   "livro": 1,
   "titulo": "CAPÍTULO OITO",
-  "palavras": 3121
+  "palavras": 3121,
+  "duplicado": false
  },
  {
   "code": "L1_09",
   "livro": 1,
   "titulo": "CAPÍTULO NOVE",
-  "palavras": 2711
+  "palavras": 2711,
+  "duplicado": false
  },
  {
   "code": "L1_10",
   "livro": 1,
   "titulo": "CAPÍTULO DEZ",
-  "palavras": 3939
+  "palavras": 3939,
+  "duplicado": false
  },
  {
   "code": "L1_11",
   "livro": 1,
   "titulo": "CAPÍTULO ONZE",
-  "palavras": 2999
+  "palavras": 2999,
+  "duplicado": false
  },
  {
   "code": "L1_12",
   "livro": 1,
   "titulo": "CAPÍTULO DOZE",
-  "palavras": 3412
+  "palavras": 3412,
+  "duplicado": false
  },
  {
   "code": "L1_13",
   "livro": 1,
   "titulo": "CAPÍTULO TREZE",
-  "palavras": 5174
+  "palavras": 5174,
+  "duplicado": false
  },
  {
   "code": "L1_14",
   "livro": 1,
   "titulo": "CAPÍTULO CATORZE",
-  "palavras": 2118
+  "palavras": 2118,
+  "duplicado": false
  },
  {
   "code": "L1_15",
   "livro": 1,
   "titulo": "CAPÍTULO QUINZE",
-  "palavras": 3365
+  "palavras": 3365,
+  "duplicado": false
  },
  {
   "code": "L1_16",
   "livro": 1,
   "titulo": "CAPÍTULO DEZESSEIS",
-  "palavras": 1478
+  "palavras": 1478,
+  "duplicado": false
  },
  {
   "code": "L1_17",
   "livro": 1,
   "titulo": "CAPÍTULO DEZESSETE",
-  "palavras": 2168
+  "palavras": 2168,
+  "duplicado": false
  },
  {
   "code": "L1_18",
   "livro": 1,
   "titulo": "CAPÍTULO DEZOITO",
-  "palavras": 2182
+  "palavras": 2182,
+  "duplicado": false
  },
  {
   "code": "L1_19",
   "livro": 1,
   "titulo": "CAPÍTULO DEZENOVE",
-  "palavras": 2918
+  "palavras": 2918,
+  "duplicado": false
  },
  {
   "code": "L1_20",
   "livro": 1,
   "titulo": "CAPÍTULO VINTE",
-  "palavras": 1742
+  "palavras": 1742,
+  "duplicado": false
  },
  {
   "code": "L1_21",
   "livro": 1,
   "titulo": "CAPÍTULO VINTE E UM",
-  "palavras": 1970
+  "palavras": 1970,
+  "duplicado": false
  },
  {
   "code": "L1_22",
   "livro": 1,
   "titulo": "CAPÍTULO VINTE E DOIS",
-  "palavras": 2119
+  "palavras": 2119,
+  "duplicado": false
  },
  {
   "code": "L1_23",
   "livro": 1,
   "titulo": "CAPÍTULO VINTE E TRÊS",
-  "palavras": 1764
+  "palavras": 1764,
+  "duplicado": false
  },
  {
   "code": "L1_24",
   "livro": 1,
   "titulo": "CAPÍTULO VINTE E QUATRO",
-  "palavras": 3597
+  "palavras": 3597,
+  "duplicado": false
  },
  {
   "code": "L1_25",
   "livro": 1,
   "titulo": "CAPÍTULO VINTE E CINCO",
-  "palavras": 1787
+  "palavras": 1787,
+  "duplicado": false
  },
  {
   "code": "L1_26",
   "livro": 1,
   "titulo": "CAPÍTULO VINTE E SEIS",
-  "palavras": 1781
+  "palavras": 1781,
+  "duplicado": false
  },
  {
   "code": "L1_27",
   "livro": 1,
   "titulo": "CAPÍTULO VINTE E SETE",
-  "palavras": 3843
+  "palavras": 3843,
+  "duplicado": false
  },
  {
   "code": "L1_28",
   "livro": 1,
   "titulo": "CAPÍTULO VINTE E OITO",
-  "palavras": 2567
+  "palavras": 2567,
+  "duplicado": false
  },
  {
   "code": "L1_29",
   "livro": 1,
   "titulo": "CAPÍTULO VINTE E NOVE",
-  "palavras": 2165
+  "palavras": 2165,
+  "duplicado": false
  },
  {
   "code": "L1_30",
   "livro": 1,
   "titulo": "CAPÍTULO TRINTA",
-  "palavras": 2115
+  "palavras": 2115,
+  "duplicado": false
  },
  {
   "code": "L1_31",
   "livro": 1,
   "titulo": "CAPÍTULO TRINTA E UM",
-  "palavras": 3446
+  "palavras": 3446,
+  "duplicado": false
  },
  {
   "code": "L1_32",
   "livro": 1,
   "titulo": "CAPÍTULO TRINTA E DOIS",
-  "palavras": 4969
+  "palavras": 4969,
+  "duplicado": false
  },
  {
   "code": "L1_33",
   "livro": 1,
   "titulo": "CAPÍTULO TRINTA E TRÊS",
-  "palavras": 2974
+  "palavras": 2974,
+  "duplicado": false
  },
  {
   "code": "L1_34",
   "livro": 1,
   "titulo": "CAPÍTULO TRINTA E QUATRO",
-  "palavras": 1965
+  "palavras": 1965,
+  "duplicado": false
  },
  {
   "code": "L1_35",
   "livro": 1,
   "titulo": "CAPÍTULO TRINTA E CINCO",
-  "palavras": 2037
+  "palavras": 2037,
+  "duplicado": false
  },
  {
   "code": "L1_36",
   "livro": 1,
   "titulo": "CAPÍTULO TRINTA E SEIS",
-  "palavras": 3215
+  "palavras": 3215,
+  "duplicado": false
  },
  {
   "code": "L1_37",
   "livro": 1,
   "titulo": "CAPÍTULO TRINTA E SETE",
-  "palavras": 2779
+  "palavras": 2779,
+  "duplicado": false
  },
  {
   "code": "L1_38",
   "livro": 1,
   "titulo": "CAPÍTULO TRINTA E OITO",
-  "palavras": 3743
+  "palavras": 3743,
+  "duplicado": false
  },
  {
   "code": "L1_39",
   "livro": 1,
   "titulo": "CAPÍTULO TRINTA E NOVE",
-  "palavras": 1779
+  "palavras": 1779,
+  "duplicado": false
  },
  {
   "code": "L1_40",
   "livro": 1,
   "titulo": "CAPÍTULO QUARENTA",
-  "palavras": 1512
+  "palavras": 1512,
+  "duplicado": false
  },
  {
   "code": "L1_41",
   "livro": 1,
   "titulo": "CAPÍTULO QUARENTA E UM",
-  "palavras": 2429
+  "palavras": 2429,
+  "duplicado": false
  },
  {
   "code": "L1_42",
   "livro": 1,
   "titulo": "CAPÍTULO QUARENTA E DOIS",
-  "palavras": 1673
+  "palavras": 1673,
+  "duplicado": false
  },
  {
   "code": "L1_43",
   "livro": 1,
   "titulo": "CAPÍTULO QUARENTA E TRÊS",
-  "palavras": 1672
+  "palavras": 1672,
+  "duplicado": false
  },
  {
   "code": "L1_44",
   "livro": 1,
   "titulo": "CAPÍTULO QUARENTA E QUATRO",
-  "palavras": 2766
+  "palavras": 2766,
+  "duplicado": false
  },
  {
   "code": "L1_45",
   "livro": 1,
   "titulo": "CAPÍTULO QUARENTA E CINCO",
-  "palavras": 2483
+  "palavras": 2483,
+  "duplicado": false
  },
  {
   "code": "L1_46",
   "livro": 1,
   "titulo": "CAPÍTULO QUARENTA E SEIS",
-  "palavras": 1585
+  "palavras": 1585,
+  "duplicado": false
  },
  {
   "code": "L1_47",
   "livro": 1,
   "titulo": "CAPÍTULO QUARENTA E SETE",
-  "palavras": 2451
+  "palavras": 2451,
+  "duplicado": false
  },
  {
   "code": "L1_48",
   "livro": 1,
   "titulo": "CAPÍTULO QUARENTA E OITO",
-  "palavras": 2642
+  "palavras": 2642,
+  "duplicado": false
  },
  {
   "code": "L1_49",
   "livro": 1,
   "titulo": "CAPÍTULO QUARENTA E NOVE",
-  "palavras": 2591
+  "palavras": 2591,
+  "duplicado": false
  },
  {
   "code": "L1_50",
   "livro": 1,
   "titulo": "CAPÍTULO CINQUENTA",
-  "palavras": 2194
+  "palavras": 2194,
+  "duplicado": false
  },
  {
   "code": "L1_51",
   "livro": 1,
   "titulo": "CAPÍTULO CINQUENTA E UM",
-  "palavras": 3187
+  "palavras": 3187,
+  "duplicado": false
  },
  {
   "code": "L1_52",
   "livro": 1,
   "titulo": "CAPÍTULO CINQUENTA E DOIS",
-  "palavras": 2565
+  "palavras": 2565,
+  "duplicado": false
+ },
+ {
+  "code": "L1_52b",
+  "livro": 1,
+  "titulo": "CAPÍTULO CINQUENTA E DOIS",
+  "palavras": 3655,
+  "duplicado": true
  },
  {
   "code": "L1_53",
   "livro": 1,
-  "titulo": "CAPÍTULO CINQUENTA E DOIS",
-  "palavras": 3655
+  "titulo": "CAPÍTULO CINQUENTA E TRÊS",
+  "palavras": 2201,
+  "duplicado": false
  },
  {
   "code": "L1_54",
   "livro": 1,
-  "titulo": "CAPÍTULO CINQUENTA E TRÊS",
-  "palavras": 2201
+  "titulo": "CAPÍTULO CINQUENTA E QUATRO",
+  "palavras": 3047,
+  "duplicado": false
  },
  {
   "code": "L1_55",
   "livro": 1,
-  "titulo": "CAPÍTULO CINQUENTA E QUATRO",
-  "palavras": 3047
+  "titulo": "CAPÍTULO CINQUENTA E CINCO",
+  "palavras": 3588,
+  "duplicado": false
  },
  {
   "code": "L1_56",
   "livro": 1,
-  "titulo": "CAPÍTULO CINQUENTA E CINCO",
-  "palavras": 3588
+  "titulo": "CAPÍTULO CINQUENTA E SEIS",
+  "palavras": 3891,
+  "duplicado": false
  },
  {
   "code": "L1_57",
   "livro": 1,
-  "titulo": "CAPÍTULO CINQUENTA E SEIS",
-  "palavras": 3891
+  "titulo": "CAPÍTULO CINQUENTA E SETE",
+  "palavras": 3231,
+  "duplicado": false
  },
  {
   "code": "L1_58",
   "livro": 1,
-  "titulo": "CAPÍTULO CINQUENTA E SETE",
-  "palavras": 3231
+  "titulo": "CAPÍTULO CINQUENTA E OITO",
+  "palavras": 3092,
+  "duplicado": false
  },
  {
   "code": "L1_59",
   "livro": 1,
-  "titulo": "CAPÍTULO CINQUENTA E OITO",
-  "palavras": 3092
+  "titulo": "CAPÍTULO CINQUENTA E NOVE",
+  "palavras": 3243,
+  "duplicado": false
  },
  {
   "code": "L1_60",
   "livro": 1,
-  "titulo": "CAPÍTULO CINQUENTA E NOVE",
-  "palavras": 3243
+  "titulo": "CAPÍTULO SESSENTA",
+  "palavras": 3251,
+  "duplicado": false
  },
  {
   "code": "L1_61",
   "livro": 1,
-  "titulo": "CAPÍTULO SESSENTA",
-  "palavras": 3251
+  "titulo": "CAPÍTULO SESSENTA E UM",
+  "palavras": 3697,
+  "duplicado": false
  },
  {
   "code": "L1_62",
   "livro": 1,
-  "titulo": "CAPÍTULO SESSENTA E UM",
-  "palavras": 3697
+  "titulo": "CAPÍTULO SESSENTA E DOIS",
+  "palavras": 3434,
+  "duplicado": false
  },
  {
   "code": "L1_63",
   "livro": 1,
-  "titulo": "CAPÍTULO SESSENTA E DOIS",
-  "palavras": 3434
+  "titulo": "CAPÍTULO SESSENTA E TRÊS",
+  "palavras": 2109,
+  "duplicado": false
  },
  {
   "code": "L1_64",
   "livro": 1,
-  "titulo": "CAPÍTULO SESSENTA E TRÊS",
-  "palavras": 2109
+  "titulo": "CAPÍTULO SESSENTA E QUATRO",
+  "palavras": 2537,
+  "duplicado": false
  },
  {
   "code": "L1_65",
   "livro": 1,
-  "titulo": "CAPÍTULO SESSENTA E QUATRO",
-  "palavras": 2537
+  "titulo": "CAPÍTULO SESSENTA E CINCO",
+  "palavras": 3968,
+  "duplicado": false
  },
  {
   "code": "L1_66",
   "livro": 1,
-  "titulo": "CAPÍTULO SESSENTA E CINCO",
-  "palavras": 3968
+  "titulo": "CAPÍTULO SESSENTA E SEIS",
+  "palavras": 3194,
+  "duplicado": false
  },
  {
   "code": "L1_67",
   "livro": 1,
-  "titulo": "CAPÍTULO SESSENTA E SEIS",
-  "palavras": 3194
- },
- {
-  "code": "L1_68",
-  "livro": 1,
   "titulo": "CAPÍTULO SESSENTA E SETE",
-  "palavras": 548
+  "palavras": 548,
+  "duplicado": false
  },
  {
   "code": "L1_epilogo",
   "livro": 1,
   "titulo": "EPÍLOGO",
-  "palavras": 1842
+  "palavras": 1842,
+  "duplicado": false
  },
  {
   "code": "L2_01",
   "livro": 2,
   "titulo": "CAPÍTULO UM",
-  "palavras": 1933
+  "palavras": 1933,
+  "duplicado": false
  },
  {
   "code": "L2_02",
   "livro": 2,
   "titulo": "CAPÍTULO DOIS",
-  "palavras": 2282
+  "palavras": 2282,
+  "duplicado": false
  },
  {
   "code": "L2_03",
   "livro": 2,
   "titulo": "CAPÍTULO TRÊS",
-  "palavras": 3329
+  "palavras": 3329,
+  "duplicado": false
  },
  {
   "code": "L2_04",
   "livro": 2,
   "titulo": "CAPÍTULO QUATRO",
-  "palavras": 1746
+  "palavras": 1746,
+  "duplicado": false
  },
  {
   "code": "L2_05",
   "livro": 2,
   "titulo": "CAPÍTULO CINCO",
-  "palavras": 2631
+  "palavras": 2631,
+  "duplicado": false
  },
  {
   "code": "L2_06",
   "livro": 2,
   "titulo": "CAPÍTULO SEIS",
-  "palavras": 2171
+  "palavras": 2171,
+  "duplicado": false
  },
  {
   "code": "L2_07",
   "livro": 2,
   "titulo": "CAPÍTULO SETE",
-  "palavras": 1791
+  "palavras": 1791,
+  "duplicado": false
  },
  {
   "code": "L2_08",
   "livro": 2,
   "titulo": "CAPÍTULO OITO",
-  "palavras": 1784
+  "palavras": 1784,
+  "duplicado": false
  },
  {
   "code": "L2_09",
   "livro": 2,
   "titulo": "CAPÍTULO NOVE",
-  "palavras": 3321
+  "palavras": 3321,
+  "duplicado": false
  },
  {
   "code": "L2_10",
   "livro": 2,
   "titulo": "CAPÍTULO DEZ",
-  "palavras": 3218
+  "palavras": 3218,
+  "duplicado": false
  },
  {
   "code": "L2_11",
   "livro": 2,
   "titulo": "CAPÍTULO ONZE",
-  "palavras": 2553
+  "palavras": 2553,
+  "duplicado": false
  },
  {
   "code": "L2_12",
   "livro": 2,
   "titulo": "CAPÍTULO DOZE",
-  "palavras": 2465
+  "palavras": 2465,
+  "duplicado": false
  },
  {
   "code": "L2_13",
   "livro": 2,
   "titulo": "CAPÍTULO TREZE",
-  "palavras": 2495
+  "palavras": 2495,
+  "duplicado": false
  },
  {
   "code": "L2_14",
   "livro": 2,
   "titulo": "CAPÍTULO QUATORZE",
-  "palavras": 2859
+  "palavras": 2859,
+  "duplicado": false
  },
  {
   "code": "L2_15",
   "livro": 2,
   "titulo": "CAPÍTULO QUINZE",
-  "palavras": 3498
+  "palavras": 3498,
+  "duplicado": false
  },
  {
   "code": "L2_16",
   "livro": 2,
   "titulo": "CAPÍTULO DEZESSEIS",
-  "palavras": 2289
+  "palavras": 2289,
+  "duplicado": false
  },
  {
   "code": "L2_17",
   "livro": 2,
   "titulo": "CAPÍTULO DEZESSETE",
-  "palavras": 3864
+  "palavras": 3864,
+  "duplicado": false
  },
  {
   "code": "L2_18",
   "livro": 2,
   "titulo": "CAPÍTULO DEZOITO",
-  "palavras": 2382
+  "palavras": 2382,
+  "duplicado": false
  },
  {
   "code": "L2_19",
   "livro": 2,
   "titulo": "CAPÍTULO DEZENOVE",
-  "palavras": 4034
+  "palavras": 4034,
+  "duplicado": false
  },
  {
   "code": "L2_20",
   "livro": 2,
   "titulo": "CAPÍTULO VINTE",
-  "palavras": 2500
+  "palavras": 2500,
+  "duplicado": false
  },
  {
   "code": "L2_21",
   "livro": 2,
-  "titulo": "CAPÍTULO VINTE E",
-  "palavras": 2884
+  "titulo": "CAPÍTULO VINTE E UM",
+  "palavras": 2884,
+  "duplicado": false
  },
  {
   "code": "L2_22",
   "livro": 2,
-  "titulo": "CAPÍTULO VINTE E",
-  "palavras": 1538
+  "titulo": "CAPÍTULO VINTE E DOIS",
+  "palavras": 1538,
+  "duplicado": false
  },
  {
   "code": "L2_23",
   "livro": 2,
-  "titulo": "CAPÍTULO VINTE E",
-  "palavras": 3073
+  "titulo": "CAPÍTULO VINTE E TRÊS",
+  "palavras": 3073,
+  "duplicado": false
  },
  {
   "code": "L2_24",
   "livro": 2,
-  "titulo": "CAPÍTULO VINTE E",
-  "palavras": 2831
+  "titulo": "CAPÍTULO VINTE E QUATRO",
+  "palavras": 2831,
+  "duplicado": false
  },
  {
   "code": "L2_25",
   "livro": 2,
-  "titulo": "CAPÍTULO VINTE E",
-  "palavras": 3143
+  "titulo": "CAPÍTULO VINTE E CINCO",
+  "palavras": 3143,
+  "duplicado": false
  },
  {
   "code": "L2_26",
   "livro": 2,
-  "titulo": "CAPÍTULO VINTE E",
-  "palavras": 2236
+  "titulo": "CAPÍTULO VINTE E SEIS",
+  "palavras": 2236,
+  "duplicado": false
  },
  {
   "code": "L2_27",
   "livro": 2,
-  "titulo": "CAPÍTULO VINTE E",
-  "palavras": 1924
+  "titulo": "CAPÍTULO VINTE E SETE",
+  "palavras": 1924,
+  "duplicado": false
  },
  {
   "code": "L2_28",
   "livro": 2,
-  "titulo": "CAPÍTULO VINTE E",
-  "palavras": 3002
+  "titulo": "CAPÍTULO VINTE E OITO",
+  "palavras": 3002,
+  "duplicado": false
  },
  {
   "code": "L2_29",
   "livro": 2,
-  "titulo": "CAPÍTULO VINTE E",
-  "palavras": 3565
+  "titulo": "CAPÍTULO VINTE E NOVE",
+  "palavras": 3565,
+  "duplicado": false
  },
  {
   "code": "L2_30",
   "livro": 2,
   "titulo": "CAPÍTULO TRINTA",
-  "palavras": 4679
+  "palavras": 4679,
+  "duplicado": false
  },
  {
   "code": "L2_31",
   "livro": 2,
-  "titulo": "CAPÍTULO TRINTA E",
-  "palavras": 3883
+  "titulo": "CAPÍTULO TRINTA E UM",
+  "palavras": 3883,
+  "duplicado": false
  },
  {
   "code": "L2_32",
   "livro": 2,
-  "titulo": "CAPÍTULO TRINTA E",
-  "palavras": 2238
+  "titulo": "CAPÍTULO TRINTA E DOIS",
+  "palavras": 2238,
+  "duplicado": false
  },
  {
   "code": "L2_33",
   "livro": 2,
-  "titulo": "CAPÍTULO TRINTA E",
-  "palavras": 3734
+  "titulo": "CAPÍTULO TRINTA E TRÊS",
+  "palavras": 3734,
+  "duplicado": false
  },
  {
   "code": "L2_34",
   "livro": 2,
-  "titulo": "CAPÍTULO TRINTA E",
-  "palavras": 2494
+  "titulo": "CAPÍTULO TRINTA E QUATRO",
+  "palavras": 2494,
+  "duplicado": false
  },
  {
   "code": "L2_35",
   "livro": 2,
-  "titulo": "CAPÍTULO TRINTA E",
-  "palavras": 4972
+  "titulo": "CAPÍTULO TRINTA E CINCO",
+  "palavras": 4972,
+  "duplicado": false
  },
  {
   "code": "L2_36",
   "livro": 2,
-  "titulo": "CAPÍTULO TRINTA E",
-  "palavras": 3282
+  "titulo": "CAPÍTULO TRINTA E SEIS",
+  "palavras": 3282,
+  "duplicado": false
  },
  {
   "code": "L2_37",
   "livro": 2,
-  "titulo": "CAPÍTULO TRINTA E",
-  "palavras": 4129
+  "titulo": "CAPÍTULO TRINTA E SETE",
+  "palavras": 4129,
+  "duplicado": false
  },
  {
   "code": "L2_38",
   "livro": 2,
-  "titulo": "CAPÍTULO TRINTA E",
-  "palavras": 4009
+  "titulo": "CAPÍTULO TRINTA E OITO",
+  "palavras": 4009,
+  "duplicado": false
  },
  {
   "code": "L2_39",
   "livro": 2,
-  "titulo": "CAPÍTULO TRINTA E",
-  "palavras": 3772
+  "titulo": "CAPÍTULO TRINTA E NOVE",
+  "palavras": 3772,
+  "duplicado": false
  },
  {
   "code": "L2_40",
   "livro": 2,
   "titulo": "CAPÍTULO QUARENTA",
-  "palavras": 3641
+  "palavras": 3641,
+  "duplicado": false
  },
  {
   "code": "L2_41",
   "livro": 2,
-  "titulo": "CAPÍTULO QUARENTA",
-  "palavras": 3545
+  "titulo": "CAPÍTULO QUARENTA E UM",
+  "palavras": 3545,
+  "duplicado": false
  },
  {
   "code": "L2_42",
   "livro": 2,
-  "titulo": "CAPÍTULO QUARENTA",
-  "palavras": 3504
+  "titulo": "CAPÍTULO QUARENTA E DOIS",
+  "palavras": 3504,
+  "duplicado": false
  },
  {
   "code": "L2_43",
   "livro": 2,
-  "titulo": "CAPÍTULO QUARENTA",
-  "palavras": 5201
+  "titulo": "CAPÍTULO QUARENTA E TRÊS",
+  "palavras": 5201,
+  "duplicado": false
  },
  {
   "code": "L2_44",
   "livro": 2,
-  "titulo": "CAPÍTULO QUARENTA",
-  "palavras": 3164
+  "titulo": "CAPÍTULO QUARENTA E QUATRO",
+  "palavras": 3164,
+  "duplicado": false
  },
  {
   "code": "L2_45",
   "livro": 2,
-  "titulo": "CAPÍTULO QUARENTA",
-  "palavras": 3184
+  "titulo": "CAPÍTULO QUARENTA E CINCO",
+  "palavras": 3184,
+  "duplicado": false
  },
  {
   "code": "L2_46",
   "livro": 2,
-  "titulo": "CAPÍTULO QUARENTA",
-  "palavras": 3773
+  "titulo": "CAPÍTULO QUARENTA E SEIS",
+  "palavras": 3773,
+  "duplicado": false
  },
  {
   "code": "L2_47",
   "livro": 2,
-  "titulo": "CAPÍTULO QUARENTA",
-  "palavras": 2201
+  "titulo": "CAPÍTULO QUARENTA E SETE",
+  "palavras": 2201,
+  "duplicado": false
  },
  {
   "code": "L2_48",
   "livro": 2,
-  "titulo": "CAPÍTULO QUARENTA",
-  "palavras": 5016
+  "titulo": "CAPÍTULO QUARENTA E OITO",
+  "palavras": 5016,
+  "duplicado": false
  },
  {
   "code": "L2_49",
   "livro": 2,
-  "titulo": "CAPÍTULO QUARENTA",
-  "palavras": 1960
+  "titulo": "CAPÍTULO QUARENTA E NOVE",
+  "palavras": 1960,
+  "duplicado": false
  },
  {
   "code": "L2_50",
   "livro": 2,
   "titulo": "CAPÍTULO CINQUENTA",
-  "palavras": 2920
+  "palavras": 2920,
+  "duplicado": false
  },
  {
   "code": "L2_51",
   "livro": 2,
-  "titulo": "CAPÍTULO CINQUENTA",
-  "palavras": 2936
+  "titulo": "CAPÍTULO CINQUENTA E UM",
+  "palavras": 2936,
+  "duplicado": false
  },
  {
   "code": "L2_52",
   "livro": 2,
-  "titulo": "CAPÍTULO CINQUENTA",
-  "palavras": 1967
+  "titulo": "CAPÍTULO CINQUENTA E DOIS",
+  "palavras": 1967,
+  "duplicado": false
  },
  {
   "code": "L2_53",
   "livro": 2,
-  "titulo": "CAPÍTULO CINQUENTA",
-  "palavras": 4180
+  "titulo": "CAPÍTULO CINQUENTA E TRÊS",
+  "palavras": 4180,
+  "duplicado": false
  },
  {
   "code": "L2_54",
   "livro": 2,
-  "titulo": "CAPÍTULO CINQUENTA",
-  "palavras": 2558
+  "titulo": "CAPÍTULO CINQUENTA E QUATRO",
+  "palavras": 2558,
+  "duplicado": false
  },
  {
   "code": "L2_55",
   "livro": 2,
-  "titulo": "CAPÍTULO CINQUENTA",
-  "palavras": 2262
+  "titulo": "CAPÍTULO CINQUENTA E CINCO",
+  "palavras": 2262,
+  "duplicado": false
  },
  {
   "code": "L2_56",
   "livro": 2,
-  "titulo": "CAPÍTULO CINQUENTA",
-  "palavras": 1666
+  "titulo": "CAPÍTULO CINQUENTA E SEIS",
+  "palavras": 1666,
+  "duplicado": false
  },
  {
   "code": "L2_57",
   "livro": 2,
-  "titulo": "CAPÍTULO CINQUENTA",
-  "palavras": 2658
+  "titulo": "CAPÍTULO CINQUENTA E SETE",
+  "palavras": 2658,
+  "duplicado": false
  },
  {
   "code": "L2_58",
   "livro": 2,
-  "titulo": "CAPÍTULO CINQUENTA",
-  "palavras": 2086
+  "titulo": "CAPÍTULO CINQUENTA E OITO",
+  "palavras": 2086,
+  "duplicado": false
  },
  {
   "code": "L2_59",
   "livro": 2,
-  "titulo": "CAPÍTULO CINQUENTA",
-  "palavras": 2633
+  "titulo": "CAPÍTULO CINQUENTA E NOVE",
+  "palavras": 2633,
+  "duplicado": false
  },
  {
   "code": "L2_60",
   "livro": 2,
   "titulo": "CAPÍTULO SESSENTA",
-  "palavras": 2370
+  "palavras": 2370,
+  "duplicado": false
  },
  {
   "code": "L2_61",
   "livro": 2,
-  "titulo": "CAPÍTULO SESSENTA",
-  "palavras": 3700
+  "titulo": "CAPÍTULO SESSENTA E UM",
+  "palavras": 3700,
+  "duplicado": false
  },
  {
   "code": "L2_62",
   "livro": 2,
-  "titulo": "CAPÍTULO SESSENTA",
-  "palavras": 5044
+  "titulo": "CAPÍTULO SESSENTA E DOIS",
+  "palavras": 5044,
+  "duplicado": false
  },
  {
   "code": "L2_63",
   "livro": 2,
-  "titulo": "CAPÍTULO SESSENTA",
-  "palavras": 1937
+  "titulo": "CAPÍTULO SESSENTA E TRÊS",
+  "palavras": 1937,
+  "duplicado": false
  },
  {
   "code": "L2_64",
   "livro": 2,
-  "titulo": "CAPÍTULO SESSENTA",
-  "palavras": 1776
+  "titulo": "CAPÍTULO SESSENTA E QUATRO",
+  "palavras": 1776,
+  "duplicado": false
  },
  {
   "code": "L2_65",
   "livro": 2,
-  "titulo": "CAPÍTULO SESSENTA",
-  "palavras": 3555
+  "titulo": "CAPÍTULO SESSENTA E CINCO",
+  "palavras": 3555,
+  "duplicado": false
  },
  {
   "code": "L2_66",
   "livro": 2,
-  "titulo": "CAPÍTULO SESSENTA",
-  "palavras": 3166
+  "titulo": "CAPÍTULO SESSENTA E SEIS",
+  "palavras": 3166,
+  "duplicado": false
  },
  {
   "code": "L2_67",
   "livro": 2,
-  "titulo": "CAPÍTULO SESSENTA",
-  "palavras": 2362
+  "titulo": "CAPÍTULO SESSENTA E SETE",
+  "palavras": 2362,
+  "duplicado": false
  },
  {
   "code": "L2_68",
   "livro": 2,
-  "titulo": "CAPÍTULO SESSENTA",
-  "palavras": 2499
+  "titulo": "CAPÍTULO SESSENTA E OITO",
+  "palavras": 2499,
+  "duplicado": false
  },
  {
   "code": "L2_69",
   "livro": 2,
-  "titulo": "CAPÍTULO SESSENTA",
-  "palavras": 2706
+  "titulo": "CAPÍTULO SESSENTA E NOVE",
+  "palavras": 2706,
+  "duplicado": false
  },
  {
   "code": "L2_70",
   "livro": 2,
   "titulo": "CAPÍTULO SETENTA",
-  "palavras": 2836
+  "palavras": 2836,
+  "duplicado": false
  },
  {
   "code": "L2_71",
   "livro": 2,
-  "titulo": "CAPÍTULO SETENTA",
-  "palavras": 3062
+  "titulo": "CAPÍTULO SETENTA E UM",
+  "palavras": 3062,
+  "duplicado": false
  },
  {
   "code": "L2_72",
   "livro": 2,
-  "titulo": "CAPÍTULO SETENTA",
-  "palavras": 1292
+  "titulo": "CAPÍTULO SETENTA E DOIS",
+  "palavras": 1292,
+  "duplicado": false
  },
  {
   "code": "L2_73",
   "livro": 2,
-  "titulo": "CAPÍTULO SETENTA",
-  "palavras": 3129
+  "titulo": "CAPÍTULO SETENTA E TRÊS",
+  "palavras": 3129,
+  "duplicado": false
  },
  {
   "code": "L2_74",
   "livro": 2,
-  "titulo": "CAPÍTULO SETENTA",
-  "palavras": 3204
+  "titulo": "CAPÍTULO SETENTA E QUATRO",
+  "palavras": 3204,
+  "duplicado": false
  },
  {
   "code": "L2_75",
   "livro": 2,
-  "titulo": "CAPÍTULO SETENTA",
-  "palavras": 3584
+  "titulo": "CAPÍTULO SETENTA E CINCO",
+  "palavras": 3584,
+  "duplicado": false
  },
  {
   "code": "L2_76",
   "livro": 2,
-  "titulo": "CAPÍTULO SETENTA",
-  "palavras": 1324
+  "titulo": "CAPÍTULO SETENTA E SEIS",
+  "palavras": 1324,
+  "duplicado": false
  },
  {
   "code": "L2_77",
   "livro": 2,
-  "titulo": "CAPÍTULO SETENTA",
-  "palavras": 2598
+  "titulo": "CAPÍTULO SETENTA E SETE",
+  "palavras": 2598,
+  "duplicado": false
+ },
+ {
+  "code": "L2_77b",
+  "livro": 2,
+  "titulo": "CAPÍTULO SETENTA E SETE",
+  "palavras": 3025,
+  "duplicado": true
  },
  {
   "code": "L2_78",
   "livro": 2,
-  "titulo": "CAPÍTULO SETENTA",
-  "palavras": 3025
+  "titulo": "CAPÍTULO SETENTA E OITO",
+  "palavras": 1784,
+  "duplicado": false
  },
  {
   "code": "L2_79",
   "livro": 2,
-  "titulo": "CAPÍTULO SETENTA",
-  "palavras": 1784
+  "titulo": "CAPÍTULO SETENTA E NOVE",
+  "palavras": 2851,
+  "duplicado": false
  },
  {
   "code": "L2_80",
   "livro": 2,
-  "titulo": "CAPÍTULO SETENTA",
-  "palavras": 2851
+  "titulo": "CAPÍTULO OITENTA",
+  "palavras": 1690,
+  "duplicado": false
  },
  {
   "code": "L2_81",
   "livro": 2,
-  "titulo": "CAPÍTULO OITENTA",
-  "palavras": 1690
+  "titulo": "CAPÍTULO OITENTA E UM",
+  "palavras": 3054,
+  "duplicado": false
  },
  {
   "code": "L2_82",
   "livro": 2,
-  "titulo": "CAPÍTULO OITENTA",
-  "palavras": 3054
+  "titulo": "CAPÍTULO OITENTA E DOIS",
+  "palavras": 4068,
+  "duplicado": false
  },
  {
   "code": "L2_83",
   "livro": 2,
-  "titulo": "CAPÍTULO OITENTA",
-  "palavras": 4068
+  "titulo": "CAPÍTULO OITENTA E TRÊS",
+  "palavras": 2082,
+  "duplicado": false
  },
  {
   "code": "L2_84",
   "livro": 2,
-  "titulo": "CAPÍTULO OITENTA",
-  "palavras": 2082
+  "titulo": "CAPÍTULO OITENTA E QUATRO",
+  "palavras": 2581,
+  "duplicado": false
  },
  {
   "code": "L2_85",
   "livro": 2,
-  "titulo": "CAPÍTULO OITENTA",
-  "palavras": 2581
+  "titulo": "CAPÍTULO OITENTA E CINCO",
+  "palavras": 1747,
+  "duplicado": false
  },
  {
   "code": "L2_86",
   "livro": 2,
-  "titulo": "CAPÍTULO OITENTA",
-  "palavras": 1747
+  "titulo": "CAPÍTULO OITENTA E SEIS",
+  "palavras": 2233,
+  "duplicado": false
  },
  {
   "code": "L2_87",
   "livro": 2,
-  "titulo": "CAPÍTULO OITENTA",
-  "palavras": 2233
+  "titulo": "CAPÍTULO OITENTA E SETE",
+  "palavras": 3094,
+  "duplicado": false
  },
  {
   "code": "L2_88",
   "livro": 2,
-  "titulo": "CAPÍTULO OITENTA",
-  "palavras": 3094
+  "titulo": "CAPÍTULO OITENTA E OITO",
+  "palavras": 3704,
+  "duplicado": false
  },
  {
   "code": "L2_89",
   "livro": 2,
-  "titulo": "CAPÍTULO OITENTA",
-  "palavras": 3704
+  "titulo": "CAPÍTULO OITENTA E NOVE",
+  "palavras": 2439,
+  "duplicado": false
  },
  {
   "code": "L2_90",
   "livro": 2,
-  "titulo": "CAPÍTULO OITENTA",
-  "palavras": 2439
+  "titulo": "CAPÍTULO NOVENTA",
+  "palavras": 7988,
+  "duplicado": false
  },
  {
   "code": "L2_91",
   "livro": 2,
-  "titulo": "CAPÍTULO NOVENTA",
-  "palavras": 7988
+  "titulo": "CAPÍTULO NOVENTA E UM",
+  "palavras": 1917,
+  "duplicado": false
  },
  {
   "code": "L2_92",
   "livro": 2,
-  "titulo": "CAPÍTULO NOVENTA",
-  "palavras": 1917
- },
- {
-  "code": "L2_93",
-  "livro": 2,
-  "titulo": "CAPÍTULO NOVENTA",
-  "palavras": 1823
+  "titulo": "CAPÍTULO NOVENTA E DOIS",
+  "palavras": 1823,
+  "duplicado": false
  },
  {
   "code": "L2_epilogo",
   "livro": 2,
   "titulo": "EPÍLOGO",
-  "palavras": 1495
+  "palavras": 1495,
+  "duplicado": false
  }
 ]

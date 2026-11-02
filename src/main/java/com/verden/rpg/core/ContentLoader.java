@@ -27,6 +27,14 @@ public final class ContentLoader {
                 throw new IllegalArgumentException("erro em " + p + ": " + e.getMessage(), e);
             }
         }
+        for (String p : strList(idx.get("characters"))) {
+            try {
+                CharacterDef c = parseCharacter(Json.parseObject(reader.apply(p)));
+                if (s.characters.putIfAbsent(c.id(), c) != null) throw new IllegalArgumentException("personagem duplicado: " + c.id());
+            } catch (RuntimeException e) {
+                throw new IllegalArgumentException("erro em " + p + ": " + e.getMessage(), e);
+            }
+        }
         for (String p : strList(idx.get("dialogues"))) {
             try {
                 Dialogue d = parseDialogue(Json.parseObject(reader.apply(p)));
@@ -63,6 +71,22 @@ public final class ContentLoader {
         return new Quest(id, req(m, "title"), cat, str(m.get("chapter"), ""), str(m.get("giver"), ""), str(m.get("summary"), ""),
                 strList(m.get("requires")), stages, strList(m.get("onStart")), strList(rw.get("effects")),
                 StoryState.num(rw.get("xp"), 0), strList(rw.get("items")));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static CharacterDef parseCharacter(Map<String, Object> m) {
+        String id = req(m, "id");
+        List<CharacterDef.Outfit> outfits = new ArrayList<>();
+        for (Object o : list(m.get("outfits"))) {
+            Map<String, Object> om = (Map<String, Object>) o;
+            outfits.add(new CharacterDef.Outfit(req(om, "id"), req(om, "name"), req(om, "skin"),
+                    !Boolean.FALSE.equals(om.get("canon")), strList(om.get("requires")), str(om.get("description"), "")));
+        }
+        Map<String, Integer> attrs = new LinkedHashMap<>();
+        if (m.get("attributes") instanceof Map<?, ?> a) for (Map.Entry<?, ?> e : a.entrySet()) attrs.put(String.valueOf(e.getKey()), StoryState.num(e.getValue(), 0));
+        return new CharacterDef(id, req(m, "name"), Boolean.TRUE.equals(m.get("playable")), strList(m.get("unlock")),
+                req(m, "model"), req(m, "animations"), str(m.get("portrait"), ""), req(m, "defaultOutfit"), outfits,
+                strList(m.get("abilities")), attrs, str(m.get("bookNote"), ""));
     }
 
     @SuppressWarnings("unchecked")
@@ -118,6 +142,17 @@ public final class ContentLoader {
                     checkConds(s, o.when(), "quest " + q.id() + "/" + o.id() + " when", problems);
                 }
             }
+        }
+        for (CharacterDef c : s.characters.values()) {
+            String w = "character " + c.id();
+            if (c.outfit(c.defaultOutfit()) == null) problems.add(w + ": roupa padrão inexistente '" + c.defaultOutfit() + "'");
+            Set<String> oi = new java.util.HashSet<>();
+            for (CharacterDef.Outfit o : c.outfits()) {
+                if (!oi.add(o.id())) problems.add(w + ": roupa duplicada " + o.id());
+                checkConds(s, o.requires(), w + "/" + o.id() + " requires", problems);
+            }
+            checkConds(s, c.unlock(), w + " unlock", problems);
+            if (c.playable() && c.abilities().isEmpty()) problems.add(w + ": personagem jogável sem habilidades base");
         }
         for (Dialogue d : s.dialogues.values()) {
             for (Dialogue.Node n : d.nodes().values()) {

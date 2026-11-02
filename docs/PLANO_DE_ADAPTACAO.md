@@ -1,12 +1,12 @@
 # Plano de Adaptação de *Prelúdio e Agouro* — Verden RPG
 
 ## 1. Estado da leitura do livro (honesto)
-O arquivo tem **458.340 palavras**: *Prelúdio* (prólogo + 67 caps + epílogo, 185 mil) e *Agouro* (93 caps + epílogo, 273 mil). Eu **li integralmente apenas os caps. 1–3 de Prelúdio** (+ prólogo e abertura do epílogo). O resto está indexado (`docs/livro/_indice.json`, um arquivo por capítulo) e mapeado por frequência de personagens/lugares, mas **a bíblia narrativa e a linha do tempo só podem ser escritas lendo os capítulos**, o que será feito em blocos (≈10–15 caps por sessão), cada um gerando `docs/livro_resumos/` no modelo do seu §2.2. Nada além dos caps. 1–3 foi transformado em missão.
+O arquivo tem ≈**442 mil palavras** (`wc`; o contador do script dá 458 mil por tratar espaços especiais de outro modo): *Prelúdio* (prólogo + 67 caps + epílogo; o título "CINQUENTA E DOIS" aparece duas vezes) e *Agouro* (92 caps + epílogo; "SETENTA E SETE" aparece duas vezes). A numeração dos arquivos em `docs/livro/` segue o número **impresso**. Eu **li integralmente apenas os caps. 1–3 de Prelúdio** (+ prólogo e abertura do epílogo). O resto está indexado (`docs/livro/_indice.json`, um arquivo por capítulo) e mapeado por frequência de personagens/lugares, mas **a bíblia narrativa e a linha do tempo só podem ser escritas lendo os capítulos**, o que será feito em blocos (≈10–15 caps por sessão), cada um gerando `docs/livro_resumos/` no modelo do seu §2.2. Nada além dos caps. 1–3 foi transformado em missão.
 
 | Faixa | Conteúdo (pelo índice) | Estado |
 |---|---|---|
 | L1 1–3 | Yettus, Dan, Flerin, Nefertari, caderno de Lena, grimório | **Lido e implementado** |
-| L1 4–9 | Lóros, Aldo, Ruby | Indexado; **próximo bloco** |
+| L1 4–9 | Lóros, Aldo, Ruby | Indexado; **próximo bloco** (ver `docs/CHAPTER_TO_MISSION_MAP.md`) |
 | L1 12+ | Entram Marie e Gabe; Caesar (23), Razor (19) | A ler |
 | L2 | Diana, Varhen, Franklin, Casthiel, Vestígio, licantropos | A ler |
 
@@ -46,3 +46,6 @@ Decisões de design já em código: duas fichas independentes (Trinity/Marie) de
 - **O homem do parapeito não é nomeado** no livro; o jogo também não o nomeia.
 - **Expansão do jogo (não é do livro)**: as escolhas acima, o objetivo opcional do mercado e a escolha de "tratar o ferimento" antes de oferecer ajuda. Marcadas como tal.
 - Ponto a verificar: Dan diz que já revistou o quarto de Lena e nada achou; o livro (cap. 2–3) não o descreve. Só construiremos o quarto se capítulos posteriores o detalharem.
+
+## 7. Validação do plano de campanha em 23 fases (Etapa A, parcial)
+O plano de fases enviado foi conferido **por âncoras** (personagens/lugares/objetos esperados em cada intervalo de capítulos): 107 de 110 confirmadas; 3 divergências e a numeração repetida estão em `docs/CHAPTER_TO_MISSION_MAP.md`. Isto valida a *estrutura*, não o *conteúdo*: cada fase ainda precisa ser lida capítulo a capítulo antes de virar missão. Dados das fases: `docs/fases.json`.

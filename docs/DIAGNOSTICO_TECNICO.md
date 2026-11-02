@@ -30,7 +30,7 @@ Fonte: análise do ZIP enviado. O que está marcado **[verificado]** foi conferi
 Ausentes do livro (0 ocorrências): Legião (das Espadas), Zytra, Haigol, Condolyus, Rinoy, Menetryx, Hiraku, Lucy, Rashad, Thalen, Raoni, Milly, Cromus, Berserker, Revólver "Cubus", Mneumônio, Triquetra, Corneta, Mønter/Copta, Partenon, Amálgama, Lanterna do Fauno, Vesten Hayvmand, Ost Sirener, magias Cronocinese/Metamorfose/Hipnose/Thu'um.
 Presentes: Razor (1.300+), Kizaki, Konge, Nagdaar, Veroogh, Jord, Karamarraw, Montainezz, Morke, Koold, Kunori, Casthiel, Merlim, Yann, Luke, Vanessa, licantropos (só no 2º livro), Cartola, Selo.
 **Isto não prova invenção** — pode vir de outro material seu. Pelas suas regras, estou apenas sinalizando. Em contrapartida, o livro tem elenco central que o mod ignora: Gabe, Caesar, Hethephéres, Penélope, Diana, Varhen, Franklin, Lumina, Darius, Lysander, Cavaleiro Esmeralda.
-**"Núcleo da Marie" não existe no texto**; "núcleo" só aparece como metáfora (L1 cap. 13 e L2 cap. 63).
+**"Núcleo da Marie" não existe no texto**; "núcleo" só aparece como metáfora (Prelúdio cap. 12 e Agouro cap. 62 pela numeração antiga; os arquivos foram renumerados pelo título impresso).
 
 ## 5. Limitações do ambiente de verificação
 Compilação completa só no CI. Aqui: (a) núcleo em Java puro compilado e testado; (b) `RpgRuntime` conferido contra os jars reais do Minecraft/Fabric (com stub de slf4j); (c) o projeto inteiro mantém o mesmo conjunto de erros da linha de base (todos por bibliotecas ausentes), sem erro novo. **Nada foi executado dentro do Minecraft.**

@@ -28,6 +28,7 @@ public final class Session {
     public final StoryState state;
     public final QuestEngine quests;
     public final Map<String, Dialogue> dialogues = new HashMap<>();
+    public final Map<String, CharacterDef> characters = new java.util.LinkedHashMap<>();
     public final Deque<Notification> notifications = new ArrayDeque<>();
     /** Itens a entregar ao jogador; a camada Minecraft esvazia esta lista. */
     public final List<Grant> grants = new ArrayList<>();
@@ -83,6 +84,7 @@ public final class Session {
             case "party": return state.party.contains(v);
             case "protagonist": return state.protagonist.equals(v);
             case "memory": return state.hasMemory(v);
+            case "outfit": return state.outfitsUnlocked.contains(v);
             case "codex": return state.codex.contains(v);
             case "region": return state.regions.contains(v);
             case "choice": {
@@ -161,6 +163,12 @@ public final class Session {
             case "xp" -> giveXp(Integer.parseInt(v));
             case "chapter" -> state.chapter = v;
             case "protagonist" -> state.protagonist = v;
+            case "switch" -> {
+                SwitchResult r = switchTo(v, true);
+                if (r != SwitchResult.OK && r != SwitchResult.ALREADY) throw new IllegalStateException("troca narrativa para " + v + " falhou: " + r);
+            }
+            case "outfit+" -> state.outfitsUnlocked.add(v);
+            case "outfit" -> equipOutfit(v.substring(0, Math.max(0, v.indexOf('/'))), v.substring(v.indexOf('/') + 1));
             case "item" -> {
                 int x = v.indexOf('*');
                 grants.add(new Grant(x < 0 ? v : v.substring(0, x), x < 0 ? 1 : Integer.parseInt(v.substring(x + 1))));
@@ -188,5 +196,74 @@ public final class Session {
             notifications.add(new Notification(Notification.Kind.LEVEL_UP, null,
                     state.protagonist + " alcançou o nível " + (state.current().level - up + i + 1)));
         }
+    }
+
+    // ------------------------------------------------------------------ personagens e aparência
+
+    public enum SwitchResult { OK, ALREADY, UNKNOWN, NOT_PLAYABLE, LOCKED, BLOCKED_BY_STORY }
+
+    /**
+     * Troca o personagem controlado. Troca <b>voluntária</b> (jogador) respeita a trava narrativa
+     * (flag {@code switch_locked}) e os requisitos do personagem; troca <b>narrativa</b> ({@code force})
+     * ignora a trava, mas nunca vai para um personagem inexistente ou não jogável.
+     * Preserva fichas, roupas e posições individuais — nada é copiado entre personagens.
+     */
+    public SwitchResult switchTo(String id, boolean force) {
+        CharacterDef d = characters.get(id);
+        if (d == null) return SwitchResult.UNKNOWN;
+        if (!d.playable()) return SwitchResult.NOT_PLAYABLE;
+        if (state.protagonist.equals(id)) return SwitchResult.ALREADY;
+        if (!force) {
+            if (state.flags.contains("switch_locked")) return SwitchResult.BLOCKED_BY_STORY;
+            if (!eval(d.unlock())) return SwitchResult.LOCKED;
+        }
+        state.protagonist = id;
+        state.sheet(id); // garante a ficha própria
+        notifications.add(new Notification(Notification.Kind.INFO, null, "Agora você controla " + d.name()));
+        quests.recheck();
+        return SwitchResult.OK;
+    }
+
+    /** Roupa realmente usada: a equipada, se ainda estiver liberada; senão a padrão. */
+    public CharacterDef.Outfit currentOutfit(String charId) {
+        CharacterDef d = characters.get(charId);
+        if (d == null) return null;
+        CharacterDef.Outfit o = d.outfit(state.outfitEquipped.getOrDefault(charId, d.defaultOutfit()));
+        if (o != null && outfitAvailable(charId, o)) return o;
+        return d.outfit(d.defaultOutfit());
+    }
+
+    public boolean outfitAvailable(String charId, CharacterDef.Outfit o) {
+        return o.id().equals(characters.get(charId).defaultOutfit())
+                || state.outfitsUnlocked.contains(charId + "/" + o.id())
+                || (!o.requires().isEmpty() && eval(o.requires()));
+    }
+
+    /** Equipa uma roupa se existir e estiver disponível. */
+    public boolean equipOutfit(String charId, String outfitId) {
+        CharacterDef d = characters.get(charId);
+        CharacterDef.Outfit o = d == null ? null : d.outfit(outfitId);
+        if (o == null || !outfitAvailable(charId, o)) return false;
+        state.outfitEquipped.put(charId, outfitId);
+        return true;
+    }
+
+    /** Aparência completa do personagem controlado agora (modelo, skin, animações, habilidades). */
+    public Appearance appearance() {
+        return appearanceOf(state.protagonist);
+    }
+
+    public Appearance appearanceOf(String charId) {
+        CharacterDef d = characters.get(charId);
+        if (d == null) return null;
+        CharacterDef.Outfit o = currentOutfit(charId);
+        return new Appearance(d.id(), d.model(), o == null ? "" : o.skin(), d.animations(), d.portrait(), d.abilities());
+    }
+
+    /** Personagens que o jogador pode controlar neste momento (ignorando a trava narrativa). */
+    public List<CharacterDef> playableNow() {
+        List<CharacterDef> out = new ArrayList<>();
+        for (CharacterDef d : characters.values()) if (d.playable() && eval(d.unlock())) out.add(d);
+        return out;
     }
 }

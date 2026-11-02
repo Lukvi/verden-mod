@@ -37,6 +37,12 @@ public final class StoryState {
     public final List<Memory> memories = new ArrayList<>();
     public final Map<String, QuestProgress> quests = new LinkedHashMap<>();
     public final Map<String, CharacterSheet> sheets = new LinkedHashMap<>();
+    /** Roupa equipada por personagem: personagem → id da roupa. */
+    public final Map<String, String> outfitEquipped = new TreeMap<>();
+    /** Roupas desbloqueadas, no formato "personagem/roupa". */
+    public final Set<String> outfitsUnlocked = new TreeSet<>();
+    /** Última posição de cada personagem (texto "dim|x|y|z|yaw|pitch"), para retomar ao trocar de volta. */
+    public final Map<String, String> positions = new TreeMap<>();
 
     /** Memória Compartilhada: um acontecimento + quem estava presente. Base de diálogos tardios. */
     public record Memory(String id, String chapter, long tick, List<String> witnesses) {}
@@ -106,6 +112,9 @@ public final class StoryState {
         Map<String, Object> sh = new LinkedHashMap<>();
         for (Map.Entry<String, CharacterSheet> e : sheets.entrySet()) sh.put(e.getKey(), e.getValue().toMap());
         m.put("sheets", sh);
+        m.put("outfitEquipped", new LinkedHashMap<>(outfitEquipped));
+        m.put("outfitsUnlocked", new ArrayList<>(outfitsUnlocked));
+        m.put("positions", new LinkedHashMap<>(positions));
         return m;
     }
 
@@ -152,6 +161,13 @@ public final class StoryState {
             for (Map.Entry<?, ?> e : sh.entrySet()) {
                 if (e.getValue() instanceof Map<?, ?> o) s.sheets.put(String.valueOf(e.getKey()), CharacterSheet.fromMap((Map<String, Object>) o));
             }
+        }
+        if (m.get("outfitEquipped") instanceof Map<?, ?> oe) {
+            for (Map.Entry<?, ?> e : oe.entrySet()) s.outfitEquipped.put(String.valueOf(e.getKey()), String.valueOf(e.getValue()));
+        }
+        strings(m.get("outfitsUnlocked"), s.outfitsUnlocked);
+        if (m.get("positions") instanceof Map<?, ?> po) {
+            for (Map.Entry<?, ?> e : po.entrySet()) s.positions.put(String.valueOf(e.getKey()), String.valueOf(e.getValue()));
         }
         return s;
     }

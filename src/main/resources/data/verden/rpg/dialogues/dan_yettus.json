@@ -1,0 +1,118 @@
+{
+ "id": "dan_yettus",
+ "start": "n1",
+ "nodes": {
+  "n1": {
+   "speaker": "trinity",
+   "mood": "gentle",
+   "text": "Pode parar, Binky. Boa tar… digo, boa noite. Está tudo bem?",
+   "next": "n2"
+  },
+  "n2": {
+   "speaker": "dan",
+   "mood": "wry",
+   "text": "Nem tão boa para mim, amigo. (olha para cima) Amiga.",
+   "options": [
+    {
+     "text": "Tá precisando de ajuda?",
+     "next": "n3"
+    },
+    {
+     "text": "Fica parado. Deixa eu ver esses ferimentos.",
+     "effects": [
+      "aff:dan+=1",
+      "var:trinity_cuidado+=1"
+     ],
+     "next": "n3"
+    }
+   ]
+  },
+  "n3": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Trinity abre a bolsa da sela, pega um frasco de líquido avermelhado e joga na areia ao lado dele. \"É uma poção. Vai ajudar nos ferimentos mais leves.\"",
+   "onEnter": [
+    "flag:dan_curado"
+   ],
+   "next": "n4"
+  },
+  "n4": {
+   "speaker": "dan",
+   "mood": "grateful",
+   "text": "Muito obrigado, senhorita…?",
+   "options": [
+    {
+     "text": "Trinity Reeves, tenente militar de Jord. Prazer.",
+     "effects": [
+      "choice:yettus_apresentacao=formal"
+     ],
+     "next": "n5"
+    },
+    {
+     "text": "Trinity Reeves, de Jord. Pode dispensar o \"tenente\", tá?",
+     "effects": [
+      "choice:yettus_apresentacao=informal",
+      "aff:dan+=1"
+     ],
+     "next": "n5"
+    }
+   ]
+  },
+  "n5": {
+   "speaker": "dan",
+   "mood": "curious",
+   "text": "\"Tenente militar de Jord.\" É jovem para uma tenente, só isso. Os de Flerin devem ter o dobro da sua idade.",
+   "next": "n6"
+  },
+  "n6": {
+   "speaker": "trinity",
+   "mood": "amused",
+   "text": "Eu sei, muitos falam isso. Tenente aos dezenove anos é absurdo mesmo, mas foi minha majestade que me promoveu, então não vou questionar.",
+   "next": "n7"
+  },
+  "n7": {
+   "speaker": "trinity",
+   "mood": "neutral",
+   "text": "Precisa de carona? Estou indo para Flerin.",
+   "next": "n8"
+  },
+  "n8": {
+   "speaker": "dan",
+   "mood": "wry",
+   "text": "O que uma tenente de Jord faria em Flerin?",
+   "options": [
+    {
+     "text": "Minha missão é confidencial.",
+     "effects": [
+      "var:trinity_reserva+=1"
+     ],
+     "next": "n9"
+    }
+   ]
+  },
+  "n9": {
+   "speaker": "dan",
+   "mood": "amused",
+   "text": "Ah, certo. Posso te levar à minha mãe, então. Sem problemas.",
+   "next": "n10"
+  },
+  "n10": {
+   "speaker": "trinity",
+   "mood": "shocked",
+   "text": "Sua… mãe? (o lampejo de reconhecimento) Príncipe Dan?!",
+   "onEnter": [
+    "flag:principe_identificado"
+   ],
+   "next": "n11"
+  },
+  "n11": {
+   "speaker": "dan",
+   "mood": "amused",
+   "text": "Relaxa. Não é como se eu saísse por aí com a coroa na cabeça. Mas, por via das dúvidas, eu te perdoo.",
+   "onEnter": [
+    "flag:binky_arisco"
+   ],
+   "next": ""
+  }
+ }
+}

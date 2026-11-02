@@ -1,0 +1,90 @@
+{
+ "id": "p1_q01_yettus",
+ "title": "Areia, Muralhas e uma Rainha",
+ "category": "main",
+ "chapter": "p1_01",
+ "giver": "dan",
+ "summary": "Trinity chega a Flerin como mensageira de Jord, com uma proposta de aliança do Rei Konge. No caminho, para para ajudar um desconhecido ferido.",
+ "requires": [],
+ "onStart": [
+  "region:deserto_yettus",
+  "codex:binky"
+ ],
+ "stages": [
+  {
+   "id": "encontro",
+   "journal": "Há um homem ferido sentado na areia, perto das muralhas de Flerin. Binky já diminuiu o passo.",
+   "objectives": [
+    {
+     "id": "o_falar",
+     "text": "Falar com o homem ferido",
+     "kind": "dialogue",
+     "target": "dan_yettus"
+    }
+   ]
+  },
+  {
+   "id": "muralhas",
+   "journal": "O homem aceitou companhia até Flerin. Binky não gosta de estranhos, então ele irá a pé ao seu lado.",
+   "onEnter": [
+    "flag:dan_conhecido",
+    "codex:dan_de_mubarak"
+   ],
+   "objectives": [
+    {
+     "id": "o_portao",
+     "text": "Chegar aos portões de Flerin com Dan",
+     "kind": "reach",
+     "target": "flerin_portao"
+    }
+   ]
+  },
+  {
+   "id": "cidade",
+   "journal": "Os guardas abriram passagem ao príncipe. O zigurate da família Mubarak domina o horizonte.",
+   "onEnter": [
+    "region:flerin",
+    "codex:flerin_adobe"
+   ],
+   "objectives": [
+    {
+     "id": "o_zigurate",
+     "text": "Atravessar a rua principal até o zigurate",
+     "kind": "reach",
+     "target": "zigurate_entrada"
+    },
+    {
+     "id": "o_mercado",
+     "text": "Observar o movimento do mercado de Flerin",
+     "kind": "examine",
+     "target": "flerin_mercado",
+     "optional": true
+    }
+   ]
+  },
+  {
+   "id": "audiencia",
+   "journal": "A rainha espera na sala do trono, sob o mosaico da Deusa Lys.",
+   "onEnter": [
+    "codex:zigurate_mubarak",
+    "codex:lys"
+   ],
+   "objectives": [
+    {
+     "id": "o_rainha",
+     "text": "Entregar a carta de Konge à Rainha Nefertari",
+     "kind": "dialogue",
+     "target": "nefertari_audiencia"
+    }
+   ]
+  }
+ ],
+ "rewards": {
+  "xp": 80,
+  "effects": [
+   "flag:proposta_entregue",
+   "chapter:p1_02"
+  ],
+  "items": []
+ }
+}

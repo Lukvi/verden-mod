@@ -1,0 +1,88 @@
+{
+ "id": "nefertari_audiencia",
+ "start": "n1",
+ "nodes": {
+  "n1": {
+   "speaker": "nefertari",
+   "mood": "solemn",
+   "text": "\"Tenente de Jord\" não é o nome dela. Diga-me, pequena, como se chama?",
+   "variants": [
+    {
+     "if": [
+      "choice:yettus_apresentacao=informal"
+     ],
+     "text": "\"Tenente de Jord\" não é o nome dela. Diga-me, pequena, como se chama? (a rainha parece ter ouvido de Dan que a moça dispensa títulos)"
+    }
+   ],
+   "next": "n2"
+  },
+  "n2": {
+   "speaker": "trinity",
+   "mood": "nervous",
+   "text": "(ajoelha-se, mão sobre o peito, como em Jord) Trinity Reeves, majestade.",
+   "next": "n3"
+  },
+  "n3": {
+   "speaker": "nefertari",
+   "mood": "solemn",
+   "text": "De Jord… vieste de bem longe. Conhecendo Konge, deve ser algo de exímia importância.",
+   "next": "n4"
+  },
+  "n4": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Trinity entrega o envelope, que Dan leva à rainha. Nele, o Rei Konge propõe uma aliança entre Flerin e as terras de Jord e Veroogh contra as ameaças de Nagdaar.",
+   "next": "n5"
+  },
+  "n5": {
+   "speaker": "nefertari",
+   "mood": "measured",
+   "text": "Uma aliança requer algo em troca. O que Jord oferece, e o que deseja com isso?",
+   "options": [
+    {
+     "text": "Jord tem a maior quantidade de tropas; Flerin tem metais e madeira. E todos sabemos que vosso reino está fragilizado no quesito militar.",
+     "effects": [
+      "choice:proposta_tom=direto",
+      "var:trinity_franqueza+=1"
+     ],
+     "next": "n6"
+    },
+    {
+     "text": "Uma troca do que cada reino tem de melhor: proteção para Flerin, recursos para Jord. Ambos saem mais fortes contra Nagdaar.",
+     "effects": [
+      "choice:proposta_tom=diplomatico",
+      "rep:flerin_corte+=2"
+     ],
+     "next": "n6"
+    }
+   ]
+  },
+  "n6": {
+   "speaker": "nefertari",
+   "mood": "measured",
+   "text": "Recursos e proteção. São demandas justas. Mas esta decisão não pode ser tomada só por mim.",
+   "variants": [
+    {
+     "if": [
+      "choice:proposta_tom=direto"
+     ],
+     "text": "Franca, para uma mensageira. Recursos e proteção: demandas justas. Mas esta decisão não pode ser tomada só por mim."
+    }
+   ],
+   "next": "n7"
+  },
+  "n7": {
+   "speaker": "nefertari",
+   "mood": "warm",
+   "text": "Marcarei uma assembleia com o conselho. Dan, leve-a a um dos aposentos. Descanse e se prepare, Trinity Reeves. Estaremos aguardando.",
+   "onEnter": [
+    "flag:assembleia_marcada",
+    "memory:audiencia_nefertari",
+    "codex:nefertari",
+    "codex:grande_conselho",
+    "codex:alianca_jord_veroogh"
+   ],
+   "next": ""
+  }
+ }
+}

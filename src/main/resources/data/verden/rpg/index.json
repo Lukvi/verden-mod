@@ -1,0 +1,12 @@
+{
+ "quests": [
+  "data/verden/rpg/quests/p1_q01_yettus.json",
+  "data/verden/rpg/quests/p1_q02_lena.json"
+ ],
+ "dialogues": [
+  "data/verden/rpg/dialogues/dan_yettus.json",
+  "data/verden/rpg/dialogues/nefertari_audiencia.json",
+  "data/verden/rpg/dialogues/dan_parapeito.json",
+  "data/verden/rpg/dialogues/homem_parapeito.json"
+ ]
+}

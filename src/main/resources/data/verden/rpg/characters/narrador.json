@@ -1,0 +1,26 @@
+{
+ "id": "narrador",
+ "name": "Membro da expedição",
+ "playable": true,
+ "unlock": [
+  "flag:nunca_liberado"
+ ],
+ "model": "verden:narrador",
+ "animations": "verden:narrador",
+ "portrait": "verden:textures/gui/portrait/narrador.png",
+ "defaultOutfit": "padrao",
+ "outfits": [
+  {
+   "id": "padrao",
+   "name": "Roupas de viagem (provisório)",
+   "skin": "verden:textures/entity/narrador/padrao.png",
+   "canon": false,
+   "description": "O prólogo não dá nome, cargo ou aparência ao narrador. Visual provisório e genérico: NÃO é cânone."
+  }
+ ],
+ "abilities": [
+  "narrador.mover_furtivo"
+ ],
+ "attributes": {},
+ "bookNote": "Prólogo de Prelúdio: relato escrito, narrado em primeira pessoa a 'majestade'. Só se sabe que participa da expedição e chama Narber de 'o marujo'."
+}

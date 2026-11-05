@@ -1,0 +1,143 @@
+{
+ "id": "dan_yettus_2",
+ "start": "b1",
+ "nodes": {
+  "b1": {
+   "speaker": "trinity",
+   "mood": "gentle",
+   "text": "É uma poção, vai ajudar nos ferimentos mais leves.",
+   "next": "b2"
+  },
+  "b2": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Ela dá uma pequena risada, que o rapaz retribui. Ele abre o frasco e bebe de uma só vez o líquido ácido e amargo, forçando uma careta. Quase no mesmo instante, os ferimentos mais aparentes começam a se fechar e cicatrizar.",
+   "next": "b3"
+  },
+  "b3": {
+   "speaker": "dan",
+   "mood": "grateful",
+   "text": "Muito obrigado, senhorita...?",
+   "next": "b4"
+  },
+  "b4": {
+   "speaker": "trinity",
+   "mood": "gentle",
+   "text": "Trinity Reeves, tenente militar de Jord. Prazer.",
+   "next": "b5"
+  },
+  "b5": {
+   "speaker": "dan",
+   "mood": "curious",
+   "text": "“Tenente militar de Jord.”",
+   "next": "b6"
+  },
+  "b6": {
+   "speaker": "trinity",
+   "mood": "neutral",
+   "text": "Sim. Algum problema?",
+   "next": "b7"
+  },
+  "b7": {
+   "speaker": "dan",
+   "mood": "curious",
+   "text": "Não, desculpe. É que parece jovem para uma tenente, só isso. Os tenentes de Flerin devem ter o dobro da sua idade.",
+   "next": "b8"
+  },
+  "b8": {
+   "speaker": "trinity",
+   "mood": "amused",
+   "text": "Eu sei, muitos falam isso. Ser tenente com dezenove anos é bem absurdo mesmo, mas foi minha majestade que me promoveu ao cargo, então não vou questionar.",
+   "next": "b9"
+  },
+  "b9": {
+   "speaker": "dan",
+   "mood": "neutral",
+   "text": "Entendo.",
+   "next": "b10"
+  },
+  "b10": {
+   "speaker": "trinity",
+   "mood": "gentle",
+   "text": "Precisa de carona? Estou indo para Flerin.",
+   "next": "b11"
+  },
+  "b11": {
+   "speaker": "dan",
+   "mood": "curious",
+   "text": "O que uma tenente de Jord faria em Flerin?",
+   "next": "b12"
+  },
+  "b12": {
+   "speaker": "trinity",
+   "mood": "stern",
+   "text": "Minha missão é confidencial.",
+   "next": "b13"
+  },
+  "b13": {
+   "speaker": "dan",
+   "mood": "amused",
+   "text": "Ah, certo... Posso te levar à minha mãe então, sem problemas.",
+   "next": "b14"
+  },
+  "b14": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Ao ouvi-lo chamar a Rainha Nefertari de “mãe”, as peças se encaixam na cabeça de Trinity. Um lampejo de reconhecimento surge em seus olhos.",
+   "next": "b15"
+  },
+  "b15": {
+   "speaker": "trinity",
+   "mood": "shocked",
+   "text": "Príncipe Dan?!",
+   "next": "b16"
+  },
+  "b16": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Trinity faz menção de descer de Binky para reverenciá-lo, mas ele a impede, rindo.",
+   "next": "b17"
+  },
+  "b17": {
+   "speaker": "dan",
+   "mood": "amused",
+   "text": "Relaxa, não é como se eu saísse com a coroa na cabeça. Mas por via das dúvidas, eu te perdoo.",
+   "next": "b18"
+  },
+  "b18": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Com o susto, ela também ri. Já ouvira falar do príncipe Dan de Flerin, mas nunca o conhecera; era cômico vê-lo desprovido da pompa e da formalidade que esperava de um nobre.",
+   "next": "b19"
+  },
+  "b19": {
+   "speaker": "dan",
+   "mood": "neutral",
+   "text": "Sobre a oferta, eu aceito companhia até lá.",
+   "next": "b20"
+  },
+  "b20": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Ele tenta aproximar a mão da montaria, que se afasta, relinchando e o assustando.",
+   "next": "b21"
+  },
+  "b21": {
+   "speaker": "trinity",
+   "mood": "gentle",
+   "text": "Ei, Binky! Tenha bons modos. Desculpe, ele não tá acostumado com outras pessoas.",
+   "next": "b22"
+  },
+  "b22": {
+   "speaker": "dan",
+   "mood": "wry",
+   "text": "Sendo assim, eu irei caminhando. Mas trate de me acompanhar.",
+   "onEnter": [
+    "flag:dan_acompanha",
+    "codex:dan_de_mubarak",
+    "codex:binky"
+   ],
+   "next": ""
+  }
+ }
+}

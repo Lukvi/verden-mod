@@ -67,13 +67,24 @@ public final class RpgRuntime {
             LOG.error("Falha ao ler a campanha; iniciando uma nova (o arquivo antigo não será apagado).", e);
         }
         session = new Session(state != null ? state : new StoryState());
+        loadContent(session);
+    }
+
+    private static void loadContent(Session s) {
         try {
-            ContentLoader.loadIndex(session, readResource("data/verden/rpg/index.json"), RpgRuntime::readResource);
-            List<String> problems = ContentLoader.validate(session);
+            ContentLoader.loadIndex(s, readResource("data/verden/rpg/index.json"), RpgRuntime::readResource);
+            List<String> problems = ContentLoader.validate(s);
             for (String p : problems) LOG.warn("Conteúdo do RPG: {}", p);
         } catch (RuntimeException e) {
             LOG.error("Falha ao carregar o conteúdo do RPG; sistemas de missão ficarão vazios.", e);
         }
+    }
+
+    /** Apaga a campanha atual (estado novo, conteúdo recarregado). Usado por "Reiniciar Fase 1". */
+    public static Session reset() {
+        session = new Session(new StoryState());
+        loadContent(session);
+        return session;
     }
 
     private static void onTick(MinecraftServer server) {

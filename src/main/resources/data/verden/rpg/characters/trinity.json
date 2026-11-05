@@ -10,10 +10,20 @@
  "outfits": [
   {
    "id": "jord_branca",
-   "name": "Armadura branca de Jord",
-   "skin": "verden:textures/entity/trinity/jord_branca.png",
+   "name": "Armadura branca de Jord (livro) — provisória",
+   "skin": "verden:textures/entity/player/trinity_jord.png",
    "canon": true,
-   "description": "Cap. 1: armadura branca, broche de pássaro dourado de Jord, cabelos castanhos longos com pequenas tranças. PLACEHOLDER: a textura ainda não existe; o caminho é o contrato para a arte."
+   "description": "Livro: armadura branca sobre vestes leves azuladas, broche de ave dourada de Jord, cabelos castanhos longos com pequenas tranças. SKIN PROVISÓRIA."
+  },
+  {
+   "id": "referencia_autor",
+   "name": "Visual da imagem de referência (provisória)",
+   "skin": "verden:textures/entity/player/trinity.png",
+   "canon": false,
+   "description": "Capa vermelha e túnica bege da imagem enviada pelo autor; não descrito no texto. Alternativo.",
+   "requires": [
+    "flag:desbloqueio_referencia"
+   ]
   }
  ],
  "abilities": [

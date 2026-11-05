@@ -1,18 +1,30 @@
 {
  "characters": [
+  "data/verden/rpg/characters/narrador.json",
   "data/verden/rpg/characters/trinity.json",
   "data/verden/rpg/characters/marie.json",
   "data/verden/rpg/characters/dan.json",
   "data/verden/rpg/characters/lena.json"
  ],
  "quests": [
-  "data/verden/rpg/quests/p1_q01_yettus.json",
-  "data/verden/rpg/quests/p1_q02_lena.json"
+  "data/verden/rpg/quests/fase_01_karamarraw_flerin.json"
  ],
  "dialogues": [
-  "data/verden/rpg/dialogues/dan_yettus.json",
-  "data/verden/rpg/dialogues/nefertari_audiencia.json",
-  "data/verden/rpg/dialogues/dan_parapeito.json",
-  "data/verden/rpg/dialogues/homem_parapeito.json"
+  "data/verden/rpg/dialogues/dan_yettus_1.json",
+  "data/verden/rpg/dialogues/dan_yettus_2.json",
+  "data/verden/rpg/dialogues/dan_caminho.json",
+  "data/verden/rpg/dialogues/flerin_rua.json",
+  "data/verden/rpg/dialogues/zigurate_binky.json",
+  "data/verden/rpg/dialogues/nefertari_audiencia_1.json",
+  "data/verden/rpg/dialogues/nefertari_audiencia_2.json"
+ ],
+ "cutscenes": [
+  "data/verden/rpg/cutscenes/c_chegada.json",
+  "data/verden/rpg/cutscenes/c_narber_destino.json",
+  "data/verden/rpg/cutscenes/c_relatorio.json",
+  "data/verden/rpg/cutscenes/c_titulo.json",
+  "data/verden/rpg/cutscenes/c_yettus_intro.json",
+  "data/verden/rpg/cutscenes/c_audiencia_porta.json",
+  "data/verden/rpg/cutscenes/c_fim_fase.json"
  ]
 }

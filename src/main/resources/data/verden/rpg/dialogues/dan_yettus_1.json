@@ -1,0 +1,69 @@
+{
+ "id": "dan_yettus_1",
+ "start": "a1",
+ "nodes": {
+  "a1": {
+   "speaker": "trinity",
+   "mood": "gentle",
+   "text": "Pode parar, Binky.",
+   "next": "a2"
+  },
+  "a2": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Trinity dá um tapinha na lateral do animal e aproxima-se do homem, a velocidade diminuindo até parar ao seu lado.",
+   "next": "a3"
+  },
+  "a3": {
+   "speaker": "trinity",
+   "mood": "gentle",
+   "text": "Boa tar-, digo, boa noite. Está tudo bem?",
+   "next": "a4"
+  },
+  "a4": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "A tenente segura o cabo da espada e o analisa de cima a baixo. Os cabelos prateados e os olhos azulados lhe parecem familiares, embora ela seja ruim para determinar rostos.",
+   "next": "a5"
+  },
+  "a5": {
+   "speaker": "dan",
+   "mood": "wry",
+   "text": "Nem tão boa para mim, amigo.",
+   "next": "a6"
+  },
+  "a6": {
+   "speaker": "dan",
+   "mood": "wry",
+   "text": "…Amiga.",
+   "next": "a7"
+  },
+  "a7": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Ambos se encaram por um momento. Trinity sorri gentilmente e solta a arma que segurara por precaução.",
+   "next": "a8"
+  },
+  "a8": {
+   "speaker": "trinity",
+   "mood": "gentle",
+   "text": "Tá precisando de ajuda?",
+   "next": "a9"
+  },
+  "a9": {
+   "speaker": "dan",
+   "mood": "wry",
+   "text": "Não precisa, eu estou...",
+   "next": "a10"
+  },
+  "a10": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Antes que ele termine, Trinity abre a bolsa da sela e puxa um pequeno frasco de líquido avermelhado.",
+   "onEnter": [
+    "flag:pocao_em_maos"
+   ],
+   "next": ""
+  }
+ }
+}

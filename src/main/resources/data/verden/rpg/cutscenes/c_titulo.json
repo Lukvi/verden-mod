@@ -1,0 +1,31 @@
+{
+ "id": "c_titulo",
+ "skippable": true,
+ "onEnd": [
+  "flag:titulo_exibido"
+ ],
+ "steps": [
+  {
+   "do": "fade",
+   "to": 1,
+   "ticks": 0
+  },
+  {
+   "do": "music",
+   "id": "titulo_tema"
+  },
+  {
+   "do": "wait",
+   "ticks": 30
+  },
+  {
+   "do": "title",
+   "id": "verden_af",
+   "ticks": 430
+  },
+  {
+   "do": "wait",
+   "ticks": 20
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+{
+ "id": "homem_parapeito",
+ "start": "n1",
+ "nodes": {
+  "n1": {
+   "speaker": "homem_parapeito",
+   "mood": "serene",
+   "text": "Sinto uma aura confusa em você, jovem. O que te aflige?",
+   "next": "n2"
+  },
+  "n2": {
+   "speaker": "trinity",
+   "mood": "embarrassed",
+   "text": "Bem… tô um pouco perdida. Esse lugar é grande. O senhor sabe onde fica a biblioteca?",
+   "next": "n3"
+  },
+  "n3": {
+   "speaker": "homem_parapeito",
+   "mood": "serene",
+   "text": "Em busca da biblioteca em meio à madrugada? Está na ala leste. Desça dois andares, siga o corredor central, dobre à esquerda. Você encontrará o arco logo em seguida.",
+   "onEnter": [
+    "flag:direcao_biblioteca",
+    "codex:homem_do_parapeito"
+   ],
+   "next": ""
+  }
+ }
+}

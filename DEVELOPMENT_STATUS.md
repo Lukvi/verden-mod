@@ -1,53 +1,40 @@
-# DEVELOPMENT_STATUS — Verden RPG (atualizado: Etapa 3, sessão 2)
+# DEVELOPMENT_STATUS — Verden RPG (Fase 1: Karamarraw → fim do Capítulo Um)
 
-## 1. Visão geral
-Mod Fabric 1.21.1 (Yarn, Java 21) "Verden", em transformação num RPG narrativo baseado em *Prelúdio e Agouro* (dois livros num só arquivo). Duas protagonistas jogáveis: Trinity Reeves e Marie Chilgster. Veja `docs/DIAGNOSTICO_TECNICO.md` (estado do mod original) e `docs/PLANO_DE_ADAPTACAO.md` (arquitetura/roadmap). Regra de ouro: o livro é a fonte; nada de cânone inventado; dúvidas viram pendência.
+## Estado real (leia primeiro)
+- **Escrito e integrado ao runtime do Minecraft** (servidor + cliente + rede): menu inicial próprio, Novo Jogo automático, prólogo de Karamarraw,
+  cutscenes (câmera, letterbox, fades, falas, título VERDEN AF, música/sons), Narber (patrulha, detecção, ocultação), cena do relatório,
+  Yettus/Binky/Dan, caminho, Flerin, zigurate, audiência, saída. **Checado por tipos contra os jars reais do MC 1.21.1/Fabric API**
+  (stubs só de bibliotecas ausentes no sandbox). **NADA foi executado dentro do Minecraft. O Gradle não foi executado** (sem rede/Gradle no sandbox).
+- Testes do núcleo (Java puro): 31/31. Auditoria de recursos (`tools/check_assets.py`): OK. Isso NÃO prova que o jogo funciona.
 
-## 2. Arquitetura atual
-```
-src/main/java/com/verden/rpg/core/   Java PURO (sem Minecraft), testável fora do jogo
-  StoryState, CharacterSheet        única fonte de verdade persistente
-  Session                           condições/efeitos declarativos + troca de protagonista + roupas
-  QuestEngine, Quest                missões em estágios; objetivos por evento ou por condição
-  Dialogue, DialogueRunner          diálogos ramificados com variantes reativas a escolhas
-  CharacterDef, Appearance          personagens e skins como DADOS
-  ContentLoader                     JSON → objetos + validação de referências
-  SaveManager                       fsync + rotação de 3 backups + checksum + rename atômico
-  Json                              parser/serializador sem dependências
-src/main/java/com/verden/rpg/RpgRuntime.java   ÚNICA ponte com o Minecraft (carrega/salva por mundo)
-src/main/resources/data/verden/rpg/   conteúdo: quests/, dialogues/, characters/, index.json
-tools/run_core_tests.sh             compila o núcleo e roda 27 testes
-tools/split_livro.py, gen_chapter_map.py   divisão do livro e mapa capítulo→fase
-docs/livro/ (gerado), docs/fases.json, docs/CHAPTER_TO_MISSION_MAP.md
-```
-Campanha salva em `<pasta do mundo>/verden_rpg/campaign.json` (+ `.bak1..3`). Uma campanha por mundo; sem multiplayer.
+## As 18 etapas (índice da missão `fase_01_karamarraw_flerin`)
+| # | Etapa | Gatilho/implementação | Pendência/risco |
+|---|---|---|---|
+| 1 | Desembarcar | cutscene `c_chegada` + zona praia | ilha/navio nunca vistos em jogo; tempo de construção |
+| 2 | Acompanhar expedição | NPCs `expedicionario` seguem o jogador | modelo vanilla de NPC, sem animação própria |
+| 3 | Investigar a mata | zona + atmosfera (partículas, sussurros, náusea, clima, tensão) | intensidade não calibrada |
+| 4 | Origem dos disparos | zona; Narber surge e patrulha | — |
+| 5 | Esconder-se | agachar perto de pedra/árvore; visto = volta ao início da mata, sem morte | equilíbrio não testado |
+| 6 | Voltar ao navio | zona do convés | — |
+| 7 | Destino de Narber | cutscene não pulável, tiro distante, sem violência gráfica | câmera nunca vista em jogo |
+| 8 | Relatório | sala fechada, Majestade/Reeves/soldado, 8 planos | texto do relatório do livro; local da cena NÃO existe no livro (sala genérica) |
+| 9 | Título + Yettus | `c_titulo` (música própria) → `c_yettus_intro` encadeadas | — |
+| 10 | Homem ferido | cavalgar Binky (cavalo vanilla c/ nome) até a zona | Binky sem modelo próprio |
+| 11 | Poção | item `Poção de Recuperação` usado em Dan (clique direito) | — |
+| 12 | Conversa | `dan_yettus_2` (texto literal do livro) | — |
+| 13 | Caminho | Dan segue a pé; `dan_caminho` | Dan pode ficar para trás (teleporta se >40) |
+| 14–15 | Cidade / zigurate | zonas; `flerin_rua` | **Flerin é a cidade já gerada do mod (sem adobe/mosaicos específicos do livro)**; zigurate é protótipo a leste da cidade |
+| 16 | Binky ao estábulo | `zigurate_binky`; cavalo é levado | sem estábulo construído |
+| 17–18 | Audiência / proposta | `nefertari_audiencia_1/2` sem escolhas | sala do trono simplificada (sem porta dupla) |
+| 19 | Corredores / fim | zona do corredor; `c_fim_fase` + selo | termina aqui; Fase 2 não iniciada |
 
-## 3. Sistemas
-**Implementados e testados (núcleo, fora do jogo):** estado da campanha, missões (9 categorias, estágios, objetivos opcionais, XP/itens/efeitos), diálogos com condições e variantes, escolhas/reputação/afinidade/memórias, codex/regiões (como dados), fichas independentes Trinity/Marie com XP e pontos, personagens+roupas+troca real de protagonista (trava narrativa, troca forçada, roupa por personagem, posição por personagem), salvamento robusto.
-**Implementado, conferido só por tipos (não executado no jogo):** `RpgRuntime` (carga/autosave a cada 5 min/ao fechar).
-**NÃO existe ainda (planejado):** qualquer coisa visível no jogo — gatilhos do mundo, NPCs da campanha, HUD, tela de diálogo/diário, rede cliente↔servidor, câmera dinâmica (exige Mixin), cutscenes, combate RPG, party, skins/modelos renderizados (as texturas citadas nos JSON **não existem**), mapa, áudio. Conteúdo de campanha: só caps. 1–3 de Prelúdio (2 missões, 4 diálogos).
+## Não feito (e por quê)
+- GeckoLib / Player Animation Library / Better Combat / CinematicTools / RPG Dialogue **não estão integrados**: sem rede aqui não consigo
+  verificar um build com novas dependências, e animações exigem modelos/animações ainda não criados. NPCs usam o modelo vanilla de jogador.
+- A skin do jogador não muda com a troca de personagem (exigiria Mixin/biblioteca de animação). Skins existem (provisórias) e são usadas pelos NPCs.
+- Tela de saves própria (pedida para depois). "Continuar Jogo" abre a lista de mundos do Minecraft.
 
-## 4. Problemas conhecidos
-- Build completo só no CI (sandbox sem Gradle/rede). Última checagem local: núcleo + RpgRuntime compilam contra os jars reais do MC 1.21.1; projeto inteiro sem erro novo.
-- Pendências do diagnóstico (pacote `world/build` duplicado, lixo na raiz, árvore ≠ HEAD): aguardam sua confirmação.
-- Lore: conteúdo do mod não atestado no livro; "Núcleo da Marie" não existe no texto; "Thu'um" é de outra franquia. Ver diagnóstico §4.
-- Capítulos com número repetido no original (L1_52/52b, L2_77/77b).
-- Marie/Lena/Dan: aparência e habilidades **PENDENTES de leitura** (JSON marcado). Atributos de Trinity e curva de XP são provisórios.
-- Estado de missão é global, não por protagonista (o plano pede estado individual); resolver quando houver missões de Marie.
-
-## 5. Última versão compilada / última bateria de testes
-- JAR: **nenhum gerado** (sem Gradle aqui). Gere pelo GitHub Actions ou `./gradlew build`.
-- Testes: `tools/run_core_tests.sh` → **27 passaram, 0 falharam** (JSON, condições, XP, conteúdo, partida completa dos caps. 1–3, personagens/skins/troca, salvamento sob corrupção).
-
-## 6. Próxima tarefa recomendada
-1. Você: confirmar as 5 decisões (plano §5) e o item "pacote duplicado/lixo".
-2. **M1 — primeira coisa visível no jogo:** `GameEvent` a partir do mundo (zonas `reach`, interação com bloco/entidade), comando de depuração `/verden rpg` (status, iniciar missão, disparar evento, trocar personagem) e notificações de missão na HUD via payload de rede. Isso permite jogar/testar o arco Yettus→Flerin no Minecraft.
-3. Ler Prelúdio caps. 4–9 (Lóros) e gerar resumos (`docs/livro_resumos/`), atualizando `LIDOS` em `tools/gen_chapter_map.py`.
-4. Ler Marie (cap. 12) antes de definir qualquer habilidade/aparência dela.
-
-## 7. Como continuar (outra sessão/IA)
-1. `python3 tools/split_livro.py <livro.txt>` e `python3 tools/gen_chapter_map.py`.
-2. `tools/run_core_tests.sh` deve dar 27/27 antes de mexer.
-3. Conteúdo novo = JSON em `data/verden/rpg/` + entrada em `index.json`; o teste "carrega o índice e valida referências" pega erros.
-4. Sintaxe de condições/efeitos: cabeçalho de `Session.java`.
-5. Nunca contar uma missão como "jogável" sem gatilho no mundo (M1).
+## Como retomar
+1. `python3 tools/split_livro.py <livro.txt>`; `tools/run_core_tests.sh` (31/31); `python3 tools/check_assets.py`.
+2. Compilar de verdade (CI: `.github/workflows/build.yml`, Gradle 8.10.2) e testar no jogo com `TESTING_GUIDE.md`.
+3. Próximo: corrigir o que o teste real revelar; só então GeckoLib/animações e a tela de saves.

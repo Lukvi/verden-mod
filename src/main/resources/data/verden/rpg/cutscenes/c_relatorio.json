@@ -1,0 +1,136 @@
+{
+ "id": "c_relatorio",
+ "skippable": true,
+ "onEnd": [
+  "flag:relatorio_visto"
+ ],
+ "steps": [
+  {
+   "do": "fade",
+   "to": 1,
+   "ticks": 0
+  },
+  {
+   "do": "act",
+   "name": "montar_relatorio",
+   "essential": true
+  },
+  {
+   "do": "letterbox",
+   "on": true
+  },
+  {
+   "do": "music",
+   "id": "relatorio_tema"
+  },
+  {
+   "do": "fade",
+   "to": 0,
+   "ticks": 40
+  },
+  {
+   "do": "shot",
+   "id": "rel_papel"
+  },
+  {
+   "do": "line",
+   "speaker": "Relato da expedição",
+   "text": "“Os antigos relatos não mudaram, e essa ilha parece estar cada vez mais...”"
+  },
+  {
+   "do": "wait",
+   "ticks": 30
+  },
+  {
+   "do": "shot",
+   "id": "rel_homem_lendo"
+  },
+  {
+   "do": "line",
+   "speaker": "majestade",
+   "text": "Amaldiçoada."
+  },
+  {
+   "do": "shot",
+   "id": "rel_olhos"
+  },
+  {
+   "do": "wait",
+   "ticks": 50
+  },
+  {
+   "do": "shot",
+   "id": "rel_mulher"
+  },
+  {
+   "do": "wait",
+   "ticks": 40
+  },
+  {
+   "do": "shot",
+   "id": "rel_taca"
+  },
+  {
+   "do": "wait",
+   "ticks": 40
+  },
+  {
+   "do": "shot",
+   "id": "rel_dois"
+  },
+  {
+   "do": "line",
+   "speaker": "majestade",
+   "text": "É como pensávamos, Tenente Reeves. Já sabe o que deve ser feito."
+  },
+  {
+   "do": "act",
+   "name": "soldado_entrega",
+   "essential": true
+  },
+  {
+   "do": "shot",
+   "id": "rel_soldado"
+  },
+  {
+   "do": "wait",
+   "ticks": 40
+  },
+  {
+   "do": "line",
+   "speaker": "majestade",
+   "text": "Envie a proposta para Flerin. Eles irão aceitar."
+  },
+  {
+   "do": "shot",
+   "id": "rel_mulher"
+  },
+  {
+   "do": "wait",
+   "ticks": 30
+  },
+  {
+   "do": "line",
+   "speaker": "reeves",
+   "text": "Sim, Majestade."
+  },
+  {
+   "do": "act",
+   "name": "reeves_sai",
+   "essential": true
+  },
+  {
+   "do": "shot",
+   "id": "rel_saida"
+  },
+  {
+   "do": "wait",
+   "ticks": 60
+  },
+  {
+   "do": "fade",
+   "to": 1,
+   "ticks": 80
+  }
+ ]
+}

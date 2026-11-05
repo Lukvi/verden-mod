@@ -1,0 +1,54 @@
+{
+ "id": "c_yettus_intro",
+ "skippable": true,
+ "onEnd": [
+  "switch:trinity"
+ ],
+ "steps": [
+  {
+   "do": "fade",
+   "to": 1,
+   "ticks": 0
+  },
+  {
+   "do": "act",
+   "name": "posicionar_yettus",
+   "essential": true
+  },
+  {
+   "do": "music",
+   "id": "stop"
+  },
+  {
+   "do": "sound",
+   "id": "vento_deserto"
+  },
+  {
+   "do": "letterbox",
+   "on": true
+  },
+  {
+   "do": "fade",
+   "to": 0,
+   "ticks": 70,
+   "async_": true
+  },
+  {
+   "do": "shot",
+   "id": "yet_aberto"
+  },
+  {
+   "do": "shot",
+   "id": "yet_galope"
+  },
+  {
+   "do": "letterbox",
+   "on": false
+  },
+  {
+   "do": "act",
+   "name": "entregar_controle",
+   "essential": true
+  }
+ ]
+}

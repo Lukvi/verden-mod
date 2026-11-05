@@ -1,0 +1,139 @@
+{
+ "id": "p1_q02_lena",
+ "title": "O Caderno de Lena",
+ "category": "investigation",
+ "chapter": "p1_02",
+ "giver": "dan",
+ "summary": "A princesa Lena desapareceu. Dan encontrou apenas um caderno que não abre. Trinity sente que há um feitiço nele.",
+ "requires": [
+  "flag:proposta_entregue"
+ ],
+ "onStart": [
+  "codex:desaparecimento_lena"
+ ],
+ "stages": [
+  {
+   "id": "sala_secreta",
+   "journal": "Dan levou você ao corredor das sete tochas e abriu uma passagem escondida. Ele pede que você não toque em nada.",
+   "objectives": [
+    {
+     "id": "o_entrar",
+     "text": "Entrar na sala secreta de Dan",
+     "kind": "reach",
+     "target": "sala_secreta_dan"
+    }
+   ]
+  },
+  {
+   "id": "caderno",
+   "journal": "O caderno de couro negro não abre, e algo nele pesa no ar. Dan não sentiu nada, o que é estranho.",
+   "objectives": [
+    {
+     "id": "o_caderno",
+     "text": "Examinar o caderno de Lena",
+     "kind": "examine",
+     "target": "caderno_lena"
+    },
+    {
+     "id": "o_esbocos",
+     "text": "Observar os esboços de armas e engenhocas nas paredes",
+     "kind": "examine",
+     "target": "esbocos_dan",
+     "optional": true
+    }
+   ]
+  },
+  {
+   "id": "biblioteca",
+   "journal": "Se Lena aprendeu algum feitiço, foi no zigurate. A biblioteca dos Mubarak fica na ala leste.",
+   "onEnter": [
+    "codex:biblioteca_mubarak"
+   ],
+   "objectives": [
+    {
+     "id": "o_biblioteca",
+     "text": "Encontrar a biblioteca da ala leste",
+     "kind": "reach",
+     "target": "biblioteca_leste"
+    },
+    {
+     "id": "o_parapeito",
+     "text": "Pedir informação a alguém no parapeito",
+     "kind": "dialogue",
+     "target": "homem_parapeito",
+     "optional": true
+    },
+    {
+     "id": "o_moda",
+     "text": "Resistir ao livro de moda",
+     "kind": "examine",
+     "target": "livro_moda",
+     "optional": true
+    }
+   ]
+  },
+  {
+   "id": "quadro",
+   "journal": "O quadro da era de ouro de Flerin causa a mesma estranheza do caderno. Há algo escondido atrás dele.",
+   "objectives": [
+    {
+     "id": "o_quadro",
+     "text": "Tocar o quadro sobre a lareira",
+     "kind": "examine",
+     "target": "quadro_biblioteca"
+    },
+    {
+     "id": "o_grimorio",
+     "text": "Pegar o que está escondido atrás do quadro",
+     "kind": "collect",
+     "target": "grimorio_rishnuu"
+    }
+   ]
+  },
+  {
+   "id": "estudo",
+   "journal": "O grimório está gasto pelo tempo. Entre feitiços úteis e inúteis, há uma runa que parece ser a do caderno.",
+   "objectives": [
+    {
+     "id": "o_estudar",
+     "text": "Estudar o grimório na sala secreta",
+     "kind": "examine",
+     "target": "grimorio_rishnuu"
+    },
+    {
+     "id": "o_bolhas",
+     "text": "Ler sobre a Invocação de Bolhas de Ar Douradas",
+     "kind": "examine",
+     "target": "pagina_bolhas",
+     "optional": true
+    }
+   ]
+  },
+  {
+   "id": "desvinculo",
+   "journal": "A Runa de Trancamento prende o caderno. O Feitiço do Desvínculo pode soltá-la, mas exige concentração.",
+   "onEnter": [
+    "codex:runa_trancamento",
+    "codex:feitico_desvinculo"
+   ],
+   "objectives": [
+    {
+     "id": "o_desvinculo",
+     "text": "Conjurar o Feitiço do Desvínculo sobre o caderno",
+     "kind": "cast",
+     "target": "desvinculo"
+    }
+   ]
+  }
+ ],
+ "rewards": {
+  "xp": 140,
+  "effects": [
+   "flag:caderno_aberto",
+   "flag:runa_trancamento_quebrada",
+   "memory:caderno_aberto",
+   "aff:dan+=1"
+  ],
+  "items": []
+ }
+}

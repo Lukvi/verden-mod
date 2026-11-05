@@ -19,6 +19,14 @@ public final class ModSounds {
     public static final SoundEvent COIN = reg("moeda.tilintar");
     public static final SoundEvent NPC_TALK = reg("npc.falar");
 
+    public static final SoundEvent RPG_MAR = reg("rpg.mar");
+    public static final SoundEvent RPG_TENSAO = reg("rpg.tensao");
+    public static final SoundEvent RPG_SUSSURROS = reg("rpg.sussurros");
+    public static final SoundEvent RPG_TIRO = reg("rpg.tiro");
+    public static final SoundEvent RPG_RELATORIO = reg("rpg.relatorio");
+    public static final SoundEvent RPG_TITULO = reg("rpg.titulo");
+    public static final SoundEvent RPG_VENTO = reg("rpg.vento");
+
     private static SoundEvent reg(String name) {
         return Registry.register(Registries.SOUND_EVENT, VerdenMod.id(name), SoundEvent.of(VerdenMod.id(name)));
     }

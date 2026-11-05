@@ -1,0 +1,34 @@
+{
+ "id": "c_fim_fase",
+ "skippable": false,
+ "onEnd": [],
+ "steps": [
+  {
+   "do": "letterbox",
+   "on": true
+  },
+  {
+   "do": "shot",
+   "id": "saida_afasta"
+  },
+  {
+   "do": "wait",
+   "ticks": 60
+  },
+  {
+   "do": "fade",
+   "to": 1,
+   "ticks": 60
+  },
+  {
+   "do": "title",
+   "id": "fim_fase",
+   "ticks": 220
+  },
+  {
+   "do": "act",
+   "name": "liberar_proxima",
+   "essential": true
+  }
+ ]
+}

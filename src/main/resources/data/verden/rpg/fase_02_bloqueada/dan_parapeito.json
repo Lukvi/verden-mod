@@ -1,0 +1,66 @@
+{
+ "id": "dan_parapeito",
+ "start": "n1",
+ "nodes": {
+  "n1": {
+   "speaker": "dan",
+   "mood": "melancholic",
+   "text": "Lena costumava vir aqui durante a noite.",
+   "next": "n2"
+  },
+  "n2": {
+   "speaker": "trinity",
+   "mood": "curious",
+   "text": "Lena?",
+   "next": "n3"
+  },
+  "n3": {
+   "speaker": "dan",
+   "mood": "melancholic",
+   "text": "Ela desapareceu. Ninguém sabe onde está, e o conselho… eles não ligam enquanto isso não atrapalhar os planos deles. Nos últimos anos a capital recebeu relatos de crianças e adolescentes sequestrados pelo nosso território. Agora passou a acontecer por aqui.",
+   "options": [
+    {
+     "text": "Isso é inaceitável! Se ninguém vai ajudar, eu irei!",
+     "effects": [
+      "choice:lena_reacao=impulsiva",
+      "var:trinity_impulsividade+=1",
+      "aff:dan+=1"
+     ],
+     "next": "n4"
+    },
+    {
+     "text": "Primeiro quero entender o que já foi feito. O que você descobriu?",
+     "effects": [
+      "choice:lena_reacao=cautelosa",
+      "var:trinity_cautela+=1"
+     ],
+     "next": "n4"
+    }
+   ]
+  },
+  "n4": {
+   "speaker": "dan",
+   "mood": "wry",
+   "text": "Você é determinada. E imprevisível.",
+   "variants": [
+    {
+     "if": [
+      "choice:lena_reacao=cautelosa"
+     ],
+     "text": "Procurei no quarto dela e não achei nada que ajudasse… exceto uma coisa. Eu devia ter aprendido a pedir ajuda mais cedo."
+    }
+   ],
+   "next": "n5"
+  },
+  "n5": {
+   "speaker": "dan",
+   "mood": "quiet",
+   "text": "Siga-me. E, por favor, não toque em nada.",
+   "onEnter": [
+    "quest.start:p1_q02_lena",
+    "flag:dan_confiou_lena"
+   ],
+   "next": ""
+  }
+ }
+}

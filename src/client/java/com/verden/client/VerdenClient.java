@@ -42,6 +42,7 @@ public class VerdenClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        com.verden.client.rpg.RpgClient.init();
         VerdenHud.register();
         EntityRendererRegistry.register(ModEntities.NPC, VerdenNpcRenderer::new);
         EntityRendererRegistry.register(ModEntities.WALKER, VerdenWalkerRenderer::new);

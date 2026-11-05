@@ -11,9 +11,9 @@
   {
    "id": "padrao",
    "name": "Príncipe de Flerin",
-   "skin": "verden:textures/entity/dan/padrao.png",
+   "skin": "verden:textures/entity/player/dan.png",
    "canon": true,
-   "description": "Cap. 1: cabelos prateados, olhos azuis. Roupas de príncipe ainda a detalhar. PLACEHOLDER: a textura ainda não existe; o caminho é o contrato para a arte."
+   "description": "Da imagem de referência do autor (traje preto com detalhes dourados; cabelos prateados; olhos azuis). Asas ausentes (não pertencem à fase 1). SKIN PROVISÓRIA."
   }
  ],
  "abilities": [],

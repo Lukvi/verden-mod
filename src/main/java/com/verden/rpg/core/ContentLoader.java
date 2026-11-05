@@ -35,6 +35,14 @@ public final class ContentLoader {
                 throw new IllegalArgumentException("erro em " + p + ": " + e.getMessage(), e);
             }
         }
+        for (String p : strList(idx.get("cutscenes"))) {
+            try {
+                Cutscene c = parseCutscene(Json.parseObject(reader.apply(p)));
+                if (s.cutscenes.putIfAbsent(c.id(), c) != null) throw new IllegalArgumentException("cutscene duplicada: " + c.id());
+            } catch (RuntimeException e) {
+                throw new IllegalArgumentException("erro em " + p + ": " + e.getMessage(), e);
+            }
+        }
         for (String p : strList(idx.get("dialogues"))) {
             try {
                 Dialogue d = parseDialogue(Json.parseObject(reader.apply(p)));
@@ -59,7 +67,7 @@ public final class ContentLoader {
                         kind.equals("state") ? str(om.get("target"), "") : req(om, "target"),
                         Math.max(1, StoryState.num(om.get("count"), 1)), Boolean.TRUE.equals(om.get("optional")), strList(om.get("when"))));
             }
-            stages.add(new Quest.Stage(req(sm, "id"), req(sm, "journal"), objs, strList(sm.get("onEnter"))));
+            stages.add(new Quest.Stage(req(sm, "id"), str(sm.get("journal"), ""), objs, strList(sm.get("onEnter"))));
         }
         Map<String, Object> rw = m.get("rewards") instanceof Map<?, ?> r ? (Map<String, Object>) r : new LinkedHashMap<>();
         Quest.Category cat;
@@ -71,6 +79,28 @@ public final class ContentLoader {
         return new Quest(id, req(m, "title"), cat, str(m.get("chapter"), ""), str(m.get("giver"), ""), str(m.get("summary"), ""),
                 strList(m.get("requires")), stages, strList(m.get("onStart")), strList(rw.get("effects")),
                 StoryState.num(rw.get("xp"), 0), strList(rw.get("items")));
+    }
+
+    /** Passo: {"do":"kind", ...params; "ticks"? ; "essential"?}. fade/line/wait têm duração (line calcula pelo texto). */
+    @SuppressWarnings("unchecked")
+    public static Cutscene parseCutscene(Map<String, Object> m) {
+        String id = req(m, "id");
+        List<Cutscene.Step> steps = new ArrayList<>();
+        for (Object o : list(m.get("steps"))) {
+            Map<String, Object> sm = new LinkedHashMap<>((Map<String, Object>) o);
+            String kind = req(sm, "do");
+            if (!Cutscene.KINDS.contains(kind)) throw new IllegalArgumentException("passo desconhecido '" + kind + "' em " + id);
+            int ticks = StoryState.num(sm.get("ticks"), 0);
+            if (kind.equals("line") && ticks <= 0) ticks = 50 + req(sm, "text").length() * 2; // tempo de leitura
+            boolean essential = Boolean.TRUE.equals(sm.get("essential")) || kind.equals("effect");
+            boolean async = Boolean.TRUE.equals(sm.get("async_"));
+            if (async && kind.equals("fade")) ticks = 0; // fade em paralelo: não segura a próxima instrução
+            if (!kind.equals("fade") && !kind.equals("line") && !kind.equals("wait")) ticks = Math.max(0, ticks);
+            sm.remove("do");
+            steps.add(new Cutscene.Step(kind, sm, ticks, essential));
+        }
+        if (steps.isEmpty()) throw new IllegalArgumentException("cutscene sem passos: " + id);
+        return new Cutscene(id, !Boolean.FALSE.equals(m.get("skippable")), steps, strList(m.get("onEnd")));
     }
 
     @SuppressWarnings("unchecked")
@@ -154,6 +184,10 @@ public final class ContentLoader {
             checkConds(s, c.unlock(), w + " unlock", problems);
             if (c.playable() && c.abilities().isEmpty()) problems.add(w + ": personagem jogável sem habilidades base");
         }
+        for (Cutscene c : s.cutscenes.values()) {
+            checkEffects(c.onEnd(), questIds, "cutscene " + c.id() + " onEnd", problems);
+            for (String e : c.onEnd()) if (e.startsWith("switch:") && !s.characters.containsKey(e.substring(7))) problems.add("cutscene " + c.id() + ": personagem inexistente em '" + e + "'");
+        }
         for (Dialogue d : s.dialogues.values()) {
             for (Dialogue.Node n : d.nodes().values()) {
                 String w = "dialogue " + d.id() + "/" + n.id();
@@ -196,7 +230,7 @@ public final class ContentLoader {
                 problems.add(where + ": missão inexistente em '" + e + "'");
                 continue;
             }
-            if (e.startsWith("quest.start:")) continue;
+            if (e.startsWith("quest.start:") || e.startsWith("switch:")) continue; // switch: é checado em validate()
             try {
                 Session probe = new Session(new StoryState());
                 probe.apply(List.of(e));

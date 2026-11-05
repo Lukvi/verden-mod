@@ -138,7 +138,7 @@ public final class QuestEngine {
 
     private void enterStage(Quest q, QuestProgress p) {
         Quest.Stage st = q.stages().get(p.stage);
-        if (p.stage > 0) session.notifications.add(new Notification(Notification.Kind.QUEST_UPDATED, q.id(), st.journal()));
+        if (p.stage > 0 && !st.journal().isEmpty()) session.notifications.add(new Notification(Notification.Kind.QUEST_UPDATED, q.id(), st.journal()));
         session.apply(st.onEnter());
     }
 

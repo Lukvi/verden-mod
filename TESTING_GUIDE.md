@@ -1,13 +1,20 @@
-# TESTING_GUIDE
+# TESTING_GUIDE — Fase 1
 
-## A. Testes automáticos (sem Minecraft) — funcionam agora
-Requer Java 21. Na raiz do projeto: `tools/run_core_tests.sh`
-Resultado esperado: última linha `27 passaram, 0 falharam`. Qualquer FAIL lista o motivo.
-O que cobrem: partida completa dos caps. 1–3 (missões, escolhas, reputação), troca Trinity↔Marie com skin/ficha/habilidades, roupas, salvamento com arquivo corrompido/truncado/versão nova.
+## Instalar
+Minecraft Java 1.21.1 + Fabric Loader (>= 0.16.9) + **Fabric API 0.115.0+1.21.1**. Nenhum outro mod é necessário nesta versão.
+Gere o JAR pelo GitHub Actions (ou `gradle build` com Gradle 8.10.2 e Java 21) e coloque `build/libs/*.jar` em `mods/`.
 
-## B. Dentro do Minecraft — única parte visível hoje: o salvamento
-(1) Gere o mod (GitHub Actions ou `./gradlew build`) e coloque o JAR de `build/libs` em `mods/` (Fabric 1.21.1 + Fabric API).
-(2) Abra um mundo de Verden e feche-o normalmente.
-(3) Na pasta do mundo deve existir `verden_rpg/campaign.json`. **Isso indica que o sistema de campanha iniciou e salvou.** Em `logs/latest.log` procure `verden/rpg`: não deve haver linhas de erro; avisos "Conteúdo do RPG: …" indicam referência quebrada nos JSON.
-(4) Reabra o mundo: se existir save anterior, o log mostra "Campanha carregada".
-Limitações: **ainda não há missões, NPCs, HUD ou comandos da campanha dentro do jogo** — isso é o marco M1. Se algo falhar na compilação do CI, envie o log do erro.
+## Jogar
+1. Abra o jogo: o menu é o de Verden (Novo Jogo / Continuar Jogo / Configurações / Sair).
+2. **Novo Jogo**: o mundo de Verden é criado sozinho. Ao entrar (~3 s) o prólogo começa (tela preta, câmera, música).
+3. Karamarraw: desça à praia, siga o caminho para o norte, observe a atmosfera. Ao ouvir os tiros, chegue perto do ponto marcado e **agache atrás de pedras/árvores** quando Narber passar. Volte ao navio.
+4. Cenas automáticas: destino de Narber → relatório → título VERDEN AF → Yettus. **Esc/Enter/Espaço** pulam as cenas puláveis.
+5. Yettus: cavalgue para o leste, fale com o homem ferido, use a poção nele (botão direito), conversem, siga até Flerin, zigurate, audiência. Termina ao sair da sala do trono.
+6. `V` abre o menu (missões, personagens, codex). Salva sozinho a cada 5 min, ao fechar o mundo e a cada cena.
+
+## Comandos (depuração)
+`/verden rpg status` (estágio atual), `/verden rpg skip` (pula cena), `/verden rpg restart`, `/verden rpg save`,
+`/verden rpg tp praia|mata|navio|yettus|portao|zigurate|salao` (requer cheats).
+
+## Se algo falhar
+Envie `logs/latest.log` (linhas com `verden`) e diga em que estágio parou (`/verden rpg status`).

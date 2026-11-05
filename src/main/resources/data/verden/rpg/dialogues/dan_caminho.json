@@ -1,0 +1,63 @@
+{
+ "id": "dan_caminho",
+ "start": "c1",
+ "nodes": {
+  "c1": {
+   "speaker": "dan",
+   "mood": "curious",
+   "text": "Perdoe-me pela pergunta, mas o que te fez me ajudar, quando me viu na areia?",
+   "next": "c2"
+  },
+  "c2": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Trinity leva a mão ao rosto, ponderando, até seus olhos se iluminarem.",
+   "next": "c3"
+  },
+  "c3": {
+   "speaker": "trinity",
+   "mood": "gentle",
+   "text": "Bem, meu dever é proteger os outros, não é?",
+   "next": "c4"
+  },
+  "c4": {
+   "speaker": "dan",
+   "mood": "curious",
+   "text": "Sim, mas geralmente os militares só se importam com os próprios reinos. Me pergunto se isto tem a ver com sua missão.",
+   "next": "c5"
+  },
+  "c5": {
+   "speaker": "trinity",
+   "mood": "indignant",
+   "text": "O quê? Eu te ajudei somente porque estava precisando de ajuda, e nada além. Eu não sou egoísta para só ligar para Jord!",
+   "next": "c6"
+  },
+  "c6": {
+   "speaker": "dan",
+   "mood": "wry",
+   "text": "Kizaki também afirmou isso.",
+   "next": "c7"
+  },
+  "c7": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Aquilo a faz engolir em seco. Kizaki é o rei de Nagdaar, o reino do oeste, conhecido por seu regime autoritário e ríspido; há meses declarou guerra contra todo o continente.",
+   "onEnter": [
+    "codex:kizaki"
+   ],
+   "next": "c8"
+  },
+  "c8": {
+   "speaker": "trinity",
+   "mood": "somber",
+   "text": "Guerras são hediondas.",
+   "next": "c9"
+  },
+  "c9": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "E assim, em silêncio, seguem o trajeto.",
+   "next": ""
+  }
+ }
+}

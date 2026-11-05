@@ -1,0 +1,72 @@
+{
+ "id": "c_chegada",
+ "skippable": true,
+ "onEnd": [
+  "switch:narrador"
+ ],
+ "steps": [
+  {
+   "do": "fade",
+   "to": 1,
+   "ticks": 0
+  },
+  {
+   "do": "letterbox",
+   "on": true
+  },
+  {
+   "do": "music",
+   "id": "karamarraw_mar"
+  },
+  {
+   "do": "act",
+   "name": "posicionar_chegada",
+   "essential": true
+  },
+  {
+   "do": "wait",
+   "ticks": 30
+  },
+  {
+   "do": "fade",
+   "to": 0,
+   "ticks": 80,
+   "async_": true
+  },
+  {
+   "do": "shot",
+   "id": "kar_mar_aberto"
+  },
+  {
+   "do": "line",
+   "speaker": "Relato da expedição",
+   "text": "Chegamos à ilha conhecida como Karamarraw por volta das 10:00 horas do último domingo."
+  },
+  {
+   "do": "shot",
+   "id": "kar_ilha_aproxima"
+  },
+  {
+   "do": "line",
+   "speaker": "Relato da expedição",
+   "text": "Como descrito nos registros anteriores, a paisagem se assemelha à típica ilha tropical, com densa vegetação e montanhas imponentes."
+  },
+  {
+   "do": "shot",
+   "id": "kar_expedicao_praia"
+  },
+  {
+   "do": "wait",
+   "ticks": 40
+  },
+  {
+   "do": "letterbox",
+   "on": false
+  },
+  {
+   "do": "act",
+   "name": "entregar_controle",
+   "essential": true
+  }
+ ]
+}

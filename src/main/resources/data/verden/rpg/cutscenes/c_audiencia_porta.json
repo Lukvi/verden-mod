@@ -1,0 +1,33 @@
+{
+ "id": "c_audiencia_porta",
+ "skippable": true,
+ "onEnd": [],
+ "steps": [
+  {
+   "do": "letterbox",
+   "on": true
+  },
+  {
+   "do": "act",
+   "name": "portas_abrem",
+   "essential": true
+  },
+  {
+   "do": "shot",
+   "id": "trono_porta"
+  },
+  {
+   "do": "shot",
+   "id": "trono_amplo"
+  },
+  {
+   "do": "letterbox",
+   "on": false
+  },
+  {
+   "do": "act",
+   "name": "iniciar_audiencia",
+   "essential": true
+  }
+ ]
+}

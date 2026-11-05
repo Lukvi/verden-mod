@@ -1,0 +1,245 @@
+{
+ "id": "fase_01_karamarraw_flerin",
+ "title": "Karamarraw e a Proposta de Jord",
+ "category": "main",
+ "chapter": "prologo_cap01",
+ "giver": "",
+ "summary": "O relato de uma expedição a uma ilha amaldiçoada e, depois, a chegada de Trinity Reeves a Flerin com uma proposta de aliança.",
+ "requires": [],
+ "onStart": [
+  "region:karamarraw"
+ ],
+ "stages": [
+  {
+   "id": "desembarque",
+   "journal": "A expedição chegou a Karamarraw. Desça à praia com os demais.",
+   "objectives": [
+    {
+     "id": "o1",
+     "text": "Desembarcar em Karamarraw",
+     "kind": "reach",
+     "target": "karamarraw_desembarque"
+    }
+   ]
+  },
+  {
+   "id": "expedicao",
+   "journal": "A ilha é como a descrevem os registros: mata densa, montanhas ao fundo. Acompanhe o grupo.",
+   "objectives": [
+    {
+     "id": "o2",
+     "text": "Acompanhar a expedição",
+     "kind": "reach",
+     "target": "karamarraw_mata_entrada"
+    }
+   ]
+  },
+  {
+   "id": "mata",
+   "journal": "Dentro da mata, algo mudou. Avance com cuidado e observe.",
+   "objectives": [
+    {
+     "id": "o3",
+     "text": "Investigar os acontecimentos estranhos na mata",
+     "kind": "reach",
+     "target": "karamarraw_mata_funda"
+    }
+   ]
+  },
+  {
+   "id": "disparos",
+   "journal": "Um disparo. Depois outro. Descubra de onde vêm.",
+   "objectives": [
+    {
+     "id": "o4",
+     "text": "Encontrar a origem dos disparos",
+     "kind": "reach",
+     "target": "karamarraw_origem_disparo"
+    }
+   ]
+  },
+  {
+   "id": "esconder",
+   "journal": "Há um homem armado atirando em tudo que se move. Não seja visto.",
+   "objectives": [
+    {
+     "id": "o5",
+     "text": "Esconder-se de Narber",
+     "kind": "hide",
+     "target": "narber_afastou"
+    }
+   ]
+  },
+  {
+   "id": "navio",
+   "journal": "Narber se afastou. Volte ao navio enquanto pode.",
+   "objectives": [
+    {
+     "id": "o6",
+     "text": "Retornar ao navio",
+     "kind": "reach",
+     "target": "karamarraw_navio"
+    }
+   ]
+  },
+  {
+   "id": "destino",
+   "journal": "O navio zarpa. Olhe para a praia.",
+   "objectives": [
+    {
+     "id": "o7",
+     "text": "Assistir ao destino de Narber",
+     "kind": "cutscene",
+     "target": "c_narber_destino"
+    }
+   ]
+  },
+  {
+   "id": "relatorio",
+   "journal": "O relato chega a quem deve ouvi-lo.",
+   "objectives": [
+    {
+     "id": "o8",
+     "text": "Concluir a cena do relatório",
+     "kind": "cutscene",
+     "target": "c_relatorio"
+    }
+   ]
+  },
+  {
+   "id": "titulo",
+   "journal": "",
+   "objectives": [
+    {
+     "id": "o9",
+     "text": "Iniciar a jornada de Trinity em Yettus",
+     "kind": "cutscene",
+     "target": "c_yettus_intro"
+    }
+   ]
+  },
+  {
+   "id": "homem_ferido",
+   "journal": "Sudeste de Verden, Deserto Yettus. Cavalgue com Binky rumo às muralhas de Flerin. Há alguém sentado na areia.",
+   "objectives": [
+    {
+     "id": "o10",
+     "text": "Encontrar o homem ferido",
+     "kind": "reach",
+     "target": "yettus_encontro"
+    }
+   ]
+  },
+  {
+   "id": "pocao",
+   "journal": "O homem está ferido. Use a poção avermelhada que Trinity guarda na bolsa da sela.",
+   "objectives": [
+    {
+     "id": "o11",
+     "text": "Ajudar o homem com a poção (use o item nele)",
+     "kind": "use_item",
+     "target": "dan"
+    }
+   ]
+  },
+  {
+   "id": "conversa",
+   "journal": "Conversem.",
+   "objectives": [
+    {
+     "id": "o12",
+     "text": "Conversar com o homem ferido",
+     "kind": "dialogue",
+     "target": "dan_yettus_2"
+    }
+   ]
+  },
+  {
+   "id": "caminho",
+   "journal": "Ele aceitou companhia até as muralhas. Binky não gosta de estranhos: ele vai a pé, você segue montada.",
+   "objectives": [
+    {
+     "id": "o13",
+     "text": "Acompanhar Dan até Flerin",
+     "kind": "reach",
+     "target": "flerin_portao"
+    }
+   ]
+  },
+  {
+   "id": "cidade",
+   "journal": "Os guardas abriram passagem. Atravesse a rua principal até o zigurate.",
+   "objectives": [
+    {
+     "id": "o14",
+     "text": "Entrar na cidade de Flerin",
+     "kind": "reach",
+     "target": "flerin_rua"
+    },
+    {
+     "id": "o15",
+     "text": "Chegar ao zigurate Mubarak",
+     "kind": "reach",
+     "target": "zigurate_entrada"
+    }
+   ]
+  },
+  {
+   "id": "estabulo",
+   "journal": "",
+   "objectives": [
+    {
+     "id": "o16",
+     "text": "Deixar Binky aos cuidados de um soldado",
+     "kind": "dialogue",
+     "target": "zigurate_binky"
+    }
+   ]
+  },
+  {
+   "id": "audiencia",
+   "journal": "A grande porta dupla da sala do trono está entreaberta.",
+   "objectives": [
+    {
+     "id": "o17",
+     "text": "Participar da audiência com a Rainha Nefertari",
+     "kind": "dialogue",
+     "target": "nefertari_audiencia_1"
+    }
+   ]
+  },
+  {
+   "id": "proposta",
+   "journal": "Entregue a proposta de aliança.",
+   "objectives": [
+    {
+     "id": "o18",
+     "text": "Apresentar a proposta de aliança",
+     "kind": "dialogue",
+     "target": "nefertari_audiencia_2"
+    }
+   ]
+  },
+  {
+   "id": "corredores",
+   "journal": "A rainha permitiu que você fique. Dan a aguarda.",
+   "objectives": [
+    {
+     "id": "o19",
+     "text": "Acompanhar Dan pelos corredores do zigurate",
+     "kind": "reach",
+     "target": "corredor_saida"
+    }
+   ]
+  }
+ ],
+ "rewards": {
+  "xp": 120,
+  "effects": [
+   "flag:fase_01_concluida",
+   "unflag:switch_locked",
+   "chapter:fase_01_fim"
+  ],
+  "items": []
+ }
+}

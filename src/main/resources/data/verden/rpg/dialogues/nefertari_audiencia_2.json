@@ -1,0 +1,93 @@
+{
+ "id": "nefertari_audiencia_2",
+ "start": "g1",
+ "nodes": {
+  "g1": {
+   "speaker": "trinity",
+   "mood": "nervous",
+   "text": "Nesta carta há tudo de forma mais detalhada, mas o Rei Konge oferece uma oportunidade de aliança entre seu reino e as terras de Jord e Veroogh. Nós estamos vivendo em intensas ameaças vindo de Nagdaar, o que torna uma aliança entre nós fundamental se quisermos evitar mais conflitos.",
+   "next": "g2"
+  },
+  "g2": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "A rainha pega o envelope das mãos de Dan e o mantém de lado; seu rosto permanece impassível.",
+   "next": "g3"
+  },
+  "g3": {
+   "speaker": "nefertari",
+   "mood": "solemn",
+   "text": "Uma aliança requer algo em troca. O que Jord oferece, e deseja com isso?",
+   "onEnter": [
+    "codex:alianca_jord_veroogh"
+   ],
+   "next": "g4"
+  },
+  "g4": {
+   "speaker": "trinity",
+   "mood": "firm",
+   "text": "O que desejamos é uma troca do que temos de melhor. Jord possui a maior quantidade de tropas militares, enquanto Flerin possui diversos recursos que precisamos, como metais e madeira. E todos sabemos que vosso reino está bem fragilizado no quesito militar.",
+   "next": "g5"
+  },
+  "g5": {
+   "speaker": "nefertari",
+   "mood": "measured",
+   "text": "Recursos e proteção. São demandas justas. Mas esta decisão não pode ser tomada só por mim.",
+   "next": "g6"
+  },
+  "g6": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Seus olhos se voltam ao chão por instantes, antes de voltarem a Trinity.",
+   "next": "g7"
+  },
+  "g7": {
+   "speaker": "nefertari",
+   "mood": "measured",
+   "text": "Marcarei uma assembleia com o conselho para decidirmos sobre a proposta, certo?",
+   "onEnter": [
+    "flag:proposta_entregue",
+    "flag:assembleia_marcada",
+    "codex:grande_conselho",
+    "memory:audiencia_nefertari"
+   ],
+   "next": "g8"
+  },
+  "g8": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Trinity assente em silêncio. A decisão a obrigará a permanecer na cidade até a assembleia, e ela não gosta da ideia de não ter onde dormir em um lugar desconhecido, apesar de gostar de viajar.",
+   "next": "g9"
+  },
+  "g9": {
+   "speaker": "nefertari",
+   "mood": "warm",
+   "text": "Dan, leve-a para um dos aposentos. Deixá-la-ei ficar por aqui até que resolvamos o que está pendente.",
+   "next": "g10"
+  },
+  "g10": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Dan iria contestar, balbuciando algumas palavras, mas hesita e assente em silêncio. Vai até Trinity e espera que ela o acompanhe.",
+   "next": "g11"
+  },
+  "g11": {
+   "speaker": "trinity",
+   "mood": "relieved",
+   "text": "Muito obrigada, majestade.",
+   "next": "g12"
+  },
+  "g12": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Ela reverencia mais uma vez antes de se levantar. A rainha assente com um leve sorriso.",
+   "next": "g13"
+  },
+  "g13": {
+   "speaker": "nefertari",
+   "mood": "warm",
+   "text": "É o mínimo que podemos oferecer. Descanse e se prepare para a assembleia que virá. Estaremos aguardando sua presença.",
+   "next": ""
+  }
+ }
+}

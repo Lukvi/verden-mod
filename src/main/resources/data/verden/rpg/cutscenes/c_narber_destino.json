@@ -1,0 +1,68 @@
+{
+ "id": "c_narber_destino",
+ "skippable": false,
+ "onEnd": [
+  "flag:narber_destino_visto"
+ ],
+ "steps": [
+  {
+   "do": "fade",
+   "to": 0,
+   "ticks": 0
+  },
+  {
+   "do": "letterbox",
+   "on": true
+  },
+  {
+   "do": "music",
+   "id": "stop"
+  },
+  {
+   "do": "act",
+   "name": "navio_zarpa",
+   "essential": true
+  },
+  {
+   "do": "shot",
+   "id": "kar_navio_afasta"
+  },
+  {
+   "do": "line",
+   "speaker": "Relato da expedição",
+   "text": "Ao zarpar, avistei-o aproximando-se da costa, mas ele parou à beira da praia."
+  },
+  {
+   "do": "act",
+   "name": "narber_na_praia",
+   "essential": true
+  },
+  {
+   "do": "shot",
+   "id": "kar_praia_distante"
+  },
+  {
+   "do": "line",
+   "speaker": "Relato da expedição",
+   "text": "Em um derradeiro gesto, ele mirou a própria cabeça e disparou diante dos nossos olhos atônitos."
+  },
+  {
+   "do": "sound",
+   "id": "tiro_distante"
+  },
+  {
+   "do": "act",
+   "name": "narber_some",
+   "essential": true
+  },
+  {
+   "do": "wait",
+   "ticks": 120
+  },
+  {
+   "do": "fade",
+   "to": 1,
+   "ticks": 50
+  }
+ ]
+}

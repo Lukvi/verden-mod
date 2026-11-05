@@ -29,6 +29,7 @@ public final class Session {
     public final QuestEngine quests;
     public final Map<String, Dialogue> dialogues = new HashMap<>();
     public final Map<String, CharacterDef> characters = new java.util.LinkedHashMap<>();
+    public final Map<String, Cutscene> cutscenes = new java.util.LinkedHashMap<>();
     public final Deque<Notification> notifications = new ArrayDeque<>();
     /** Itens a entregar ao jogador; a camada Minecraft esvazia esta lista. */
     public final List<Grant> grants = new ArrayList<>();

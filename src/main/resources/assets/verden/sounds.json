@@ -49,5 +49,61 @@
     "sounds": [
       "verden:npc_talk"
     ]
+  },
+  "rpg.mar": {
+    "sounds": [
+      {
+        "name": "verden:kar_mar",
+        "volume": 0.9
+      }
+    ]
+  },
+  "rpg.tensao": {
+    "sounds": [
+      {
+        "name": "verden:tensao",
+        "volume": 0.9
+      }
+    ]
+  },
+  "rpg.sussurros": {
+    "sounds": [
+      {
+        "name": "verden:sussurros",
+        "volume": 0.8
+      }
+    ]
+  },
+  "rpg.tiro": {
+    "sounds": [
+      {
+        "name": "verden:tiro",
+        "volume": 1.0
+      }
+    ]
+  },
+  "rpg.relatorio": {
+    "sounds": [
+      {
+        "name": "verden:relatorio_tema",
+        "volume": 0.9
+      }
+    ]
+  },
+  "rpg.titulo": {
+    "sounds": [
+      {
+        "name": "verden:titulo_tema",
+        "volume": 1.0
+      }
+    ]
+  },
+  "rpg.vento": {
+    "sounds": [
+      {
+        "name": "verden:vento",
+        "volume": 0.8
+      }
+    ]
   }
 }

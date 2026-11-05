@@ -1,0 +1,3 @@
+Conteúdo do Capítulo 2 (Lena, parapeito, caderno, biblioteca), escrito antes da nova abertura. NÃO está no index.json:
+pertence à fase 2 (fora do limite da fase_01_karamarraw_flerin). Antes de ativar: revisar contra o texto, remover as
+afinidades/escolhas inventadas e exigir a flag fase_02_liberada.

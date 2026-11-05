@@ -28,7 +28,16 @@ public enum NpcRole {
     FERREIRO("ferreiro", 4),
     ALQUIMISTA("alquimista", 4),
     ARMEIRO("armeiro", 4),
-    MERCEIRO("merceiro", 4);
+    MERCEIRO("merceiro", 4),
+    // ---- Campanha (Prelúdio): NPCs de história, não comerciantes. Manter SEMPRE no fim do enum (o índice é salvo). ----
+    DAN("dan", 1),
+    NEFERTARI("nefertari", 1),
+    HOMEM_SERENO("homem_sereno", 1),
+    NARBER("narber", 1),
+    EXPEDICIONARIO("expedicionario", 1),
+    MAJESTADE("majestade", 1),
+    REEVES("reeves", 1),
+    SOLDADO("soldado", 1);
 
     public final String id;
     public final int lines;
@@ -45,7 +54,7 @@ public enum NpcRole {
 
     public boolean isMerchant() {
         return switch (this) {
-            case LUKE, NOITE, LIAM, KONGE, RAONI -> false;
+            case LUKE, NOITE, LIAM, KONGE, RAONI, DAN, NEFERTARI, HOMEM_SERENO, NARBER, EXPEDICIONARIO, MAJESTADE, REEVES, SOLDADO -> false;
             default -> true;
         };
     }

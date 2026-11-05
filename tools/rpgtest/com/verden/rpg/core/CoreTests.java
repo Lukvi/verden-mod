@@ -130,7 +130,7 @@ public final class CoreTests {
             Session s = loadedSession();
             List<String> p = ContentLoader.validate(s);
             check(p.isEmpty(), "problemas: " + p);
-            check(s.quests.def("p1_q01_yettus") != null && s.dialogues.containsKey("nefertari_audiencia"), "carregou");
+            check(s.quests.def("fase_01_karamarraw_flerin") != null && s.dialogues.containsKey("nefertari_audiencia_2") && s.cutscenes.size() == 7, "carregou");
         });
         test("validador detecta referências quebradas", () -> {
             Session s = new Session(new StoryState());
@@ -141,74 +141,97 @@ public final class CoreTests {
         });
 
         System.out.println("== campanha (protótipo cap. 1-3)");
-        test("partida completa do arco inicial", () -> {
+        test("fase 1 completa (Karamarraw → fim da audiência) segue a ordem e para no limite", () -> {
             Session s = loadedSession();
-            check(s.quests.start("p1_q01_yettus"), "inicia missão 1");
-            eq(s.quests.statusOf("p1_q01_yettus"), "active", "ativa");
-            check(s.state.regions.contains("deserto_yettus"), "região do deserto");
-
-            // evento fora do estágio atual não conta
-            s.fire(new GameEvent("reach", "zigurate_entrada"));
-            eq(s.state.quests.get("p1_q01_yettus").stage, 0, "ignorou evento fora de ordem");
-
-            play(s, "dan_yettus", 1, 1, 0); // escolhas: cuidado, informal, reservada (única)
-            check(s.state.flags.contains("dan_curado") && s.state.flags.contains("principe_identificado"), "flags do encontro");
-            eq(s.state.choices.get("yettus_apresentacao"), "informal", "escolha registrada");
-            eq(s.state.affinity.get("dan"), 2, "afinidade 2 (cuidado + informal)");
-            eq(s.state.quests.get("p1_q01_yettus").stage, 1, "foi para as muralhas");
-
-            s.fire(new GameEvent("reach", "flerin_portao"));
-            s.fire(new GameEvent("reach", "zigurate_entrada"));
-            eq(s.state.quests.get("p1_q01_yettus").stage, 3, "chegou à audiência (mercado opcional não bloqueou)");
-
-            DialogueRunner r = new DialogueRunner(s, s.dialogues.get("nefertari_audiencia"));
-            check(r.text().contains("dispensa títulos"), "Nefertari reage à apresentação informal");
-            while (r.options().isEmpty()) r.advance();
-            r.choose(0); // direto
-            while (!r.finished()) { if (r.options().isEmpty()) r.advance(); else r.choose(0); }
-
-            eq(s.quests.statusOf("p1_q01_yettus"), "done", "missão 1 concluída");
+            s.apply(List.of("switch:narrador"));
+            check(s.quests.start("fase_01_karamarraw_flerin"), "inicia");
+            String[][] ev = {{"reach", "karamarraw_desembarque"}, {"reach", "karamarraw_mata_entrada"}, {"reach", "karamarraw_mata_funda"},
+                    {"reach", "karamarraw_origem_disparo"}, {"hide", "narber_afastou"}, {"reach", "karamarraw_navio"},
+                    {"cutscene", "c_narber_destino"}, {"cutscene", "c_relatorio"}, {"cutscene", "c_yettus_intro"}, {"reach", "yettus_encontro"}};
+            int stage = 0;
+            for (String[] e : ev) {
+                s.fire(new GameEvent("reach", "zigurate_entrada")); // evento fora de ordem nunca avança
+                eq(s.state.quests.get("fase_01_karamarraw_flerin").stage, stage, "sem avanço fora de ordem em " + e[1]);
+                s.fire(new GameEvent(e[0], e[1]));
+                eq(s.state.quests.get("fase_01_karamarraw_flerin").stage, ++stage, "avançou em " + e[1]);
+            }
+            eq(s.quests.journalLines("fase_01_karamarraw_flerin").get(1), "[ ] Ajudar o homem com a poção (use o item nele)", "agora exige USAR a poção");
+            s.fire(new GameEvent("dialogue", "dan_yettus_2")); // conversar sem usar a poção não conta
+            eq(s.state.quests.get("fase_01_karamarraw_flerin").stage, 10, "diálogo sem poção não avança");
+            play(s, "dan_yettus_1");
+            check(s.state.flags.contains("pocao_em_maos"), "a poção chega às mãos");
+            s.fire(new GameEvent("use_item", "dan"));
+            play(s, "dan_yettus_2");
+            check(s.state.flags.contains("dan_acompanha"), "Dan acompanha");
+            for (String[] e : new String[][]{{"reach", "flerin_portao"}, {"reach", "flerin_rua"}, {"reach", "zigurate_entrada"}}) s.fire(new GameEvent(e[0], e[1]));
+            eq(s.state.quests.get("fase_01_karamarraw_flerin").stage, 14, "cidade concluída (2 objetivos)");
+            play(s, "zigurate_binky"); play(s, "nefertari_audiencia_1");
+            eq(s.quests.statusOf("fase_01_karamarraw_flerin"), "active", "ainda falta a proposta e a saída");
+            play(s, "nefertari_audiencia_2");
             check(s.state.flags.contains("proposta_entregue") && s.state.flags.contains("assembleia_marcada"), "marcos canônicos");
-            eq(s.state.chapter, "p1_02", "capítulo avançou");
-            check(s.state.hasMemory("audiencia_nefertari"), "memória registrada");
-            check(s.quests.isAvailable("p1_q02_lena"), "missão 2 disponível");
-            check(s.state.sheet("trinity").xp >= 80 || s.state.sheet("trinity").level > 1, "xp concedido");
-
-            // missão 2
-            play(s, "dan_parapeito", 0);
-            eq(s.quests.statusOf("p1_q02_lena"), "active", "missão 2 iniciada pelo diálogo");
-            for (String[] ev : new String[][]{
-                    {"reach", "sala_secreta_dan"}, {"examine", "caderno_lena"}, {"reach", "biblioteca_leste"},
-                    {"examine", "quadro_biblioteca"}, {"collect", "grimorio_rishnuu"}, {"examine", "grimorio_rishnuu"}}) {
-                s.fire(new GameEvent(ev[0], ev[1]));
-            }
-            eq(s.quests.statusOf("p1_q02_lena"), "active", "ainda falta o feitiço");
-            s.fire(new GameEvent("cast", "desvinculo"));
-            eq(s.quests.statusOf("p1_q02_lena"), "done", "missão 2 concluída");
-            check(s.state.flags.contains("caderno_aberto"), "caderno aberto");
-            check(s.state.codex.contains("runa_trancamento"), "codex da runa");
-            boolean q = false, c = false;
-            for (Notification n : s.notifications) {
-                q |= n.kind() == Notification.Kind.QUEST_STARTED;
-                c |= n.kind() == Notification.Kind.QUEST_COMPLETED;
-            }
-            check(q && c, "notificações de início e conclusão");
+            eq(s.quests.statusOf("fase_01_karamarraw_flerin"), "active", "fase só termina ao sair da sala");
+            s.fire(new GameEvent("reach", "corredor_saida"));
+            eq(s.quests.statusOf("fase_01_karamarraw_flerin"), "done", "fase concluída");
+            check(s.state.flags.contains("fase_01_concluida"), "flag de conclusão libera a próxima etapa");
+            eq(s.state.quests.size(), 1, "nada do Capítulo 2 foi iniciado");
+            check(!s.dialogues.containsKey("dan_parapeito") && s.quests.def("p1_q02_lena") == null, "Capítulo 2 fora da fase 1");
         });
-        test("escolha direta x diplomática muda reação e reputação", () -> {
-            Session a = loadedSession(), b = loadedSession();
-            for (Session s : new Session[]{a, b}) {
-                s.quests.start("p1_q01_yettus");
-                play(s, "dan_yettus", 0, 0, 0);
-                s.fire(new GameEvent("reach", "flerin_portao"));
-                s.fire(new GameEvent("reach", "zigurate_entrada"));
+        test("CÂNONE: nenhum diálogo da fase 1 tem escolhas e as falas-chave são literais do livro", () -> {
+            Session s = loadedSession();
+            StringBuilder all = new StringBuilder();
+            for (Dialogue d : s.dialogues.values()) for (Dialogue.Node n : d.nodes().values()) {
+                check(n.options().isEmpty(), "escolha inventada em " + d.id() + "/" + n.id());
+                all.append(n.text()).append('\n');
             }
-            play(a, "nefertari_audiencia", 0);
-            play(b, "nefertari_audiencia", 1);
-            eq(a.state.choices.get("proposta_tom"), "direto", "tom a");
-            eq(b.state.choices.get("proposta_tom"), "diplomatico", "tom b");
-            eq(b.state.reputation.get("flerin_corte"), 2, "diplomacia rende reputação");
-            check(a.state.reputation.getOrDefault("flerin_corte", 0) == 0, "franqueza não rende");
-            check(a.state.flags.contains("proposta_entregue") && b.state.flags.contains("proposta_entregue"), "cânone igual nos dois caminhos");
+            for (String frase : new String[]{"Nem tão boa para mim, amigo.", "Minha missão é confidencial.", "Relaxa, não é como se eu saísse com a coroa na cabeça. Mas por via das dúvidas, eu te perdoo.",
+                    "Guerras são hediondas.", "Aqui parece bem tranquilo.", "Acredito que minha mãe não vai gostar de ver o Binky na sala do trono.",
+                    "“Tenente de Jord” não é o nome dela. Diga-me, pequena, como se chama?", "Recursos e proteção. São demandas justas. Mas esta decisão não pode ser tomada só por mim.",
+                    "É o mínimo que podemos oferecer. Descanse e se prepare para a assembleia que virá. Estaremos aguardando sua presença."})
+                check(all.indexOf(frase) >= 0, "fala ausente: " + frase);
+        });
+        test("integração de dados: toda cutscene/diálogo exigido pela missão existe; título dura o bastante", () -> {
+            Session s = loadedSession();
+            for (Quest.Stage st : s.quests.def("fase_01_karamarraw_flerin").stages()) for (Quest.Objective o : st.objectives()) {
+                if (o.kind().equals("cutscene")) check(s.cutscenes.containsKey(o.target()), "cutscene inexistente: " + o.target());
+                if (o.kind().equals("dialogue")) check(s.dialogues.containsKey(o.target()), "diálogo inexistente: " + o.target());
+            }
+            eq(s.quests.def("fase_01_karamarraw_flerin").stages().size(), 18, "18 etapas");
+            long titulo = s.cutscenes.get("c_titulo").steps().stream().filter(x -> x.kind().equals("title")).mapToInt(Cutscene.Step::ticks).sum();
+            check(titulo >= 400, "título com peso (>= 20 s): " + titulo);
+            check(!s.cutscenes.get("c_narber_destino").skippable() && s.cutscenes.get("c_relatorio").skippable(), "destino de Narber não pulável; relatório pulável");
+        });
+        test("cutscene: ordem das falas do relatório e cronometragem", () -> {
+            Session s = loadedSession();
+            CutsceneRunner r = new CutsceneRunner(s.cutscenes.get("c_relatorio"));
+            List<String> falas = new ArrayList<>();
+            int ticks = 0;
+            while (!r.finished() && ticks++ < 5000) for (CutsceneRunner.Cue c : r.tick()) if (c.kind().equals("line")) falas.add(c.params().get("text").toString());
+            check(r.finished() && ticks > 400, "a cena respira (> 20 s): " + ticks + " ticks");
+            eq(falas.get(1), "Amaldiçoada.", "o homem completa o relato");
+            eq(falas.get(2), "É como pensávamos, Tenente Reeves. Já sabe o que deve ser feito.", "ordem das falas");
+            eq(falas.get(3), "Envie a proposta para Flerin. Eles irão aceitar.", "ordem das falas");
+            eq(falas.get(4), "Sim, Majestade.", "resposta da tenente");
+        });
+        test("cutscene: pular mantém só ações essenciais; cena não pulável ignora o pedido", () -> {
+            Session s = loadedSession();
+            CutsceneRunner r = new CutsceneRunner(s.cutscenes.get("c_relatorio"));
+            for (int i = 0; i < 30; i++) r.tick();
+            List<CutsceneRunner.Cue> resto = r.skip();
+            check(r.finished(), "terminou");
+            check(resto.stream().allMatch(CutsceneRunner.Cue::essential) && resto.stream().anyMatch(c -> "reeves_sai".equals(c.params().get("name"))), "ações do mundo preservadas");
+            check(resto.stream().noneMatch(c -> c.kind().equals("line")), "falas não são repetidas");
+            CutsceneRunner nao = new CutsceneRunner(s.cutscenes.get("c_narber_destino"));
+            nao.tick();
+            check(nao.skip().isEmpty() && !nao.finished(), "o destino de Narber não pode ser pulado");
+        });
+        test("novo jogo: narrador sem nome → Trinity só ao fim do prólogo", () -> {
+            Session s = loadedSession();
+            s.apply(List.of("switch:narrador", "flag:switch_locked")); // o novo jogo trava a troca durante o prólogo
+            eq(s.state.protagonist, "narrador", "começa no narrador");
+            eq(s.switchTo("trinity", false), Session.SwitchResult.BLOCKED_BY_STORY, "jogador não troca sozinho");
+            check(!s.characters.get("narrador").name().toLowerCase().contains("narber"), "narrador não recebe nome do livro");
+            s.apply(List.of("switch:trinity"));
+            eq(s.appearance().characterId(), "trinity", "Trinity assume");
         });
         test("opção com condição falsa fica oculta", () -> {
             Session s = new Session(new StoryState());
@@ -296,8 +319,8 @@ public final class CoreTests {
         Path f = tmp.resolve("state.json");
         test("save/load preserva tudo", () -> {
             Session s = loadedSession();
-            s.quests.start("p1_q01_yettus");
-            play(s, "dan_yettus", 1, 1, 0);
+            s.quests.start("fase_01_karamarraw_flerin");
+            play(s, "dan_yettus_1");
             s.apply(List.of("protagonist:marie", "xp:300", "protagonist:trinity", "party+:dan", "memory:m1"));
             s.state.playTicks = 12345;
             SaveManager.save(f, s.state);

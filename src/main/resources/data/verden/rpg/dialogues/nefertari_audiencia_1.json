@@ -1,0 +1,70 @@
+{
+ "id": "nefertari_audiencia_1",
+ "start": "f1",
+ "nodes": {
+  "f1": {
+   "speaker": "dan",
+   "mood": "neutral",
+   "text": "Licença, mãe.",
+   "next": "f2"
+  },
+  "f2": {
+   "speaker": "dan",
+   "mood": "neutral",
+   "text": "Trouxe esta tenente de Jord ao seu encontro, ela me disse que tinha uma informação confidencial, ou algo assim.",
+   "next": "f3"
+  },
+  "f3": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Dan faz uma reverência respeitosa diante da rainha; Trinity o imita, tentando esconder o nervosismo.",
+   "next": "f4"
+  },
+  "f4": {
+   "speaker": "nefertari",
+   "mood": "solemn",
+   "text": "“Tenente de Jord” não é o nome dela. Diga-me, pequena, como se chama?",
+   "onEnter": [
+    "codex:nefertari",
+    "codex:lys"
+   ],
+   "next": "f5"
+  },
+  "f5": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Trinity engole em seco, ajoelha-se e põe as mãos sobre o peito, como o gesto de respeito de seu reino.",
+   "next": "f6"
+  },
+  "f6": {
+   "speaker": "trinity",
+   "mood": "nervous",
+   "text": "Trinity Reeves, majestade.",
+   "next": "f7"
+  },
+  "f7": {
+   "speaker": "nefertari",
+   "mood": "solemn",
+   "text": "De Jord... Vieste de bem longe. Conhecendo Konge, deve ser algo de exímia importância.",
+   "next": "f8"
+  },
+  "f8": {
+   "speaker": "trinity",
+   "mood": "nervous",
+   "text": "De fato, majestade. A informação que trago é de extrema importância.",
+   "next": "f9"
+  },
+  "f9": {
+   "speaker": "nefertari",
+   "mood": "solemn",
+   "text": "Então, Trinity Reeves de Jord, fale-me sobre. Sou toda ouvidos.",
+   "next": "f10"
+  },
+  "f10": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Trinity respira fundo e tira do bolso um pequeno envelope, que Dan se oferece para pegar e entregar à mãe.",
+   "next": ""
+  }
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "id": "flerin_rua",
+ "start": "d1",
+ "nodes": {
+  "d1": {
+   "speaker": "narrador",
+   "mood": "neutral",
+   "text": "Os guardas reconhecem o príncipe e abrem a passagem. Pela rua principal, os moradores olham para a tenente com receio; ela sorri gentilmente e acena com a cabeça.",
+   "onEnter": [
+    "region:flerin",
+    "codex:flerin_adobe"
+   ],
+   "next": "d2"
+  },
+  "d2": {
+   "speaker": "trinity",
+   "mood": "gentle",
+   "text": "Aqui parece bem tranquilo.",
+   "next": "d3"
+  },
+  "d3": {
+   "speaker": "dan",
+   "mood": "wry",
+   "text": "Nunca esteve por aqui antes? É, tentamos manter os problemas longe da população.",
+   "onEnter": [
+    "codex:zigurate_mubarak"
+   ],
+   "next": ""
+  }
+ }
+}

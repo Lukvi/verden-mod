@@ -13,8 +13,8 @@ final class Shots {
 
     private static Shot sh(double[] a, double[] b, double[] ta, double[] tb, int t) { return new Shot(a, b, ta, tb, t); }
 
-    // ilha: (x leste, y acima do mar, z sul)
-    private static double[] k(double x, double y, double z) { return v(KarBuilder.KX + x, KarBuilder.SEA + y, KarBuilder.KZ + z); }
+    // ilha: x leste, y ACIMA DO MAR, z para o interior (origem na costa norte real)
+    private static double[] k(double x, double y, double z) { return v(KarBuilder.LX + x, KarBuilder.SEA + y, KarBuilder.cz + z); }
 
     // sala: relativo ao centro, y acima do piso
     private static double[] r(double x, double y, double z) { return v(KarBuilder.RX + 0.5 + x, KarBuilder.RY + 1 + y, KarBuilder.RZ + 0.5 + z); }
@@ -22,13 +22,14 @@ final class Shots {
     static Shot get(String id, ServerWorld w, int zigAy) {
         int sx = Fase01.YSX, sz = Fase01.YSZ;
         int sy = Fase01.surface(w, sx, sz);
+        KarBuilder.locate(w);
         int ax = RpgServer.AX, az = RpgServer.AZ;
         return switch (id) {
-            case "kar_mar_aberto" -> sh(k(0, 26, 125), k(0, 20, 92), k(0, 12, -10), k(0, 12, -10), 220);
-            case "kar_ilha_aproxima" -> sh(k(34, 15, 78), k(10, 9, 52), k(0, 24, -30), k(0, 8, 28), 220);
-            case "kar_expedicao_praia" -> sh(k(-10, 6, 46), k(-3, 5, 38), k(0, 3, 31), k(0, 3, 30), 140);
-            case "kar_navio_afasta" -> sh(k(0, 9, 52), k(0, 14, 120), k(0, 6, 10), k(0, 6, 10), 260);
-            case "kar_praia_distante" -> sh(k(6, 13, 126), k(4, 13, 130), k(0, 3, 30), k(0, 3, 30), 200);
+            case "kar_mar_aberto" -> sh(k(10, 34, -190), k(6, 24, -110), k(0, 40, 150), k(0, 30, 120), 240);
+            case "kar_ilha_aproxima" -> sh(k(60, 18, -100), k(18, 9, -52), k(0, 45, 150), k(0, 6, 6), 240);
+            case "kar_expedicao_praia" -> sh(k(-8, 6, -30), k(-3, 5, -18), k(0, 3, 4), k(0, 3, 4), 150);
+            case "kar_navio_afasta" -> sh(k(0, 9, -28), k(0, 16, -130), k(0, 8, 20), k(0, 8, 20), 280);
+            case "kar_praia_distante" -> sh(k(6, 14, -118), k(4, 14, -124), k(0, 3, 4), k(0, 3, 4), 220);
             case "rel_papel" -> sh(r(0.5, 2.0, -0.3), r(0.15, 1.95, -1.0), r(0, 1.6, -1.75), r(0, 1.6, -1.75), 150);
             case "rel_homem_lendo" -> sh(r(-2.4, 2.3, 1.8), r(-1.8, 2.15, 1.1), r(0, 2.3, -2.0), r(0, 2.3, -2.0), 160);
             case "rel_olhos" -> sh(r(0, 2.6, -0.6), r(0, 2.6, -1.2), r(0, 2.62, -2.0), r(0, 2.62, -2.0), 120);

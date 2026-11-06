@@ -32,6 +32,7 @@ final class RpgHud {
         int w = c.getScaledWindowWidth(), h = c.getScaledWindowHeight();
         playerPanel(c, tr, mc, h);
         questTracker(c, tr, w);
+        compass(c, tr, mc, w);
         prompt(c, tr, mc, w, h);
         toasts(c, tr, w);
     }
@@ -73,6 +74,26 @@ final class RpgHud {
             c.drawText(tr, tr.trimToWidth((done ? "+ " : "- ") + s.substring(4), bw - 12), x + 6, ty, done ? RpgUi.GREEN : RpgUi.WHITE, true);
             ty += 11;
         }
+    }
+
+    /** Bússola: faixa no topo; o ícone mostra para onde fica o objetivo atual (setas nas bordas se estiver fora de vista) e a distância. */
+    private static void compass(DrawContext c, TextRenderer tr, MinecraftClient mc, int w) {
+        if (RpgClient.state == null || !(RpgClient.state.get("goal") instanceof Map<?, ?> g)) return;
+        double gx = ((Number) g.get("x")).doubleValue(), gz = ((Number) g.get("z")).doubleValue();
+        double dx = gx - mc.player.getX(), dz = gz - mc.player.getZ(), dist = Math.hypot(dx, dz);
+        double target = Math.toDegrees(Math.atan2(-dx, dz)), rel = target - mc.player.getYaw();
+        rel = ((rel % 360) + 540) % 360 - 180;
+        int bw = 220, x0 = (w - bw) / 2, y0 = 4;
+        c.fill(x0, y0, x0 + bw, y0 + 14, 0x90000000);
+        c.drawBorder(x0, y0, bw, 14, 0xFFC8A25A);
+        int cx = w / 2;
+        c.fill(cx, y0 + 1, cx + 1, y0 + 13, 0x40FFFFFF);
+        double clamped = Math.max(-90, Math.min(90, rel));
+        int ix = cx + (int) (clamped / 90.0 * (bw / 2 - 12));
+        RpgUi.icon(c, "quest_main", ix - 6, y0 + 1, 12);
+        if (Math.abs(rel) > 90) c.drawText(tr, rel < 0 ? "<<" : ">>", rel < 0 ? x0 + 3 : x0 + bw - 14, y0 + 3, RpgUi.GOLD, true);
+        String lab = g.get("label") + "  " + (int) dist + " m";
+        c.drawCenteredTextWithShadow(tr, lab, cx, y0 + 17, RpgUi.WHITE);
     }
 
     private static void prompt(DrawContext c, TextRenderer tr, MinecraftClient mc, int w, int h) {

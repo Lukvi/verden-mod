@@ -12,7 +12,7 @@
  "stages": [
   {
    "id": "desembarque",
-   "journal": "A expedição chegou a Karamarraw. Desça à praia com os demais.",
+   "journal": "O navio ancorou perto da praia. Desça pela prancha e pise em Karamarraw. A bússola no topo da tela aponta o objetivo.",
    "objectives": [
     {
      "id": "o1",
@@ -24,7 +24,7 @@
   },
   {
    "id": "expedicao",
-   "journal": "A ilha é como a descrevem os registros: mata densa, montanhas ao fundo. Acompanhe o grupo.",
+   "journal": "Siga a trilha para o interior junto com a expedição. Fique perto do grupo.",
    "objectives": [
     {
      "id": "o2",
@@ -36,7 +36,7 @@
   },
   {
    "id": "mata",
-   "journal": "Dentro da mata, algo mudou. Avance com cuidado e observe.",
+   "journal": "A mata fecha e algo está errado: sussurros, gritos, vultos. Continue pela trilha.",
    "objectives": [
     {
      "id": "o3",
@@ -48,7 +48,7 @@
   },
   {
    "id": "disparos",
-   "journal": "Um disparo. Depois outro. Descubra de onde vêm.",
+   "journal": "Tiros ecoam à frente. Aproxime-se com cuidado e agache-se (Shift) ao chegar perto do ponto marcado.",
    "objectives": [
     {
      "id": "o4",
@@ -60,7 +60,7 @@
   },
   {
    "id": "esconder",
-   "journal": "Há um homem armado atirando em tudo que se move. Não seja visto.",
+   "journal": "É Narber, e ele atira em tudo que se move. Fique agachado (Shift), fora da vista dele, até ele se afastar.",
    "objectives": [
     {
      "id": "o5",
@@ -72,7 +72,7 @@
   },
   {
    "id": "navio",
-   "journal": "Narber se afastou. Volte ao navio enquanto pode.",
+   "journal": "Narber se afastou. Volte pela trilha até o navio.",
    "objectives": [
     {
      "id": "o6",

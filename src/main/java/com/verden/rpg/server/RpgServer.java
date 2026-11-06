@@ -261,6 +261,8 @@ public final class RpgServer {
         m.put("quests", quests);
         m.put("codex", new ArrayList<>(s.state.codex));
         m.put("points", new ArrayList<>());
+        Object[] g = Fase01.goal(s, p);
+        if (g != null) { Map<String, Object> go = new LinkedHashMap<>(); go.put("x", g[0]); go.put("z", g[1]); go.put("label", g[2]); m.put("goal", go); }
         m.put("toasts", new ArrayList<>(toasts));
         toasts.clear();
         ServerPlayNetworking.send(p, new RpgNet.State(Json.write(m)));
@@ -292,9 +294,9 @@ public final class RpgServer {
                             ServerWorld w = p.getServerWorld();
                             Integer ay = s == null ? null : s.state.vars.get("slice_ay");
                             double[] pos = switch (StringArgumentType.getString(c, "lugar")) {
-                                case "praia" -> new double[]{KarBuilder.KX + 0.5, KarBuilder.SEA + 2, KarBuilder.KZ + 28.5};
-                                case "mata" -> new double[]{KarBuilder.KX + 0.5, KarBuilder.SEA + KarBuilder.ih(0, -2) + 1, KarBuilder.KZ - 2.5};
-                                case "navio" -> new double[]{KarBuilder.KX + 0.5, KarBuilder.SEA + 2, KarBuilder.KZ + 44.5};
+                                case "praia" -> new double[]{KarBuilder.LX + 0.5, Fase01.surface(w, KarBuilder.LX, KarBuilder.cz + 4), KarBuilder.cz + 4.5};
+                                case "mata" -> new double[]{KarBuilder.LX + 14.5, Fase01.surface(w, KarBuilder.LX + 14, KarBuilder.cz + 85), KarBuilder.cz + 85.5};
+                                case "navio" -> new double[]{KarBuilder.LX + 0.5, KarBuilder.SEA + 1, KarBuilder.cz - 24.5};
                                 case "yettus" -> new double[]{Fase01.YSX + 0.5, Fase01.surface(w, Fase01.YSX, Fase01.YSZ), Fase01.YSZ + 0.5};
                                 case "portao" -> new double[]{Fase01.FX - 100.5, Fase01.surface(w, Fase01.FX - 100, Fase01.FZ), Fase01.FZ + 0.5};
                                 case "zigurate" -> ay == null ? null : new double[]{AX + 0.5, ay + 1, AZ - 20};

@@ -1,4 +1,8 @@
 # CHANGELOG
+## Revisão 2 — feedback do 1º teste
+- Karamarraw: usa a ilha real do mapa (sem construir terreno); KarBuilder reescrito (navio, prancha, suprimentos, marcos, mata, pedras); câmeras recalculadas.
+- Fase01 reescrita: expedição por script, Narber sem laço de bloqueio e com saída garantida, escalada de tensão, dicas, bússola (campo `goal` no pacote de estado + HUD).
+- Novo som `rpg.grito`; textos de missão mais claros.
 ## Etapa 3 / sessão 2
 - Núcleo: `CharacterDef`, `Appearance`; `Session.switchTo`, roupas (`outfit`, `outfit+`, `switch` como efeitos; `outfit:` como condição); estado por personagem (roupa, posição) no save.
 - Dados: personagens Trinity/Marie/Dan/Lena (só fatos confirmados; resto PENDENTE).

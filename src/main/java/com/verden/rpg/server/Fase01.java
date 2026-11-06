@@ -48,7 +48,6 @@ final class Fase01 {
     static final int DESEMBARQUE = 0, EXPEDICAO = 1, MATA = 2, DISPAROS = 3, ESCONDER = 4, NAVIO = 5, DESTINO = 6, RELATORIO = 7, TITULO = 8,
             FERIDO = 9, POCAO = 10, CONVERSA = 11, CAMINHO = 12, CIDADE = 13, ESTABULO = 14, AUDIENCIA = 15, PROPOSTA = 16, CORREDORES = 17, FIM = 99;
     static final int FX = 3840, FZ = -584, YSX = FX - 300, YSZ = FZ;
-    private static final int KX = KarBuilder.KX, KZ = KarBuilder.KZ, SEA = KarBuilder.SEA;
     private static final Random RND = new Random();
     private static final Set<String> inside = new HashSet<>();
     private static String lastTrack;
@@ -113,14 +112,15 @@ final class Fase01 {
         CutsceneDirector.abort();
         RpgServer.closeDialogue();
         inside.clear();
-        if (!KarBuilder.oceanoSeguro(w)) {
-            p.sendMessage(Text.literal("Karamarraw: a área reservada não é oceano profundo neste mundo. Construção abortada para não alterar o terreno.").formatted(Formatting.RED));
-            return;
+        lastStage = -1;
+        narberReset();
+        KarBuilder.locate(w); // acha a costa norte da Karamarraw REAL (o terreno não é alterado)
+        if (!s.state.vars.containsKey("kar_built")) {
+            p.sendMessage(Text.literal("Preparando Karamarraw… (navio, praia e mata; alguns segundos)").formatted(Formatting.GRAY), false);
+            KarBuilder.buildAll(w);
+            s.state.vars.put("kar_built", 1);
         }
-        boolean ilha = w.getBlockState(new BlockPos(KX, SEA + 1, KZ + 31)).isOf(Blocks.SAND);
-        boolean sala = !w.getBlockState(new BlockPos(KarBuilder.RX, KarBuilder.RY, KarBuilder.RZ)).isAir();
-        if (!ilha) { p.sendMessage(Text.literal("Construindo Karamarraw… (alguns segundos)").formatted(Formatting.GRAY), false); KarBuilder.buildIsland(w); KarBuilder.buildShip(w); }
-        if (!sala) KarBuilder.buildRoom(w);
+        if (w.getBlockState(new BlockPos(KarBuilder.RX, KarBuilder.RY, KarBuilder.RZ)).isAir()) KarBuilder.buildRoom(w);
         s.apply(List.of("switch:narrador", "flag:switch_locked"));
         if (stage(s) < 0) s.quests.start(Q);
         w.setWeather(24000, 0, false, false);
@@ -134,25 +134,33 @@ final class Fase01 {
 
     private static final String[][] AUTO = {{"0", "c_chegada"}, {"6", "c_narber_destino"}, {"7", "c_relatorio"}, {"8", "c_titulo"}, {"8", "c_yettus_intro"}, {"99", "c_fim_fase"}};
 
+    private static int lastStage = -1, lastStageTick;
+    private static final String[] HINT = {"Desça pela prancha até a praia.", "Siga a trilha para o interior com a expedição (veja a bússola no topo).", "Continue pela trilha: algo está errado na mata.",
+            "Os tiros vêm de mais à frente. Aproxime-se com cuidado e agache-se (Shift) perto do ponto marcado.", "Fique agachado (Shift), longe da vista de Narber, até ele se afastar.", "Narber se foi. Volte pela trilha até o navio."};
+
     static void tick(MinecraftServer server, Session s) {
         int t = server.getTicks();
         int st = stage(s);
         if (st < 0) return;
+        if (st != lastStage) { lastStage = st; lastStageTick = t; }
         for (ServerPlayerEntity p : server.getPlayerManager().getPlayerList()) {
             if (!CutsceneDirector.busy()) {
                 String nx = nextAuto(s);
                 if (nx != null) CutsceneDirector.start(s, nx, p);
             }
             if (CutsceneDirector.busy()) continue;
+            KarBuilder.locate(p.getServerWorld());
+            expedicao(p, s, st, t);
+            narberTick(p, s, st, t);
             if (t % 5 == 0 && !RpgServer.dialogueActive()) zones(p, s, st);
             if (!RpgServer.dialogueActive()) autoDialogs(p, s, st);
             if (t % 10 == 0) {
                 atmosphere(p, s, st, t);
-                expedition(p, s, st);
-                narber(p, s, st);
                 followDan(p, s, st);
                 binkyAoEstabulo(p, s);
                 music(p, st, t);
+                if (st >= 0 && st < HINT.length && t - lastStageTick > 1200 && (t - lastStageTick) % 600 < 10)
+                    p.sendMessage(Text.literal("Dica: " + HINT[st]).formatted(Formatting.GOLD), true);
             }
         }
     }
@@ -171,11 +179,13 @@ final class Fase01 {
         boolean has(double x, double y, double z) { return x >= x1 && x <= x2 && y >= y1 && y <= y2 && z >= z1 && z <= z2; }
     }
 
-    private static Zone kz(String id, int x1, int x2, int z1, int z2) { return new Zone(id, KX + x1, KX + x2, SEA - 2, SEA + 70, KZ + z1, KZ + z2); }
+    private static Zone kz(String id, double lx, double lz, double r) { return new Zone(id, KarBuilder.LX + lx - r, KarBuilder.LX + lx + r, -64, 320, KarBuilder.cz + lz - r, KarBuilder.cz + lz + r); }
 
     private static List<Zone> zones(Session s) {
-        List<Zone> l = new ArrayList<>(List.of(kz("karamarraw_desembarque", -7, 7, 24, 32), kz("karamarraw_mata_entrada", -6, 6, 10, 16), kz("karamarraw_mata_funda", -8, 8, -3, 1),
-                kz("karamarraw_origem_disparo", -9, 3, -10, -8), new Zone("karamarraw_navio", KX - 3, KX + 3, SEA, SEA + 6, KZ + 38, KZ + 52),
+        int[][] T = KarBuilder.TRAIL;
+        List<Zone> l = new ArrayList<>(List.of(kz("karamarraw_desembarque", 0, 8, 12), kz("karamarraw_mata_entrada", T[1][0], T[1][1], 14), kz("karamarraw_mata_funda", T[2][0], T[2][1], 14),
+                kz("karamarraw_origem_disparo", T[3][0], T[3][1], 12),
+                new Zone("karamarraw_navio", KarBuilder.LX - 4, KarBuilder.LX + 5, KarBuilder.SEA - 2, KarBuilder.SEA + 10, KarBuilder.cz - 34, KarBuilder.cz - 12),
                 new Zone("yettus_encontro", FX - 215, FX - 185, -64, 320, FZ - 14, FZ + 20), new Zone("yettus_caminho", FX - 170, FX - 140, -64, 320, FZ - 30, FZ + 30),
                 new Zone("flerin_portao", FX - 122, FX - 94, -64, 320, FZ - 16, FZ + 16), new Zone("flerin_rua", FX - 92, FX - 60, -64, 320, FZ - 14, FZ + 14)));
         Integer ay = s.state.vars.get("slice_ay");
@@ -220,18 +230,26 @@ final class Fase01 {
 
     // ------------------------------------------------------------------ atmosfera de Karamarraw (cenas 1–3)
 
+    private static double lx(ServerPlayerEntity p) { return p.getX() - KarBuilder.LX; }
+
+    private static double lz(ServerPlayerEntity p) { return p.getZ() - KarBuilder.cz; }
+
+    /** Tensão 0..1 conforme o jogador avança pela trilha (z 40→130). Cai sozinha ao voltar para a praia. */
     private static double intensity(ServerPlayerEntity p, int st) {
-        if (st < EXPEDICAO || st > ESCONDER) return 0;
-        double lz = p.getZ() - KZ, k = (14 - lz) / 22.0;
-        return Math.max(st >= MATA ? 0.45 : 0, Math.min(1, st >= ESCONDER ? 1 : k));
+        if (st < EXPEDICAO || st > NAVIO) return 0;
+        double k = Math.max(0, Math.min(1, (lz(p) - 40) / 90.0));
+        if (st == ESCONDER) k = Math.max(k, 0.8);
+        return k;
     }
 
+    private static int gritoCd, visaoCd;
+
+    /** Escalada: sussurros → gritos distantes → vultos → mal-estar/escuridão → (estágio 3) primeiro tiro. */
     private static void atmosphere(ServerPlayerEntity p, Session s, int st, int t) {
         ServerWorld w = p.getServerWorld();
         double k = intensity(p, st);
-        if (st >= ESCONDER + 1 && st <= DESTINO && k == 0) return;
         if (k <= 0.05) return;
-        if (t % 40 == 0) w.setTimeOfDay(4000 + (long) (8500 * k));
+        if (t % 40 == 0) w.setTimeOfDay(4000 + (long) (8000 * k));
         if (k > 0.4 && !w.isRaining()) w.setWeather(0, 24000, true, k > 0.8);
         w.spawnParticles(ParticleTypes.ASH, p.getX(), p.getY() + 1.2, p.getZ(), (int) (6 * k) + 1, 4, 2, 4, 0.01);
         if (k > 0.3) w.spawnParticles(ParticleTypes.WHITE_ASH, p.getX(), p.getY() + 1.5, p.getZ(), 3, 5, 2.5, 5, 0.0);
@@ -239,12 +257,26 @@ final class Fase01 {
             double ang = RND.nextDouble() * Math.PI * 2, d = 6 + RND.nextDouble() * 5;
             w.playSound(null, p.getX() + Math.cos(ang) * d, p.getY() + 1.5, p.getZ() + Math.sin(ang) * d, ModSounds.RPG_SUSSURROS, SoundCategory.AMBIENT, 1.4f, 0.85f + RND.nextFloat() * 0.3f);
         }
-        if (k > 0.5 && t % 200 == 0) p.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 0, true, false, false));
+        if (k > 0.3 && --gritoCd <= 0) { // gritos longínquos
+            gritoCd = 14 + RND.nextInt(14);
+            double ang = RND.nextDouble() * Math.PI * 2, d = 30 + RND.nextDouble() * 30;
+            w.playSound(null, p.getX() + Math.cos(ang) * d, p.getY() + 2, p.getZ() + Math.sin(ang) * d, ModSounds.RPG_GRITO, SoundCategory.AMBIENT, 3f, 0.8f + RND.nextFloat() * 0.4f);
+        }
+        if (k > 0.45 && --visaoCd <= 0) { // vultos: colunas de almas que surgem e somem entre as árvores
+            visaoCd = 10 + RND.nextInt(10);
+            double ang = Math.toRadians(p.getYaw() + 90 + RND.nextInt(120) - 60), d = 12 + RND.nextDouble() * 10;
+            double vx = p.getX() + Math.cos(ang) * d, vz = p.getZ() + Math.sin(ang) * d;
+            int vy = (int) Math.floor(KarBuilder.top(w, vx - KarBuilder.LX, vz - KarBuilder.cz));
+            w.spawnParticles(ParticleTypes.SOUL, vx, vy + 1.0, vz, 14, 0.25, 0.9, 0.25, 0.01);
+            w.spawnParticles(ParticleTypes.SCULK_SOUL, vx, vy + 1.6, vz, 4, 0.2, 0.5, 0.2, 0.02);
+        }
+        if (k > 0.55 && t % 200 == 0) p.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 0, true, false, false));
+        if (k > 0.8 && t % 400 == 0) p.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 80, 0, true, false, false));
     }
 
     private static void music(ServerPlayerEntity p, int st, int t) {
         String want = null; int len = 0;
-        if (st >= DESEMBARQUE && st <= ESCONDER) { boolean tense = intensity(p, st) > 0.3 || st >= DISPAROS; want = tense ? "verden:rpg.tensao" : "verden:rpg.mar"; len = tense ? 28 : 38; }
+        if (st >= DESEMBARQUE && st <= NAVIO) { boolean tense = intensity(p, st) > 0.3 || st == DISPAROS || st == ESCONDER; want = tense ? "verden:rpg.tensao" : "verden:rpg.mar"; len = tense ? 28 : 38; }
         else if (st >= FERIDO && st <= CAMINHO) { want = "verden:rpg.vento"; len = 28; }
         if (want == null) return;
         if (!want.equals(lastTrack) || t - lastTrackTick > len * 20) {
@@ -254,86 +286,186 @@ final class Fase01 {
         }
     }
 
-    // ------------------------------------------------------------------ expedição e Narber
+    // ------------------------------------------------------------------ expedição: NPCs por script (sem pathfinding)
 
-    private static void expedition(ServerPlayerEntity p, Session s, int st) {
+    /** Move o NPC em linha reta até (tx,tz) acompanhando o relevo; a animação de andar vem da própria variação de posição. */
+    static boolean step(ServerWorld w, VerdenNpcEntity e, double tx, double tz, double speed) {
+        double dx = tx - e.getX(), dz = tz - e.getZ(), d = Math.hypot(dx, dz);
+        if (d < 0.05) return true;
+        double m = Math.min(speed, d), nx = e.getX() + dx / d * m, nz = e.getZ() + dz / d * m;
+        int bx = (int) Math.floor(nx), bz = (int) Math.floor(nz);
+        w.getChunk(bx >> 4, bz >> 4);
+        double ny = w.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, bx, bz);
+        float yaw = (float) Math.toDegrees(Math.atan2(-dx, dz));
+        e.refreshPositionAndAngles(nx, ny, nz, yaw, 0f);
+        e.setHeadYaw(yaw);
+        e.setBodyYaw(yaw);
+        return d - m < 0.05;
+    }
+
+    static void face(VerdenNpcEntity e, double tx, double tz) {
+        float yaw = (float) Math.toDegrees(Math.atan2(-(tx - e.getX()), tz - e.getZ()));
+        e.setYaw(yaw);
+        e.setHeadYaw(yaw);
+        e.setBodyYaw(yaw);
+    }
+
+    private static final double[][][] ROTINA = {
+            {{3, 11}},                               // 0 guia: espera no começo da trilha, olhando para o interior
+            {{0.5, -12}, {-5.5, 6}},                 // 1 leva carga do navio aos suprimentos
+            {{1.5, -12}, {5.5, 7}},                  // 2 idem, lado leste
+            {{-12, 3}, {12, 3}},                     // 3 vigia a linha d'água
+            {{-8, 9}, {-5, 5}}};                     // 4 confere os caixotes
+    private static final java.util.Map<java.util.UUID, int[]> RS = new java.util.HashMap<>();
+    private static int leadIdx = 1;
+
+    private static int expIndex(VerdenNpcEntity e) {
+        for (String tg : e.getCommandTags()) if (tg.startsWith("exp") && tg.length() == 4) return tg.charAt(3) - '0';
+        return 0;
+    }
+
+    private static void expedicao(ServerPlayerEntity p, Session s, int st, int t) {
+        if (st < DESEMBARQUE || st > ESCONDER) return;
         ServerWorld w = p.getServerWorld();
-        List<VerdenNpcEntity> l = tagged(w, "verden_expedicao", p.getBlockPos(), 80);
+        List<VerdenNpcEntity> l = tagged(w, "verden_expedicao", new BlockPos(KarBuilder.LX, KarBuilder.SEA, KarBuilder.cz + 40), 200);
+        if (l.isEmpty()) return;
         double k = intensity(p, st);
+        VerdenNpcEntity leader = null;
+        for (VerdenNpcEntity e : l) if (expIndex(e) == 0) leader = e;
+        double lpx = KarBuilder.LX, lpz = KarBuilder.cz;
         for (VerdenNpcEntity e : l) {
-            e.setAiDisabled(false);
-            if (st == EXPEDICAO || st == MATA) {
-                if (e.squaredDistanceTo(p) > 36) e.getNavigation().startMovingTo(p.getX() + RND.nextInt(5) - 2, p.getY(), p.getZ() + RND.nextInt(5) - 2, 1.0);
-                if (e.squaredDistanceTo(p) > 40 * 40) e.refreshPositionAndAngles(p.getX() - 2, p.getY(), p.getZ() + 3, e.getYaw(), 0);
-                e.setSneaking(k > 0.5 && RND.nextInt(3) == 0); // desconforto: encolhem-se
-            } else {
-                e.getNavigation().stop();
-                e.setAiDisabled(true);
+            e.setAiDisabled(true);
+            int i = expIndex(e);
+            double ex = e.getX() - lpx, ez = e.getZ() - lpz;
+            if (st >= DISPAROS) { // primeiro tiro: congelam, agachados, voltados para o som
+                e.setSneaking(true);
+                face(e, KarBuilder.LX + KarBuilder.NARBER_HOME[0], KarBuilder.cz + KarBuilder.NARBER_HOME[1]);
+                continue;
+            }
+            boolean marcha = st >= EXPEDICAO && leader != null;
+            if (marcha) {
+                if (i == 0) {
+                    double[] wp = {KarBuilder.TRAIL[leadIdx][0], KarBuilder.TRAIL[leadIdx][1]};
+                    double pd = leader.distanceTo(p);
+                    if (pd > 16) { e.setSneaking(false); face(e, p.getX(), p.getZ()); }  // espera o jogador
+                    else if (step(w, e, lpx + wp[0], lpz + wp[1], 0.15 * (1 - 0.45 * k)) && leadIdx < 2) leadIdx++;
+                } else {
+                    double lx0 = leader.getX() + (i % 2 == 0 ? -2.2 : 2.2), lz0 = leader.getZ() - 2.2 * i;
+                    if (Math.hypot(e.getX() - lx0, e.getZ() - lz0) > 1.2) step(w, e, lx0, lz0, 0.17);
+                    else if (t % 40 == 0) e.setYaw(e.getYaw() + RND.nextInt(120) - 60); // olha ao redor
+                }
+                e.setSneaking(k > 0.55 && i != 0);
+                continue;
+            }
+            // vida na praia (antes de partir): rotinas de trabalho
+            int[] r = RS.computeIfAbsent(e.getUuid(), u -> new int[]{0, 0});
+            double[][] pts = ROTINA[Math.min(i, ROTINA.length - 1)];
+            double[] tg = pts[r[0] % pts.length];
+            if (ez < -13.5 && tg[1] > -3) { // ainda no convés: vai à prancha primeiro
+                if (Math.abs(ex - 0.5) > 0.4) step(w, e, lpx + 0.5, e.getZ(), 0.12);
+                else step(w, e, lpx + 0.5, lpz - 1.5, 0.12);
+                continue;
+            }
+            if (i == 0) { if (p.distanceTo(e) < 12) face(e, p.getX(), p.getZ()); else if (t % 200 == 0) face(e, lpx, lpz + 140); step(w, e, lpx + tg[0], lpz + tg[1], 0.1); continue; }
+            if (Math.hypot(ex - tg[0], ez - tg[1]) > 0.5) { step(w, e, lpx + tg[0], lpz + tg[1], 0.1); e.setSneaking(false); }
+            else {
+                e.setSneaking(i == 4 || i == 1 || i == 2);          // abaixam para pegar/conferir carga
+                if (r[1] == 0) r[1] = 50 + RND.nextInt(60);
+                if (--r[1] <= 0) { r[0]++; r[1] = 0; }
             }
         }
     }
 
-    private static final double[][] WP = {{-10, -16}, {-6, -11}, {-2, -8}, {6, -12}, {14, -22}, {8, -34}};
-    private static int narberWp, narberPause, narberCool;
+    // ------------------------------------------------------------------ Narber (movimento por script; nunca bloqueia a missão)
 
-    private static boolean escondido(ServerPlayerEntity p) {
-        if (!p.isSneaking()) return false;
-        int cover = 0;
-        ServerWorld w = p.getServerWorld();
-        BlockPos b = p.getBlockPos();
-        for (int dx = -2; dx <= 2; dx++) for (int dz = -2; dz <= 2; dz++) for (int dy = 0; dy <= 2; dy++) {
-            var bs = w.getBlockState(b.add(dx, dy, dz));
-            if (bs.isOf(Blocks.MOSSY_COBBLESTONE) || bs.isIn(BlockTags.LOGS) || bs.isIn(BlockTags.LEAVES)) cover++;
-        }
-        return cover >= 7;
+    private static int nShot, nAlertCd, nPath, nTimer, nPause;
+    private static double[] nTarget;
+
+    private static void narberReset() { nShot = 60; nAlertCd = 0; nPath = 0; nTimer = 0; nPause = 0; nTarget = null; leadIdx = 1; RS.clear(); }
+
+    private static void narberFire(ServerWorld w, VerdenNpcEntity n) {
+        n.setYaw(RND.nextInt(360));
+        n.setHeadYaw(n.getYaw());
+        w.playSound(null, n.getX(), n.getY() + 1, n.getZ(), ModSounds.RPG_TIRO, SoundCategory.HOSTILE, 8f, 0.9f + RND.nextFloat() * 0.25f);
+        w.spawnParticles(ParticleTypes.POOF, n.getX(), n.getY() + 1.3, n.getZ(), 6, 0.3, 0.2, 0.3, 0.02);
+        w.spawnParticles(ParticleTypes.SMOKE, n.getX(), n.getY() + 1.4, n.getZ(), 4, 0.2, 0.1, 0.2, 0.01);
     }
 
-    private static void narber(ServerPlayerEntity p, Session s, int st) {
+    private static void narberTick(ServerPlayerEntity p, Session s, int st, int t) {
         ServerWorld w = p.getServerWorld();
-        BlockPos kc = new BlockPos(KX, SEA + 5, KZ);
-        VerdenNpcEntity n = one(w, "verden_narber_ilha", kc, 70);
+        double hx = KarBuilder.LX + KarBuilder.NARBER_HOME[0], hz = KarBuilder.cz + KarBuilder.NARBER_HOME[1];
+        BlockPos home = BlockPos.ofFloored(hx, KarBuilder.SEA + 20, hz);
+        VerdenNpcEntity n = (st == DISPAROS || st == ESCONDER) ? one(w, "verden_narber_ilha", home, 150) : null;
         if (st == DISPAROS && n == null && !s.state.flags.contains("narber_ativo")) {
-            double y = SEA + KarBuilder.ih((int) WP[0][0], (int) WP[0][1]) + 1;
-            n = spawn(w, NpcRole.NARBER, "verden_narber_ilha", KX + WP[0][0] + 0.5, y, KZ + WP[0][1] + 0.5, 180f, false);
+            n = spawn(w, NpcRole.NARBER, "verden_narber_ilha", hx, KarBuilder.top(w, KarBuilder.NARBER_HOME[0], KarBuilder.NARBER_HOME[1]), hz, 180f, true);
             s.state.flags.add("narber_ativo");
-            narberWp = 0; narberPause = 0; narberCool = 0;
-            w.playSound(null, KX + WP[0][0], y, KZ + WP[0][1], ModSounds.RPG_TIRO, SoundCategory.HOSTILE, 5f, 1f);
+            narberReset();
+        }
+        if (st != DISPAROS && st != ESCONDER) {
+            VerdenNpcEntity old = one(w, "verden_narber_ilha", home, 150);
+            if (old != null) old.discard();
+            return;
         }
         if (n == null) return;
-        if (st != DISPAROS && st != ESCONDER) { n.discard(); return; }
-        n.setAiDisabled(false);
-        double dist = n.distanceTo(p);
-        boolean vejo = dist < 16 && n.canSee(p) && !escondido(p);
-        if (narberCool > 0) narberCool--;
-        if ((dist < 4.5 || vejo) && narberCool == 0 && st >= DISPAROS) {
-            narberCool = 6;
-            w.playSound(null, n.getX(), n.getY() + 1, n.getZ(), ModSounds.RPG_TIRO, SoundCategory.HOSTILE, 4f, 1.1f);
-            p.sendMessage(Text.literal("Narber viu você! Corra para o fundo da mata e esconda-se (agache atrás de pedras ou árvores).").formatted(Formatting.RED), true);
-            p.teleport(w, KX + 0.5, SEA + KarBuilder.ih(0, 6) + 1, KZ + 6.5, 180f, 0f);
-            n.refreshPositionAndAngles(KX + WP[0][0] + 0.5, n.getY(), KZ + WP[0][1] + 0.5, 180f, 0f);
-            narberWp = 0; narberPause = 0;
-            return;
-        }
-        if (narberPause > 0) {
-            narberPause--;
-            return;
-        }
-        double[] wp = WP[Math.min(narberWp, WP.length - 1)];
-        double tx = KX + wp[0] + 0.5, tz = KZ + wp[1] + 0.5, ty = SEA + KarBuilder.ih((int) wp[0], (int) wp[1]) + 1;
-        n.getNavigation().startMovingTo(tx, ty, tz, 0.95);
-        if (Math.hypot(n.getX() - tx, n.getZ() - tz) < 2.2) {
-            narberWp++;
-            narberPause = 3;
-            n.setYaw(RND.nextInt(360));
-            w.playSound(null, n.getX(), n.getY() + 1, n.getZ(), ModSounds.RPG_TIRO, SoundCategory.HOSTILE, 4f, 0.9f + RND.nextFloat() * 0.3f);
-            w.spawnParticles(ParticleTypes.POOF, n.getX(), n.getY() + 1.2, n.getZ(), 6, 0.3, 0.2, 0.3, 0.02);
-            if (narberWp >= WP.length) {
+        n.setAiDisabled(true);
+        if (--nShot <= 0) { narberFire(w, n); nShot = 60 + RND.nextInt(60); }
+        if (st == DISPAROS) { // vaga pela clareira, atirando em qualquer coisa
+            if (nPause > 0) nPause--;
+            else {
+                if (nTarget == null || Math.hypot(n.getX() - nTarget[0], n.getZ() - nTarget[1]) < 0.6) {
+                    nTarget = new double[]{hx + RND.nextInt(15) - 7, hz + RND.nextInt(15) - 7};
+                    nPause = RND.nextInt(50);
+                }
+                step(w, n, nTarget[0], nTarget[1], 0.09);
+            }
+        } else { // ESCONDER: afasta-se pelo caminho de saída; termina por tempo mesmo que o jogador falhe em se esconder
+            nTimer++;
+            int[] pt = KarBuilder.NARBER_PATH[Math.min(nPath, KarBuilder.NARBER_PATH.length - 1)];
+            if (step(w, n, KarBuilder.LX + pt[0], KarBuilder.cz + pt[1], 0.16)) nPath++;
+            if (nPath >= KarBuilder.NARBER_PATH.length || nTimer > 1500) {
                 n.discard();
                 s.fire(new GameEvent("hide", "narber_afastou"));
                 p.sendMessage(Text.literal("Os passos se afastam. Volte ao navio.").formatted(Formatting.GRAY), true);
                 RpgServer.markDirty();
+                return;
             }
         }
+        if (t % 10 == 0) {
+            if (nAlertCd > 0) { nAlertCd -= 10; return; }
+            double d = n.distanceTo(p);
+            boolean visto = d < 4.5 || (d < 22 && !p.isSneaking() && n.canSee(p));
+            if (visto) {
+                nAlertCd = 120;
+                narberFire(w, n);
+                var away = p.getPos().subtract(n.getPos()).normalize();
+                p.setVelocity(away.x * 1.1, 0.45, away.z * 1.1);
+                p.velocityModified = true;
+                p.sendMessage(Text.literal("Narber atirou em sua direção! Agache-se (Shift) e fique fora da vista dele.").formatted(Formatting.RED), true);
+            }
+        }
+    }
+
+    /** Alvo da bússola da HUD (null = nenhum). Devolve {x, z, rótulo}. */
+    static Object[] goal(Session s, ServerPlayerEntity p) {
+        KarBuilder.locate(p.getServerWorld());
+        int st = stage(s);
+        int[][] T = KarBuilder.TRAIL;
+        Integer ay = s.state.vars.get("slice_ay");
+        double ax = RpgServer.AX, az = RpgServer.AZ;
+        return switch (st) {
+            case DESEMBARQUE -> new Object[]{KarBuilder.LX + 0.5, KarBuilder.cz + 6.0, "Praia"};
+            case EXPEDICAO -> new Object[]{KarBuilder.LX + T[1][0] + 0.5, KarBuilder.cz + T[1][1] + 0.5, "Trilha"};
+            case MATA -> new Object[]{KarBuilder.LX + T[2][0] + 0.5, KarBuilder.cz + T[2][1] + 0.5, "Trilha"};
+            case DISPAROS -> new Object[]{KarBuilder.LX + T[3][0] + 0.5, KarBuilder.cz + T[3][1] + 0.5, "Origem dos tiros"};
+            case NAVIO -> new Object[]{KarBuilder.LX + 0.5, KarBuilder.cz - 13.0, "Navio"};
+            case FERIDO, POCAO -> new Object[]{FX - 200.0, FZ + 4.0, "Homem ferido"};
+            case CAMINHO -> new Object[]{FX - 108.0, (double) FZ, "Flerin"};
+            case CIDADE -> new Object[]{ax, az - 19.0, "Zigurate"};
+            case ESTABULO -> new Object[]{ax, az - 19.0, "Soldado"};
+            case AUDIENCIA -> new Object[]{ax, az - 11.0, "Sala do trono"};
+            case CORREDORES -> new Object[]{ax - 13.0, az + 5.0, "Corredores"};
+            default -> null;
+        };
     }
 
     // ------------------------------------------------------------------ Dan, Binky
@@ -370,30 +502,31 @@ final class Fase01 {
         ServerWorld w = p.getServerWorld();
         switch (name) {
             case "posicionar_chegada" -> {
-                p.teleport(w, KX + 0.5, SEA + 2, KZ + 44.5, 180f, 0f);
+                p.teleport(w, KarBuilder.LX + 0.5, KarBuilder.SEA + 1, KarBuilder.cz - 24.5, 0f, 0f);
                 w.setTimeOfDay(4000);
                 w.setWeather(24000, 0, false, false);
                 for (int i = 0; i < 5; i++) spawnExped(w, i, 0);
-                clearTag(w, "verden_narber_ilha", new BlockPos(KX, SEA, KZ), 70);
+                clearTag(w, "verden_narber_ilha", new BlockPos(KarBuilder.LX, KarBuilder.SEA, KarBuilder.cz + 150), 200);
+                narberReset();
                 s.state.flags.remove("narber_ativo");
             }
             case "entregar_controle" -> p.sendMessage(Text.literal(stage(s) >= FERIDO ? "Cavalgue para o leste, rumo às muralhas de Flerin." : "Desça à praia e acompanhe a expedição.").formatted(Formatting.GOLD), true);
             case "navio_zarpa" -> {
-                p.teleport(w, KX + 0.5, SEA + 2, KZ + 46.5, 180f, 0f);
+                p.teleport(w, KarBuilder.LX + 0.5, KarBuilder.SEA + 1, KarBuilder.cz - 22.5, 0f, 0f);
                 w.setWeather(24000, 0, false, false);
-                clearTag(w, "verden_expedicao", new BlockPos(KX, SEA, KZ), 90);
+                clearTag(w, "verden_expedicao", new BlockPos(KarBuilder.LX, KarBuilder.SEA, KarBuilder.cz + 40), 200);
                 for (int i = 0; i < 4; i++) spawnExped(w, i, 1);
             }
-            case "narber_na_praia" -> spawn(w, NpcRole.NARBER, "verden_narber_praia", KX + 0.5, SEA + 2, KZ + 30.5, 0f, true);
+            case "narber_na_praia" -> spawn(w, NpcRole.NARBER, "verden_narber_praia", KarBuilder.LX + 0.5, KarBuilder.top(w, 0, 3), KarBuilder.cz + 3.5, 180f, true);
             case "narber_some" -> {
-                VerdenNpcEntity n = one(w, "verden_narber_praia", new BlockPos(KX, SEA, KZ + 30), 30);
+                VerdenNpcEntity n = one(w, "verden_narber_praia", new BlockPos(KarBuilder.LX, KarBuilder.SEA, KarBuilder.cz + 3), 40);
                 if (n != null) { w.spawnParticles(ParticleTypes.POOF, n.getX(), n.getY() + 1, n.getZ(), 12, 0.3, 0.5, 0.3, 0.02); n.discard(); }
             }
             case "montar_relatorio" -> {
                 int rx = KarBuilder.RX, ry = KarBuilder.RY, rz = KarBuilder.RZ;
                 if (w.getBlockState(new BlockPos(rx, ry, rz)).isAir()) KarBuilder.buildRoom(w);
-                clearTag(w, "verden_expedicao", new BlockPos(KX, SEA, KZ), 90);
-                clearTag(w, "verden_narber_praia", new BlockPos(KX, SEA, KZ + 30), 40);
+                clearTag(w, "verden_expedicao", new BlockPos(KarBuilder.LX, KarBuilder.SEA, KarBuilder.cz + 40), 200);
+                clearTag(w, "verden_narber_praia", new BlockPos(KarBuilder.LX, KarBuilder.SEA, KarBuilder.cz + 3), 40);
                 p.teleport(w, rx + 0.5, ry + 1, rz + 7.5, 180f, 0f);
                 w.setWeather(24000, 0, false, false);
                 spawn(w, NpcRole.MAJESTADE, "verden_rel_majestade", rx + 0.5, ry + 1, rz - 1.5, 0f, true);
@@ -420,16 +553,18 @@ final class Fase01 {
     }
 
     private static void spawnExped(ServerWorld w, int i, int onDeck) {
-        double x = KX + (i - 2) * 1.4 + 0.5, z = onDeck == 1 ? KZ + 44.5 + (i % 2) * 2 : KZ + 41.5 + (i % 2);
-        double y = SEA + 2;
+        double x = KarBuilder.LX + (i - 2) * 1.2 + 0.5, z = KarBuilder.cz - 23.5 + (i % 2) * 3 + (onDeck == 1 ? 2 : 0);
+        double y = KarBuilder.SEA + 1;
         VerdenNpcEntity e = ModEntities.NPC.create(w);
         if (e == null) return;
         w.getChunk((int) x >> 4, (int) z >> 4);
         e.setVariant(NpcRole.EXPEDICIONARIO.ordinal());
-        e.refreshPositionAndAngles(x, y, z, 180f, 0f);
+        e.refreshPositionAndAngles(x, y, z, onDeck == 1 ? 180f : 0f, 0f);
         e.setPersistent();
         e.setInvulnerable(true);
+        e.setAiDisabled(true);
         e.addCommandTag("verden_expedicao");
+        e.addCommandTag("exp" + i);
         w.spawnEntity(e);
     }
 
@@ -471,6 +606,6 @@ final class Fase01 {
     static double[] checkpoint(Session s) {
         int st = stage(s);
         if (st >= FERIDO && st < FIM) return new double[]{YSX + 0.5, 0, YSZ + 0.5, 270};
-        return new double[]{KX + 0.5, SEA + KarBuilder.ih(0, 28) + 1, KZ + 28.5, 180};
+        return new double[]{KarBuilder.LX + 0.5, 0, KarBuilder.cz + 4.5, 0};
     }
 }

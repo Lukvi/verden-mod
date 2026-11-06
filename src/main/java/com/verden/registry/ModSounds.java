@@ -25,6 +25,7 @@ public final class ModSounds {
     public static final SoundEvent RPG_TIRO = reg("rpg.tiro");
     public static final SoundEvent RPG_RELATORIO = reg("rpg.relatorio");
     public static final SoundEvent RPG_TITULO = reg("rpg.titulo");
+    public static final SoundEvent RPG_GRITO = reg("rpg.grito");
     public static final SoundEvent RPG_VENTO = reg("rpg.vento");
 
     private static SoundEvent reg(String name) {

@@ -138,7 +138,8 @@ final class CutsceneDirector {
                 String id = String.valueOf(a.get("id"));
                 SoundEvent ev = id.equals("tiro_distante") ? ModSounds.RPG_TIRO : id.equals("vento_deserto") ? ModSounds.RPG_VENTO : null;
                 if (ev != null) {
-                    double x = id.equals("tiro_distante") ? KarBuilder.KX + 0.5 : p.getX(), y = id.equals("tiro_distante") ? KarBuilder.SEA + 2 : p.getY(), z = id.equals("tiro_distante") ? KarBuilder.KZ + 30.5 : p.getZ();
+                    boolean tr = id.equals("tiro_distante");
+                    double x = tr ? KarBuilder.LX + 0.5 : p.getX(), y = tr ? KarBuilder.SEA + 2 : p.getY(), z = tr ? KarBuilder.cz + 3.5 : p.getZ();
                     p.getServerWorld().playSound(null, x, y, z, ev, SoundCategory.PLAYERS, id.equals("tiro_distante") ? 6f : 1.2f, 1f);
                 }
             }

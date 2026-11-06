@@ -13,7 +13,7 @@ for ev, v in sj.items():
         need(os.path.exists(f"{A}/sounds/{n.split(':')[-1]}.ogg"), f'som ausente: {ev} -> {n}')
 src = open(R + '/src/main/java/com/verden/registry/ModSounds.java', encoding='utf-8').read()
 for m in re.finditer(r'reg\("(rpg\.[a-z_]+)"\)', src): need(m.group(1) in sj, f'evento registrado sem entrada em sounds.json: {m.group(1)}')
-for ev in ('rpg.mar', 'rpg.tensao', 'rpg.sussurros', 'rpg.tiro', 'rpg.relatorio', 'rpg.titulo', 'rpg.vento'): need(ev in sj, f'evento usado pelo código ausente: {ev}')
+for ev in ('rpg.mar', 'rpg.tensao', 'rpg.sussurros', 'rpg.tiro', 'rpg.grito', 'rpg.relatorio', 'rpg.titulo', 'rpg.vento'): need(ev in sj, f'evento usado pelo código ausente: {ev}')
 roles = re.findall(r'^\s+([A-Z_]+)\("([a-z_]+)", \d+\)', open(R + '/src/main/java/com/verden/entity/NpcRole.java', encoding='utf-8').read(), re.M)
 lang = json.load(open(A + '/lang/pt_br.json', encoding='utf-8'))
 for _, rid in roles:

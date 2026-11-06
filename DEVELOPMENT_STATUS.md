@@ -1,5 +1,16 @@
 # DEVELOPMENT_STATUS — Verden RPG (Fase 1: Karamarraw → fim do Capítulo Um)
 
+## Revisão 2 (após o primeiro teste do autor)
+- **Karamarraw agora é a ilha REAL do mapa do mod** (~4,8 km × 1,2 km; serra de até y≈116 colada à costa norte). Nada de terreno é construído:
+  só navio+prancha, suprimentos na praia, marcos, mata ao longo da trilha e pedras (todos só sobre ar/água). A costa norte é achada em tempo de execução (x=3000 → z≈1464).
+- **Bloqueio de progressão (causa):** Narber detectava o jogador ANTES da zona "origem dos disparos" e o teleportava de volta (laço infinito), e sua patrulha dependia de pathfinding que podia nunca terminar. Corrigido:
+  Narber agora se move por script, detecta só quem está de pé/visível a <22 blocos (agachar = invisível), nunca teleporta o jogador (só o empurra) e **sai sozinho** (≈37 s, limite de 75 s).
+- **Tensão com preparação:** sussurros → gritos distantes (novo som `grito`) → vultos de almas → náusea/escuridão → primeiro tiro longínquo ao entrar no estágio 4.
+- **Expedição:** 5 NPCs com rotinas por script (carregam/conferem carga, vigiam a praia), marcham pela trilha esperando o jogador, encolhem-se com a tensão e congelam voltados para o som no primeiro tiro.
+- **Clareza:** bússola no topo da HUD (direção + distância do objetivo), textos de missão explícitos (inclui "agache com Shift"), dicas automáticas após 60 s parado.
+- Tipos checados contra os jars reais (stubs só de libs ausentes); testes do núcleo 31/31; recursos OK. **Continua sem Gradle/Minecraft neste ambiente: nada foi executado no jogo.**
+
+
 ## Estado real (leia primeiro)
 - **Escrito e integrado ao runtime do Minecraft** (servidor + cliente + rede): menu inicial próprio, Novo Jogo automático, prólogo de Karamarraw,
   cutscenes (câmera, letterbox, fades, falas, título VERDEN AF, música/sons), Narber (patrulha, detecção, ocultação), cena do relatório,
@@ -10,7 +21,7 @@
 ## As 18 etapas (índice da missão `fase_01_karamarraw_flerin`)
 | # | Etapa | Gatilho/implementação | Pendência/risco |
 |---|---|---|---|
-| 1 | Desembarcar | cutscene `c_chegada` + zona praia | ilha/navio nunca vistos em jogo; tempo de construção |
+| 1 | Desembarcar | cutscene `c_chegada` + zona praia | navio/praia nunca vistos em jogo |
 | 2 | Acompanhar expedição | NPCs `expedicionario` seguem o jogador | modelo vanilla de NPC, sem animação própria |
 | 3 | Investigar a mata | zona + atmosfera (partículas, sussurros, náusea, clima, tensão) | intensidade não calibrada |
 | 4 | Origem dos disparos | zona; Narber surge e patrulha | — |

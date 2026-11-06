@@ -105,5 +105,13 @@
         "volume": 0.8
       }
     ]
+  },
+  "rpg.grito": {
+    "sounds": [
+      {
+        "name": "verden:grito",
+        "volume": 1.0
+      }
+    ]
   }
 }

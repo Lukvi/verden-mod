@@ -37,7 +37,8 @@ public enum NpcRole {
     EXPEDICIONARIO("expedicionario", 1),
     MAJESTADE("majestade", 1),
     REEVES("reeves", 1),
-    SOLDADO("soldado", 1);
+    SOLDADO("soldado", 1),
+    NARBER_COMUM("narber_comum", 1);
 
     public final String id;
     public final int lines;
@@ -54,7 +55,7 @@ public enum NpcRole {
 
     public boolean isMerchant() {
         return switch (this) {
-            case LUKE, NOITE, LIAM, KONGE, RAONI, DAN, NEFERTARI, HOMEM_SERENO, NARBER, EXPEDICIONARIO, MAJESTADE, REEVES, SOLDADO -> false;
+            case LUKE, NOITE, LIAM, KONGE, RAONI, DAN, NEFERTARI, HOMEM_SERENO, NARBER, EXPEDICIONARIO, MAJESTADE, REEVES, SOLDADO, NARBER_COMUM -> false;
             default -> true;
         };
     }

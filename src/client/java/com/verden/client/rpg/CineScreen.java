@@ -34,6 +34,7 @@ public class CineScreen extends Screen {
     public void render(DrawContext c, int mx, int my, float delta) {
         CineController.frame();
         long now = System.currentTimeMillis();
+        if (CineController.active && now - CineController.beginMs > 300_000) { CineController.end(net.minecraft.client.MinecraftClient.getInstance()); return; } // limite de segurança: 5 min
         TextRenderer tr = textRenderer;
         CineController.letter += (CineController.letterTarget - CineController.letter) * 0.08f;
         int bar = Math.round(height * 0.12f * CineController.letter);

@@ -5,7 +5,8 @@
   "player/trinity_jord.png": "Trinity/Reeves — visual do LIVRO (armadura branca) — provisória",
   "player/trinity.png": "Trinity — visual da imagem de referência (capa vermelha) — provisória",
   "player/dan.png": "Dan — da imagem de referência (traje preto/dourado; as asas NÃO estão na skin) — provisória",
-  "npc/narber.png": "Narber — só pele pálida e olhos vermelhos são do texto; resto genérico",
+  "npc/narber.png": "Narber possuído — só pele pálida e olhos vermelhos são do texto; resto genérico",
+  "npc/narber_comum.png": "Narber antes da influência (aparência genérica; o livro não o descreve antes)",
   "npc/expedicionario.png": "genérica",
   "npc/majestade.png": "só cabelos longos loiros, pele clara e olhos avermelhados são do texto; resto genérico",
   "npc/soldado.png": "só 'armadurado' é do texto"

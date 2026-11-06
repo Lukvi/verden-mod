@@ -16,6 +16,10 @@
    "essential": true
   },
   {
+   "do": "wait",
+   "ticks": 40
+  },
+  {
    "do": "letterbox",
    "on": true
   },

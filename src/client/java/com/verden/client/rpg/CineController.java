@@ -30,6 +30,7 @@ final class CineController {
     private static long shotStart, shotDur;
     private static MarkerEntity cam;
     private static boolean hudWas;
+    static long beginMs;
 
     @SuppressWarnings("unchecked")
     static void handle(String json) {
@@ -86,9 +87,10 @@ final class CineController {
         if (mc.player == null || mc.world == null) return;
         active = true;
         skippable = skip;
+        boolean chained = cam != null; // cena encadeada: mantém o preto para não piscar o mundo entre as cenas
         letter = letterTarget = 0f;
-        fadeFrom = fadeTo = 0f;
-        fadeDur = 0;
+        if (!chained) { fadeFrom = fadeTo = 0f; fadeDur = 0; }
+        beginMs = System.currentTimeMillis();
         speaker = text = "";
         titleId = null;
         p0 = null;
@@ -105,6 +107,11 @@ final class CineController {
     static void end(MinecraftClient mc) {
         if (!active && cam == null) return;
         active = false;
+        fadeFrom = fadeTo = 0f; // nada de preto sobrando: o mundo precisa aparecer
+        fadeDur = 0;
+        letter = letterTarget = 0f;
+        titleId = null;
+        text = "";
         mc.setCameraEntity(mc.player);
         if (cam != null && mc.world != null) mc.world.removeEntity(cam.getId(), Entity.RemovalReason.DISCARDED);
         cam = null;

@@ -1,4 +1,9 @@
 # CHANGELOG
+## Revisão 3
+- Narber presente desde o início (papéis `narber_comum` → `narber`), arco de deterioração e recuperação de spawn; nome visível.
+- Terror: passos, galhos, batimento; escalada completa por k.
+- Tela preta: preload de chunks, esperas, exceções isoladas, flag `cine` no estado, auto-recuperação do cliente, limpeza de fade, limite de 5 min.
+- Orientação de NPCs (headYaw/bodyYaw) corrigida.
 ## Revisão 2 — feedback do 1º teste
 - Karamarraw: usa a ilha real do mapa (sem construir terreno); KarBuilder reescrito (navio, prancha, suprimentos, marcos, mata, pedras); câmeras recalculadas.
 - Fase01 reescrita: expedição por script, Narber sem laço de bloqueio e com saída garantida, escalada de tensão, dicas, bússola (campo `goal` no pacote de estado + HUD).

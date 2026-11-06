@@ -227,6 +227,7 @@ public final class RpgServer {
         m.put("chapter", s.state.chapter);
         m.put("started", !s.state.quests.isEmpty());
         m.put("locked", s.state.flags.contains("switch_locked"));
+        m.put("cine", CutsceneDirector.busy());
         List<Object> chars = new ArrayList<>();
         for (CharacterDef c : s.characters.values()) {
             if (!c.playable() || c.id().equals("narrador")) continue; // o narrador de Karamarraw não tem identidade/painel

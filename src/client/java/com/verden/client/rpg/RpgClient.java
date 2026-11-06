@@ -90,6 +90,8 @@ public final class RpgClient {
         } catch (RuntimeException e) {
             return;
         }
+        // rede de segurança: se o servidor diz que não há cutscene mas a tela de cinema ficou ativa, devolve o controle agora
+        if (CineController.active && !Boolean.TRUE.equals(state.get("cine"))) CineController.end(MinecraftClient.getInstance());
         for (Map<String, Object> t : list("toasts")) toasts.add(new Toast(String.valueOf(t.get("kind")), String.valueOf(t.get("text")), System.currentTimeMillis()));
     }
 

@@ -59,6 +59,11 @@ final class Fase01 {
         return q.status == StoryState.QuestProgress.Status.DONE ? FIM : q.stage;
     }
 
+    /** Gera/carrega os chunks em volta ANTES do fade-in (evita mundo vazio/tela preta depois de um teleporte para área nova). */
+    static void preload(ServerWorld w, int bx, int bz, int r) {
+        for (int cx = (bx >> 4) - r; cx <= (bx >> 4) + r; cx++) for (int cz2 = (bz >> 4) - r; cz2 <= (bz >> 4) + r; cz2++) w.getChunk(cx, cz2);
+    }
+
     static int surface(ServerWorld w, int x, int z) {
         w.getChunk(x >> 4, z >> 4);
         return w.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, x, z);
@@ -76,12 +81,24 @@ final class Fase01 {
         if (e == null) return null;
         e.setVariant(role.ordinal());
         e.refreshPositionAndAngles(x, y, z, yaw, 0f);
+        orient(e, yaw);
         e.setPersistent();
         e.setInvulnerable(true);
         e.addCommandTag(tag);
         e.setAiDisabled(still);
+        if (role == NpcRole.NARBER || role == NpcRole.NARBER_COMUM) { e.setCustomName(Text.literal("Narber")); e.setCustomNameVisible(true); }
         w.spawnEntity(e);
         return e;
+    }
+
+    /** NPCs são desenhados com headYaw/bodyYaw (não só yaw): sem isto todo NPC estático nasce olhando para o sul. */
+    static void orient(net.minecraft.entity.LivingEntity e, float yaw) {
+        e.setYaw(yaw);
+        e.setHeadYaw(yaw);
+        e.setBodyYaw(yaw);
+        e.prevYaw = yaw;
+        e.prevHeadYaw = yaw;
+        e.prevBodyYaw = yaw;
     }
 
     static List<VerdenNpcEntity> tagged(ServerWorld w, String tag, BlockPos around, int r) {
@@ -115,6 +132,7 @@ final class Fase01 {
         lastStage = -1;
         narberReset();
         KarBuilder.locate(w); // acha a costa norte da Karamarraw REAL (o terreno não é alterado)
+        preload(w, KarBuilder.LX, KarBuilder.cz - 24, 7);
         if (!s.state.vars.containsKey("kar_built")) {
             p.sendMessage(Text.literal("Preparando Karamarraw… (navio, praia e mata; alguns segundos)").formatted(Formatting.GRAY), false);
             KarBuilder.buildAll(w);
@@ -270,6 +288,15 @@ final class Fase01 {
             w.spawnParticles(ParticleTypes.SOUL, vx, vy + 1.0, vz, 14, 0.25, 0.9, 0.25, 0.01);
             w.spawnParticles(ParticleTypes.SCULK_SOUL, vx, vy + 1.6, vz, 4, 0.2, 0.5, 0.2, 0.02);
         }
+        double rad = Math.toRadians(p.getYaw() + 180);
+        if (k > 0.35 && RND.nextInt(22) == 0) { // passos atrás do jogador (sempre a mesma distância: quem anda é "algo" que o segue)
+            w.playSound(null, p.getX() - Math.sin(rad) * 3.5, p.getY(), p.getZ() + Math.cos(rad) * 3.5, SoundEvents.BLOCK_GRASS_STEP, SoundCategory.AMBIENT, 1.6f, 0.7f + RND.nextFloat() * 0.2f);
+        }
+        if (k > 0.4 && RND.nextInt(40) == 0) { // galho que se parte ao longe
+            double a2 = RND.nextDouble() * Math.PI * 2, d2 = 8 + RND.nextDouble() * 8;
+            w.playSound(null, p.getX() + Math.cos(a2) * d2, p.getY() + 1, p.getZ() + Math.sin(a2) * d2, SoundEvents.BLOCK_WOOD_BREAK, SoundCategory.AMBIENT, 1.4f, 0.6f);
+        }
+        if (k > 0.5 && t % 30 == 0) w.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.ENTITY_WARDEN_HEARTBEAT, SoundCategory.PLAYERS, (float) (0.3 + 0.9 * k), 1f); // batimento cardíaco
         if (k > 0.55 && t % 200 == 0) p.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 0, true, false, false));
         if (k > 0.8 && t % 400 == 0) p.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 80, 0, true, false, false));
     }
@@ -298,16 +325,12 @@ final class Fase01 {
         double ny = w.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, bx, bz);
         float yaw = (float) Math.toDegrees(Math.atan2(-dx, dz));
         e.refreshPositionAndAngles(nx, ny, nz, yaw, 0f);
-        e.setHeadYaw(yaw);
-        e.setBodyYaw(yaw);
+        orient(e, yaw);
         return d - m < 0.05;
     }
 
     static void face(VerdenNpcEntity e, double tx, double tz) {
-        float yaw = (float) Math.toDegrees(Math.atan2(-(tx - e.getX()), tz - e.getZ()));
-        e.setYaw(yaw);
-        e.setHeadYaw(yaw);
-        e.setBodyYaw(yaw);
+        orient(e, (float) Math.toDegrees(Math.atan2(-(tx - e.getX()), tz - e.getZ())));
     }
 
     private static final double[][][] ROTINA = {
@@ -315,19 +338,29 @@ final class Fase01 {
             {{0.5, -12}, {-5.5, 6}},                 // 1 leva carga do navio aos suprimentos
             {{1.5, -12}, {5.5, 7}},                  // 2 idem, lado leste
             {{-12, 3}, {12, 3}},                     // 3 vigia a linha d'água
-            {{-8, 9}, {-5, 5}}};                     // 4 confere os caixotes
+            {{-8, 9}, {-5, 5}},                      // 4 confere os caixotes
+            {{-2, 9}, {-1, 5}}};                     // 5 Narber: também trabalha com a carga
     private static final java.util.Map<java.util.UUID, int[]> RS = new java.util.HashMap<>();
     private static int leadIdx = 1;
+    /** 0 = membro do grupo; 1 = afastando-se; 2 = na clareira (possuído); 3 = saindo. */
+    private static int narberPhase;
+    private static boolean firstShot;
+    private static int nShot, nAlertCd, nPath, nTimer, nPause, nWait;
+    private static double[] nTarget;
 
     private static int expIndex(VerdenNpcEntity e) {
         for (String tg : e.getCommandTags()) if (tg.startsWith("exp") && tg.length() == 4) return tg.charAt(3) - '0';
         return 0;
     }
 
+    private static void narberReset() { narberPhase = 0; firstShot = false; nShot = 60; nAlertCd = 0; nPath = 0; nTimer = 0; nPause = 0; nWait = 0; nTarget = null; leadIdx = 1; RS.clear(); }
+
     private static void expedicao(ServerPlayerEntity p, Session s, int st, int t) {
         if (st < DESEMBARQUE || st > ESCONDER) return;
         ServerWorld w = p.getServerWorld();
-        List<VerdenNpcEntity> l = tagged(w, "verden_expedicao", new BlockPos(KarBuilder.LX, KarBuilder.SEA, KarBuilder.cz + 40), 200);
+        BlockPos mid = new BlockPos(KarBuilder.LX, KarBuilder.SEA, KarBuilder.cz + 60);
+        List<VerdenNpcEntity> l = new ArrayList<>(tagged(w, "verden_expedicao", mid, 260));
+        if (narberPhase == 0) l.addAll(tagged(w, "verden_narber_ilha", mid, 260)); // Narber é do grupo até a influência da ilha
         if (l.isEmpty()) return;
         double k = intensity(p, st);
         VerdenNpcEntity leader = null;
@@ -337,24 +370,25 @@ final class Fase01 {
             e.setAiDisabled(true);
             int i = expIndex(e);
             double ex = e.getX() - lpx, ez = e.getZ() - lpz;
-            if (st >= DISPAROS) { // primeiro tiro: congelam, agachados, voltados para o som
+            if (firstShot || st >= DISPAROS) { // primeiro tiro: congelam, agachados, voltados para o som
                 e.setSneaking(true);
-                face(e, KarBuilder.LX + KarBuilder.NARBER_HOME[0], KarBuilder.cz + KarBuilder.NARBER_HOME[1]);
+                face(e, lpx + KarBuilder.NARBER_HOME[0], lpz + KarBuilder.NARBER_HOME[1]);
                 continue;
             }
-            boolean marcha = st >= EXPEDICAO && leader != null;
-            if (marcha) {
+            if (st >= EXPEDICAO && leader != null) { // marcha pela trilha
                 if (i == 0) {
                     double[] wp = {KarBuilder.TRAIL[leadIdx][0], KarBuilder.TRAIL[leadIdx][1]};
-                    double pd = leader.distanceTo(p);
-                    if (pd > 16) { e.setSneaking(false); face(e, p.getX(), p.getZ()); }  // espera o jogador
+                    if (leader.distanceTo(p) > 16) { e.setSneaking(false); face(e, p.getX(), p.getZ()); } // espera o jogador
                     else if (step(w, e, lpx + wp[0], lpz + wp[1], 0.15 * (1 - 0.45 * k)) && leadIdx < 2) leadIdx++;
+                } else if (i == 5 && k > 0.2) { // Narber fica para trás, parado, encarando a mata
+                    face(e, lpx + KarBuilder.NARBER_HOME[0], lpz + KarBuilder.NARBER_HOME[1]);
+                    e.setSneaking(false);
                 } else {
                     double lx0 = leader.getX() + (i % 2 == 0 ? -2.2 : 2.2), lz0 = leader.getZ() - 2.2 * i;
                     if (Math.hypot(e.getX() - lx0, e.getZ() - lz0) > 1.2) step(w, e, lx0, lz0, 0.17);
-                    else if (t % 40 == 0) e.setYaw(e.getYaw() + RND.nextInt(120) - 60); // olha ao redor
+                    else if (t % 40 == 0) orient(e, e.getYaw() + RND.nextInt(120) - 60); // olha ao redor
+                    e.setSneaking(k > 0.55);
                 }
-                e.setSneaking(k > 0.55 && i != 0);
                 continue;
             }
             // vida na praia (antes de partir): rotinas de trabalho
@@ -369,23 +403,17 @@ final class Fase01 {
             if (i == 0) { if (p.distanceTo(e) < 12) face(e, p.getX(), p.getZ()); else if (t % 200 == 0) face(e, lpx, lpz + 140); step(w, e, lpx + tg[0], lpz + tg[1], 0.1); continue; }
             if (Math.hypot(ex - tg[0], ez - tg[1]) > 0.5) { step(w, e, lpx + tg[0], lpz + tg[1], 0.1); e.setSneaking(false); }
             else {
-                e.setSneaking(i == 4 || i == 1 || i == 2);          // abaixam para pegar/conferir carga
+                e.setSneaking(i == 4 || i == 1 || i == 2 || i == 5); // abaixam para pegar/conferir carga
                 if (r[1] == 0) r[1] = 50 + RND.nextInt(60);
                 if (--r[1] <= 0) { r[0]++; r[1] = 0; }
             }
         }
     }
 
-    // ------------------------------------------------------------------ Narber (movimento por script; nunca bloqueia a missão)
-
-    private static int nShot, nAlertCd, nPath, nTimer, nPause;
-    private static double[] nTarget;
-
-    private static void narberReset() { nShot = 60; nAlertCd = 0; nPath = 0; nTimer = 0; nPause = 0; nTarget = null; leadIdx = 1; RS.clear(); }
+    // ------------------------------------------------------------------ Narber (movimento por script; presente desde o início; nunca bloqueia a missão)
 
     private static void narberFire(ServerWorld w, VerdenNpcEntity n) {
-        n.setYaw(RND.nextInt(360));
-        n.setHeadYaw(n.getYaw());
+        orient(n, RND.nextInt(360));
         w.playSound(null, n.getX(), n.getY() + 1, n.getZ(), ModSounds.RPG_TIRO, SoundCategory.HOSTILE, 8f, 0.9f + RND.nextFloat() * 0.25f);
         w.spawnParticles(ParticleTypes.POOF, n.getX(), n.getY() + 1.3, n.getZ(), 6, 0.3, 0.2, 0.3, 0.02);
         w.spawnParticles(ParticleTypes.SMOKE, n.getX(), n.getY() + 1.4, n.getZ(), 4, 0.2, 0.1, 0.2, 0.01);
@@ -393,23 +421,43 @@ final class Fase01 {
 
     private static void narberTick(ServerPlayerEntity p, Session s, int st, int t) {
         ServerWorld w = p.getServerWorld();
-        double hx = KarBuilder.LX + KarBuilder.NARBER_HOME[0], hz = KarBuilder.cz + KarBuilder.NARBER_HOME[1];
-        BlockPos home = BlockPos.ofFloored(hx, KarBuilder.SEA + 20, hz);
-        VerdenNpcEntity n = (st == DISPAROS || st == ESCONDER) ? one(w, "verden_narber_ilha", home, 150) : null;
-        if (st == DISPAROS && n == null && !s.state.flags.contains("narber_ativo")) {
-            n = spawn(w, NpcRole.NARBER, "verden_narber_ilha", hx, KarBuilder.top(w, KarBuilder.NARBER_HOME[0], KarBuilder.NARBER_HOME[1]), hz, 180f, true);
-            s.state.flags.add("narber_ativo");
-            narberReset();
-        }
-        if (st != DISPAROS && st != ESCONDER) {
-            VerdenNpcEntity old = one(w, "verden_narber_ilha", home, 150);
-            if (old != null) old.discard();
+        double hx = KarBuilder.LX + KarBuilder.NARBER_HOME[0] + 0.5, hz = KarBuilder.cz + KarBuilder.NARBER_HOME[1] + 0.5;
+        BlockPos mid = new BlockPos(KarBuilder.LX, KarBuilder.SEA, KarBuilder.cz + 60);
+        if (st < DESEMBARQUE || st > ESCONDER) {
+            VerdenNpcEntity old = one(w, "verden_narber_ilha", mid, 260);
+            if (old != null && st > ESCONDER) old.discard();
             return;
         }
-        if (n == null) return;
+        VerdenNpcEntity n = one(w, "verden_narber_ilha", mid, 260);
+        if (n == null) {
+            if (s.state.flags.contains("narber_fim") || t % 20 != 0) return;
+            // recuperação: se por qualquer motivo ele não existe, recria já na fase correta (nunca fica ausente)
+            boolean pos = narberPhase >= 2 || st >= DISPAROS;
+            double y = KarBuilder.top(w, KarBuilder.NARBER_HOME[0], KarBuilder.NARBER_HOME[1]);
+            n = spawn(w, pos ? NpcRole.NARBER : NpcRole.NARBER_COMUM, "verden_narber_ilha", hx, y, hz, 180f, true);
+            if (n == null) return;
+            if (pos) { narberPhase = Math.max(narberPhase, 2); firstShot = true; }
+        }
         n.setAiDisabled(true);
+        double k = intensity(p, st);
+        if (narberPhase == 0 && (k > 0.38 || st >= MATA)) narberPhase = 1; // a influência o chama para dentro da mata
+        if (narberPhase == 1) {
+            if (st >= DISPAROS) nWait++;
+            if (step(w, n, hx, hz, 0.11) || nWait > 400 || st >= ESCONDER) {
+                if (st >= ESCONDER || nWait > 400) n.refreshPositionAndAngles(hx, KarBuilder.top(w, KarBuilder.NARBER_HOME[0], KarBuilder.NARBER_HOME[1]), hz, 180f, 0f);
+                narberPhase = 2;
+                n.setVariant(NpcRole.NARBER.ordinal()); // pele pálida e olhos vermelhos (texto do prólogo)
+                n.setSneaking(false);
+                firstShot = true;
+                nShot = 5;
+                p.sendMessage(Text.literal("Um disparo ecoa pela mata.").formatted(Formatting.DARK_RED), true);
+            }
+            return;
+        }
+        if (narberPhase == 0) return;
+        if (st == ESCONDER && narberPhase == 2) narberPhase = 3;
         if (--nShot <= 0) { narberFire(w, n); nShot = 60 + RND.nextInt(60); }
-        if (st == DISPAROS) { // vaga pela clareira, atirando em qualquer coisa
+        if (narberPhase == 2) { // vaga pela clareira atirando em qualquer coisa
             if (nPause > 0) nPause--;
             else {
                 if (nTarget == null || Math.hypot(n.getX() - nTarget[0], n.getZ() - nTarget[1]) < 0.6) {
@@ -418,12 +466,13 @@ final class Fase01 {
                 }
                 step(w, n, nTarget[0], nTarget[1], 0.09);
             }
-        } else { // ESCONDER: afasta-se pelo caminho de saída; termina por tempo mesmo que o jogador falhe em se esconder
+        } else { // fase 3: afasta-se; termina por tempo mesmo que o jogador falhe em se esconder
             nTimer++;
             int[] pt = KarBuilder.NARBER_PATH[Math.min(nPath, KarBuilder.NARBER_PATH.length - 1)];
             if (step(w, n, KarBuilder.LX + pt[0], KarBuilder.cz + pt[1], 0.16)) nPath++;
             if (nPath >= KarBuilder.NARBER_PATH.length || nTimer > 1500) {
                 n.discard();
+                s.state.flags.add("narber_fim");
                 s.fire(new GameEvent("hide", "narber_afastou"));
                 p.sendMessage(Text.literal("Os passos se afastam. Volte ao navio.").formatted(Formatting.GRAY), true);
                 RpgServer.markDirty();
@@ -505,10 +554,11 @@ final class Fase01 {
                 p.teleport(w, KarBuilder.LX + 0.5, KarBuilder.SEA + 1, KarBuilder.cz - 24.5, 0f, 0f);
                 w.setTimeOfDay(4000);
                 w.setWeather(24000, 0, false, false);
-                for (int i = 0; i < 5; i++) spawnExped(w, i, 0);
-                clearTag(w, "verden_narber_ilha", new BlockPos(KarBuilder.LX, KarBuilder.SEA, KarBuilder.cz + 150), 200);
+                clearTag(w, "verden_narber_ilha", new BlockPos(KarBuilder.LX, KarBuilder.SEA, KarBuilder.cz + 60), 260);
                 narberReset();
-                s.state.flags.remove("narber_ativo");
+                for (int i = 0; i < 5; i++) spawnExped(w, i, 0);
+                spawn(w, NpcRole.NARBER_COMUM, "verden_narber_ilha", KarBuilder.LX + 1.7, KarBuilder.SEA + 1, KarBuilder.cz - 20.5, 0f, true).addCommandTag("exp5"); // Narber embarca com a expedição
+                s.state.flags.remove("narber_fim");
             }
             case "entregar_controle" -> p.sendMessage(Text.literal(stage(s) >= FERIDO ? "Cavalgue para o leste, rumo às muralhas de Flerin." : "Desça à praia e acompanhe a expedição.").formatted(Formatting.GOLD), true);
             case "navio_zarpa" -> {
@@ -581,6 +631,7 @@ final class Fase01 {
         }
         spawn(w, NpcRole.NEFERTARI, "verden_nefertari", RpgServer.AX + 0.5, ay + 1, RpgServer.AZ + 0.5, 180f, true);
         spawn(w, NpcRole.SOLDADO, "verden_soldado_entrada", RpgServer.AX + 3.5, ay + 1, RpgServer.AZ - 19.5, 0f, true);
+        preload(w, YSX, YSZ, 7);
         int dx = FX - 200, sy = surface(w, YSX, YSZ);
         spawn(w, NpcRole.DAN, "verden_dan", dx + 0.5, surface(w, dx, YSZ + 4), YSZ + 4.5, 90f, true);
         w.setWeather(24000, 0, false, false);

@@ -13,6 +13,9 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +31,7 @@ import java.util.Map;
 final class CutsceneDirector {
     private CutsceneDirector() {}
 
+    private static final Logger LOG = LoggerFactory.getLogger("verden/cine");
     private static CutsceneRunner active;
     private static ServerPlayerEntity actor;
 
@@ -58,7 +62,7 @@ final class CutsceneDirector {
         Session s = RpgRuntime.session();
         if (s == null || actor == null || actor.isRemoved() || !actor.isAlive()) { abort(); return; }
         actor.setVelocity(0, actor.getVelocity().y, 0);
-        for (CutsceneRunner.Cue c : active.tick()) exec(c, s);
+        for (CutsceneRunner.Cue c : active.tick()) safeExec(c, s);
         if (active != null && active.finished()) end(s);
     }
 
@@ -67,7 +71,7 @@ final class CutsceneDirector {
         Session s = RpgRuntime.session();
         List<CutsceneRunner.Cue> rest = active.skip();
         if (!active.finished() || s == null) return; // cena não pulável: ignora o pedido
-        for (CutsceneRunner.Cue c : rest) exec(c, s);
+        for (CutsceneRunner.Cue c : rest) safeExec(c, s);
         send(actor, m("cmd", "fade", "to", 0.0, "ticks", 0));
         end(s);
     }
@@ -83,6 +87,11 @@ final class CutsceneDirector {
         actor = null;
     }
 
+    /** Uma ação que falhe NUNCA pode travar a cena nem derrubar o servidor: registra e segue. */
+    private static void safeExec(CutsceneRunner.Cue c, Session s) {
+        try { exec(c, s); } catch (RuntimeException e) { LOG.error("Falha na instrução de cutscene '{}' ({})", c.kind(), c.params(), e); }
+    }
+
     private static void end(Session s) {
         Cutscene cs = active.cutscene();
         ServerPlayerEntity p = actor;
@@ -90,7 +99,7 @@ final class CutsceneDirector {
         actor = null;
         p.setInvulnerable(false);
         s.state.flags.add("cs_feito:" + cs.id());
-        s.apply(cs.onEnd());
+        try { s.apply(cs.onEnd()); } catch (RuntimeException e) { LOG.error("Falha nos efeitos finais de {}", cs.id(), e); }
         s.fire(new GameEvent("cutscene", cs.id()));
         RpgRuntime.saveNow("cutscene " + cs.id());
         RpgServer.markDirty();

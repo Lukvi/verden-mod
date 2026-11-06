@@ -16,6 +16,10 @@
    "essential": true
   },
   {
+   "do": "wait",
+   "ticks": 80
+  },
+  {
    "do": "music",
    "id": "stop"
   },

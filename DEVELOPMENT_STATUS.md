@@ -1,5 +1,13 @@
 # DEVELOPMENT_STATUS — Verden RPG (Fase 1: Karamarraw → fim do Capítulo Um)
 
+## Revisão 3 (feedback: terror, Narber ausente, tela preta, orientação de Reeves)
+- **Narber agora existe desde o início**: embarca com a expedição (nome visível "Narber", skin normal), trabalha na praia, fica para trás encarando a mata,
+  afasta-se sozinho e chega à clareira como o Narber possuído (pele pálida, olhos vermelhos); só então o primeiro tiro. Se por qualquer motivo a entidade não existir, é recriada na fase correta (recuperação). Antes ele só nascia no estágio 4 e a flag era marcada mesmo se o spawn falhasse.
+- **Terror com acontecimentos**: Narber estranho e ausente do grupo, sussurros, gritos distantes, vultos de almas, passos atrás do jogador, galhos quebrando, batimento cardíaco, náusea/escuridão, clima, e o grupo que se encolhe e congela voltado para o tiro.
+- **Tela preta**: (1) chunks são pré-gerados ANTES do fade-in e as cenas esperam 2–4 s após teleportar; (2) falha numa instrução de cutscene é registrada e não trava nem derruba o servidor; (3) o estado enviado ao cliente traz `cine`: se o cliente ficar preso na tela de cinema com o servidor sem cutscene, ele devolve o controle sozinho; (4) fade/letterbox/título são zerados ao terminar; (5) limite de 5 min.
+- **Orientação**: NPCs são desenhados por headYaw/bodyYaw; eu só fixava yaw, então todo NPC estático (Reeves, soldado, Nefertari) nascia olhando para o sul. Corrigido em `Fase01.orient`.
+- Pendente de verdade: nada disto foi executado no Minecraft (sem Gradle/jogo aqui).
+
 ## Revisão 2 (após o primeiro teste do autor)
 - **Karamarraw agora é a ilha REAL do mapa do mod** (~4,8 km × 1,2 km; serra de até y≈116 colada à costa norte). Nada de terreno é construído:
   só navio+prancha, suprimentos na praia, marcos, mata ao longo da trilha e pedras (todos só sobre ar/água). A costa norte é achada em tempo de execução (x=3000 → z≈1464).

@@ -57,13 +57,14 @@ trinity_jord().save(A + '/player/trinity_jord.png'); trinity_jord().save(A + '/n
 trinity().save(A + '/player/trinity.png')                                                          # visual da imagem de referência do autor (alternativo)
 dan().save(A + '/player/dan.png'); dan().save(A + '/npc/dan.png')
 paint((60, 45, 35), (232, 226, 222), (235, 20, 20), (35, 50, 80), (35, 50, 80), (70, 70, 78), (30, 25, 22))[0].save(A + '/npc/narber.png')
+paint((60, 45, 35), (214, 170, 138), (60, 40, 30), (35, 50, 80), (35, 50, 80), (70, 70, 78), (30, 25, 22))[0].save(A + '/npc/narber_comum.png')  # Narber ainda normal (antes da influência da ilha)
 paint((90, 60, 40), (220, 175, 140), (60, 40, 30), (150, 125, 85), (150, 125, 85), (90, 80, 60), (55, 40, 30))[0].save(A + '/npc/expedicionario.png')
 paint((230, 205, 120), (236, 230, 224), (200, 20, 30), (35, 20, 28), (35, 20, 28), (30, 18, 24), (20, 14, 18), long_hair=True)[0].save(A + '/npc/majestade.png')
 paint((120, 120, 130), (200, 160, 130), (60, 50, 40), (120, 124, 134), (120, 124, 134), (100, 104, 114), (70, 72, 80), helmet=(128, 132, 142))[0].save(A + '/npc/soldado.png')
 import json
 json.dump({"status": "PROVISÓRIO", "nota": "Todas as skins são geradas por tools/gen_skins.py e NÃO são arte final.",
   "skins": {"player/trinity_jord.png": "Trinity/Reeves — visual do LIVRO (armadura branca) — provisória", "player/trinity.png": "Trinity — visual da imagem de referência (capa vermelha) — provisória",
-  "player/dan.png": "Dan — da imagem de referência (traje preto/dourado; as asas NÃO estão na skin) — provisória", "npc/narber.png": "Narber — só pele pálida e olhos vermelhos são do texto; resto genérico",
+  "player/dan.png": "Dan — da imagem de referência (traje preto/dourado; as asas NÃO estão na skin) — provisória", "npc/narber.png": "Narber possuído — só pele pálida e olhos vermelhos são do texto; resto genérico", "npc/narber_comum.png": "Narber antes da influência (aparência genérica; o livro não o descreve antes)",
   "npc/expedicionario.png": "genérica", "npc/majestade.png": "só cabelos longos loiros, pele clara e olhos avermelhados são do texto; resto genérico", "npc/soldado.png": "só 'armadurado' é do texto"}},
   open(A + '/SKINS_PROVISORIAS.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print('skins ok')
